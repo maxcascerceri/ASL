@@ -14,6 +14,11 @@ enum ASLModuleCompleteCopy {
     static let subtitle = "You earned this. Keep going!"
     static let continueCTA = "Continue"
 
+    static func nextStoneCTA(nextStone: ASLLesson, unit: ASLUnit) -> String {
+        let title = ASLStoneDisplayTitles.title(for: nextStone, unit: unit)
+        return "Start Stone \(nextStone.sortOrder) - \(title)"
+    }
+
     static func headline(index: Int) -> String {
         guard !headlines.isEmpty else { return "You crushed it!" }
         return headlines[index % headlines.count]

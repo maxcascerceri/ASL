@@ -43,13 +43,22 @@ struct ProfileSettingsSheet: View {
 
             #if DEBUG
             Button("Reset onboarding") {
-                ASLPremiumAccess.resetAll()
                 ASLOnboarding.resetAll()
+                ASLPremiumAccess.beginDebugOnboardingReplay()
                 dismiss()
             }
             .font(.asl(15, weight: .semibold))
             .foregroundStyle(Brand.primary)
             .padding(.top, 16)
+
+            if ASLPremiumAccess.isDebugReplayOnboardingActive {
+                Text("Onboarding preview is active — use Exit preview in the app or finish the flow.")
+                    .font(.asl(13, weight: .medium))
+                    .foregroundStyle(Brand.secondaryLabel)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 24)
+                    .padding(.top, 8)
+            }
             #endif
 
             Spacer(minLength: 0)

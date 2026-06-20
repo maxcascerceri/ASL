@@ -6,10 +6,21 @@
 import SwiftUI
 
 struct RootView: View {
+    @EnvironmentObject private var subscriptionStore: ASLSubscriptionStore
     @StateObject private var store = ASLDataStore()
-    @State private var hasPremium = ASLPremiumAccess.hasAccess
     @State private var onboardingComplete = ASLOnboarding.isComplete
     @State private var showLaunchSplash = true
+    #if DEBUG
+    @State private var debugReplayOnboarding = ASLPremiumAccess.isDebugReplayOnboardingActive
+    #endif
+
+    private var hasPremium: Bool {
+        #if DEBUG
+        ASLPremiumAccess.hasMockAccess || subscriptionStore.hasPremium
+        #else
+        subscriptionStore.hasPremium
+        #endif
+    }
 
     var body: some View {
         ZStack {
@@ -31,44 +42,110 @@ struct RootView: View {
             ASLOnboarding.markLaunchedIfNeeded()
         }
         .onReceive(NotificationCenter.default.publisher(for: ASLOnboarding.debugResetNotification)) { _ in
-            hasPremium = ASLPremiumAccess.hasAccess
             onboardingComplete = ASLOnboarding.isComplete
+            #if DEBUG
+            debugReplayOnboarding = ASLPremiumAccess.isDebugReplayOnboardingActive
+            #endif
+            Task {
+                await subscriptionStore.refreshCustomerInfo()
+            }
         }
+    }
+
+    private func exitDebugOnboardingPreview() {
+        #if DEBUG
+        ASLPremiumAccess.endDebugOnboardingReplay()
+        debugReplayOnboarding = false
+        onboardingComplete = ASLOnboarding.isComplete
+        #endif
     }
 
     @ViewBuilder
     private var mainContent: some View {
         Group {
-            if hasPremium {
-                ContentView()
-                    .environmentObject(store)
+            #if DEBUG
+            if debugReplayOnboarding {
+                onboardingExperience
+            } else if hasPremium {
+                mainAppContent
             } else if onboardingComplete {
                 OnboardingPaywallView(
                     profile: ASLOnboarding.loadProfile(),
                     progress: 1,
-                    onTrialStarted: activateTrialAndSeedStars
+                    onTrialStarted: completePurchaseAndSeedStars
                 )
             } else {
-                OnboardingFlowView(
-                    onReachPaywall: {
-                        ASLOnboarding.markComplete()
-                    },
-                    onTrialStarted: activateTrialAndSeedStars
-                )
-                .environmentObject(store)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                onboardingExperience
             }
+            #else
+            if hasPremium {
+                mainAppContent
+            } else if onboardingComplete {
+                OnboardingPaywallView(
+                    profile: ASLOnboarding.loadProfile(),
+                    progress: 1,
+                    onTrialStarted: completePurchaseAndSeedStars
+                )
+            } else {
+                onboardingExperience
+            }
+            #endif
+        }
+        #if DEBUG
+        .overlay(alignment: .topTrailing) {
+            if debugReplayOnboarding {
+                Button("Exit preview") {
+                    exitDebugOnboardingPreview()
+                }
+                .font(.asl(12, weight: .semibold))
+                .foregroundStyle(Brand.secondaryLabel)
+                .padding(.horizontal, 14)
+                .padding(.vertical, 8)
+                .background(.ultraThinMaterial, in: Capsule())
+                .padding(.top, 8)
+                .padding(.trailing, 12)
+            }
+        }
+        #endif
+    }
+
+    private var mainAppContent: some View {
+        ContentView()
+            .environmentObject(store)
+    }
+
+    @ViewBuilder
+    private var onboardingExperience: some View {
+        if onboardingComplete {
+            OnboardingPaywallView(
+                profile: ASLOnboarding.loadProfile(),
+                progress: 1,
+                onTrialStarted: completePurchaseAndSeedStars
+            )
+        } else {
+            OnboardingFlowView(
+                onReachPaywall: {
+                    ASLOnboarding.markComplete()
+                },
+                onTrialStarted: completePurchaseAndSeedStars
+            )
+            .environmentObject(store)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 
-    private func activateTrialAndSeedStars() {
-        ASLPremiumAccess.activateMockTrial()
+    private func completePurchaseAndSeedStars() {
+        #if DEBUG
+        ASLPremiumAccess.endDebugOnboardingReplay()
+        debugReplayOnboarding = false
+        #endif
+        guard hasPremium else { return }
         store.applyOnboardingTrialRewards()
         UnitMascot.prepareHomeIntroAfterOnboarding()
-        hasPremium = true
     }
 }
 
 #Preview {
     RootView()
+        .environmentObject(ASLSubscriptionStore.shared)
 }

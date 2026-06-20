@@ -42,10 +42,17 @@ struct SignsTabView: View {
         guard let query = dictionarySearchQuery else { return [] }
 
         return SignCategory.uniqueWordIds
-            .filter { ASLWordDisplay.title(for: $0).lowercased().hasPrefix(query) }
+            .filter { !SignEquivalence.isAlias($0) }
+            .filter { SignEquivalence.matchesSearchQuery($0, query: query) }
             .sorted {
-                ASLWordDisplay.title(for: $0).localizedCaseInsensitiveCompare(
-                    ASLWordDisplay.title(for: $1)
+                SignEquivalence.dictionaryTitle(
+                    for: $0,
+                    fallback: ASLWordDisplay.title(for: $0)
+                ).localizedCaseInsensitiveCompare(
+                    SignEquivalence.dictionaryTitle(
+                        for: $1,
+                        fallback: ASLWordDisplay.title(for: $1)
+                    )
                 ) == .orderedAscending
             }
     }
@@ -348,6 +355,14 @@ private struct SignCategory: Identifiable {
 
     static func category(withId id: String) -> SignCategory? {
         all.first { $0.id == id }
+    }
+
+    /// Grid cells for dictionary browsing (pronouns use grouped canonical ids).
+    var dictionaryGridWordIds: [String] {
+        if id == "pronouns" {
+            return SignEquivalence.pronounGridWordIds
+        }
+        return words
     }
 
     /// Category label for search results (first category that lists this sign).
@@ -821,12 +836,15 @@ private struct SignCategoryDetailView: View {
 
             ScrollView(showsIndicators: false) {
                 SignGridView(
-                    wordIds: category.words,
+                    wordIds: category.dictionaryGridWordIds,
                     store: store,
                     favoriteWordIds: favoriteWordIds,
                     compact: true,
                     toggleFavorite: toggleFavorite,
-                    selectSign: selectSign
+                    selectSign: { wordId, _ in
+                        let detailIds = SignEquivalence.dictionaryDetailWordIds(primaryWordId: wordId)
+                        selectSign(wordId, detailIds)
+                    }
                 )
                 .frame(maxWidth: .infinity)
                 .padding(.horizontal, 18)
@@ -1156,7 +1174,10 @@ private struct SignWordCard: View {
 
     private var labelSection: some View {
         VStack(spacing: compact ? 6 : 2) {
-            Text(ASLWordDisplay.title(for: store.wordsById[wordId]?.text ?? wordId))
+            Text(SignEquivalence.dictionaryTitle(
+                for: wordId,
+                fallback: ASLWordDisplay.title(for: store.wordsById[wordId]?.text ?? wordId)
+            ))
                 .aslStyle(.cardTitle, variant: compact ? .compact : .standard)
                 .lineLimit(1)
                 .minimumScaleFactor(0.72)
@@ -1523,7 +1544,15 @@ private struct SignDetailSheet: View {
     }
 
     private var currentTitle: String {
-        ASLWordDisplay.title(for: store.wordsById[currentWordId]?.text ?? currentWordId)
+        SignEquivalence.dictionaryTitle(
+            for: currentWordId,
+            fallback: ASLWordDisplay.title(for: store.wordsById[currentWordId]?.text ?? currentWordId)
+        )
+    }
+
+    private var groupedSignNote: String? {
+        guard SignEquivalence.groupedDisplayTitle(for: currentWordId) != nil else { return nil }
+        return "These English words share one ASL sign."
     }
 
     private var isFavorite: Bool {
@@ -1563,6 +1592,14 @@ private struct SignDetailSheet: View {
                 stageHeight: 340,
                 showsControls: true
             )
+
+            if let groupedSignNote {
+                Text(groupedSignNote)
+                    .font(LessonQuestionLayout.microcopyFont)
+                    .foregroundStyle(Brand.secondaryLabel)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 24)
+            }
 
             HStack(spacing: 40) {
                 Button {

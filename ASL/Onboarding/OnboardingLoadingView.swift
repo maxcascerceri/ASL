@@ -286,15 +286,15 @@ struct OnboardingLoadingView: View {
             completeStep(2)
             activateStep(3)
             Haptics.progressBump()
-            withAnimation(.easeInOut(duration: 0.5)) {
-                checklistProgress = progressFraction(forStep: 4)
-            }
-            progressStepLabel = 4
         }
 
         schedule(after: OnboardingPersonalizingMetrics.step4CompleteDelay) {
             completeStep(3)
             Haptics.correct()
+            withAnimation(.easeInOut(duration: 0.5)) {
+                checklistProgress = progressFraction(forStep: 4)
+            }
+            progressStepLabel = 4
             markLessonReady()
         }
 

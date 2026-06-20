@@ -38,7 +38,6 @@ enum OnboardingPaywallPlan: String, CaseIterable, Identifiable {
         "\(OnboardingPaywallPricing.trialDays)-day free trial"
     }
 
-    /// Stub for future StoreKit product IDs.
     var productId: String {
         switch self {
         case .yearly: return "asl.premium.yearly"
@@ -52,15 +51,43 @@ struct OnboardingPaywallView: View {
     let progress: Double
     let onTrialStarted: () -> Void
 
+    @EnvironmentObject private var subscriptionStore: ASLSubscriptionStore
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-    @Environment(\.openURL) private var openURL
 
     @State private var selectedPlan: OnboardingPaywallPlan = .yearly
     @State private var heroIn = false
     @State private var benefitsIn = false
     @State private var plansIn = false
     @State private var actionIn = false
+
+    private var pricing: PaywallPricingSnapshot {
+        subscriptionStore.pricing
+    }
+
+    private var isBusy: Bool {
+        subscriptionStore.isPurchasing || subscriptionStore.isRestoring
+    }
+
+    private var canPurchase: Bool {
+        !isBusy && subscriptionStore.package(for: selectedPlan) != nil
+    }
+
+    private var trialButtonOpacity: Double {
+        if subscriptionStore.isPurchasing { return 1 }
+        if canPurchase { return 1 }
+        return 0.55
+    }
+
+    private var trialButtonTitle: String {
+        if subscriptionStore.isPurchasing {
+            return "Starting trial…"
+        }
+        if subscriptionStore.isLoadingOfferings {
+            return "Loading plans…"
+        }
+        return OnboardingCopy.startFreeTrial
+    }
 
     var body: some View {
         Color.white.ignoresSafeArea()
@@ -76,6 +103,26 @@ struct OnboardingPaywallView: View {
             }
             .onAppear {
                 runAppearAnimation()
+                Task {
+                    await subscriptionStore.loadOfferings()
+                }
+            }
+            .alert(
+                "Subscription",
+                isPresented: Binding(
+                    get: { subscriptionStore.purchaseError != nil },
+                    set: { isPresented in
+                        if !isPresented {
+                            subscriptionStore.purchaseError = nil
+                        }
+                    }
+                )
+            ) {
+                Button("OK", role: .cancel) {
+                    subscriptionStore.purchaseError = nil
+                }
+            } message: {
+                Text(subscriptionStore.purchaseError ?? "")
             }
     }
 
@@ -128,15 +175,20 @@ struct OnboardingPaywallView: View {
                 .multilineTextAlignment(.center)
                 .opacity(actionIn ? 1 : 0)
 
-            PaywallTrialButton(title: OnboardingCopy.startFreeTrial, action: onTrialStarted)
-                .opacity(actionIn ? 1 : 0)
+            PaywallTrialButton(
+                title: trialButtonTitle,
+                isLoading: subscriptionStore.isPurchasing,
+                action: startTrial
+            )
+                .opacity(actionIn ? trialButtonOpacity : 0)
                 .offset(y: actionIn ? 0 : 6)
+                .allowsHitTesting(canPurchase)
+                .animation(nil, value: subscriptionStore.isPurchasing)
 
             PaywallTrustStack(
                 selectedPlan: selectedPlan,
-                onPrivacy: { openLegalLink(ASLLegalLinks.privacyPolicy) },
-                onTerms: { openLegalLink(ASLLegalLinks.termsOfUse) },
-                onRestore: {}
+                pricing: pricing,
+                onRestore: restorePurchases
             )
             .opacity(actionIn ? 1 : 0)
         }
@@ -146,20 +198,39 @@ struct OnboardingPaywallView: View {
     private var plansBlock: some View {
         VStack(spacing: 10) {
             PaywallPlanCard(
-                model: PaywallPlanCardContent.weekly,
+                model: PaywallPlanCardContent.weekly(from: pricing),
                 isSelected: selectedPlan == .weekly
             ) {
                 selectedPlan = .weekly
             }
 
             PaywallPlanCard(
-                model: PaywallPlanCardContent.yearly,
+                model: PaywallPlanCardContent.yearly(from: pricing),
                 isSelected: selectedPlan == .yearly
             ) {
                 selectedPlan = .yearly
             }
         }
         .animation(.easeOut(duration: 0.12), value: selectedPlan)
+        .animation(.easeOut(duration: 0.12), value: pricing)
+    }
+
+    private func startTrial() {
+        Task {
+            let purchased = await subscriptionStore.purchase(plan: selectedPlan)
+            if purchased {
+                onTrialStarted()
+            }
+        }
+    }
+
+    private func restorePurchases() {
+        Task {
+            let restored = await subscriptionStore.restore()
+            if restored {
+                onTrialStarted()
+            }
+        }
     }
 
     private func runAppearAnimation() {
@@ -192,10 +263,5 @@ struct OnboardingPaywallView: View {
                 actionIn = true
             }
         }
-    }
-
-    private func openLegalLink(_ url: URL?) {
-        guard let url else { return }
-        openURL(url)
     }
 }

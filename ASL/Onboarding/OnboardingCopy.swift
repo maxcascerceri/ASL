@@ -363,13 +363,25 @@ enum OnboardingCopy {
         "\(OnboardingPaywallPricing.formattedWeeklyPrice)/week"
     }
 
-    static func paywallBillingMicrocopy(plan: OnboardingPaywallPlan) -> String {
+    static func paywallBillingMicrocopy(plan: OnboardingPaywallPlan, pricing: PaywallPricingSnapshot) -> String {
+        let trialPrefix: String = {
+            if let trialDays = pricing.trialDays, trialDays > 0 {
+                return "\(trialDays) days free, then "
+            }
+            return ""
+        }()
+
         switch plan {
         case .yearly:
-            return "7 days free, then \(OnboardingPaywallPricing.formattedYearlyPrice)/year. Cancel anytime."
+            return "\(trialPrefix)\(pricing.yearlyDisplayPrice)/year. Cancel anytime."
         case .weekly:
-            return "7 days free, then \(OnboardingPaywallPricing.formattedWeeklyPrice)/week. Cancel anytime."
+            return "\(trialPrefix)\(pricing.weeklyDisplayPrice)/week. Cancel anytime."
         }
+    }
+
+    /// Legacy alias using fallback pricing.
+    static func paywallBillingMicrocopy(plan: OnboardingPaywallPlan) -> String {
+        paywallBillingMicrocopy(plan: plan, pricing: .fallback)
     }
 
     /// Legacy alias — prefer `paywallBenefits(profile:)`.

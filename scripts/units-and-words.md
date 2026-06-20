@@ -14,11 +14,11 @@ hello, thankyou, bye, please, sorry, welcome, congratulations, oops, very, much,
 
 yes, no, ok, sure, really, wow, dontknow, notyet, samehere, excuseme, seeyoulater, have, havegoodday, signagain, nicetoseeyou, alright, cool, awesome, funny
 
-| 3 | p1-u03 | You & Me | 19 | 0 |
+| 3 | p1-u03 | You & Me | 11 | 0 |
 
 ### 3. You & Me (`p1-u03`)
 
-i, me, you, we, us, our, my, your, his, mine, he, they, she, her, him, them, their, yours, ours
+i, you, we, he, she, they, my, your, our, his, their
 
 | 4 | p1-u73 | Getting Help | 13 | 9 |
 

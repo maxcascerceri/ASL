@@ -20,8 +20,7 @@ UNIT_SPECS: list[tuple[str, str, str, str, list[str]]] = [
       "excuseme", "seeyoulater", "have", "havegoodday", "signagain", "nicetoseeyou", "alright",
       "cool", "awesome", "funny"]),
     ("p1-u03", "You & Me", "Pronouns and possessives.", "Subject",
-     ["i", "me", "you", "we", "us", "our", "my", "your",
-      "his", "mine", "he", "they", "she", "her", "him", "them", "their", "yours", "ours"]),
+     ["i", "you", "we", "he", "she", "they", "my", "your", "our", "his", "their"]),
     ("p1-u73", "Getting Help", "Ask for help, clarity, and safety.", "Survival",
      ["again", "wait", "need", "slow", "help", "understand",
       "idontunderstand", "ineedhelp", "canyouhelpme", "pleasehelpme",
@@ -205,6 +204,11 @@ MANUAL_UNIT_STONE_WORD_SUBSETS: dict[str, list[list[str]]] = {
         ["yes", "no", "ok", "sure", "really", "wow", "dontknow", "notyet", "signagain", "cool"],
         ["awesome", "funny", "samehere", "excuseme", "seeyoulater"],
         ["have", "havegoodday", "nicetoseeyou", "alright"],
+    ],
+    "p1-u03": [
+        ["i", "you", "we", "my", "your"],
+        ["he", "she", "they", "his", "their", "our"],
+        [],
     ],
     "p1-u23": [
         ["go", "come", "walk", "run"],
@@ -968,21 +972,127 @@ def semantic_distractor_peer_ids(word_id: str) -> set[str]:
     return peers
 
 
+# English glosses that share one ASL production (alias → canonical playback / teach id).
+SIGN_ALIAS_TO_CANONICAL: dict[str, str] = {
+    "me": "i",
+    "us": "we",
+    "him": "he",
+    "her": "she",
+    "them": "they",
+    "mine": "my",
+    "yours": "your",
+    "ours": "our",
+}
+
+SIGN_CANONICAL_PRONOUNS: frozenset[str] = frozenset(
+    {
+        "i",
+        "you",
+        "we",
+        "he",
+        "she",
+        "they",
+        "my",
+        "your",
+        "our",
+        "his",
+        "their",
+    }
+)
+
+# Stone 3 English-grammar fill slots (alias answer, canonical sign video via app lookup).
+ENGLISH_ALIAS_FILL_SLOTS: list[dict[str, object]] = [
+    {
+        "answerWordId": "me",
+        "sentenceBefore": "Can you help ",
+        "sentenceAfter": "?",
+        "distractorWordIds": ["you", "him"],
+    },
+    {
+        "answerWordId": "us",
+        "sentenceBefore": "Come with ",
+        "sentenceAfter": ".",
+        "distractorWordIds": ["them", "you"],
+    },
+    {
+        "answerWordId": "him",
+        "sentenceBefore": "I told ",
+        "sentenceAfter": " the news.",
+        "distractorWordIds": ["she", "they"],
+    },
+    {
+        "answerWordId": "her",
+        "sentenceBefore": "I saw ",
+        "sentenceAfter": " yesterday.",
+        "distractorWordIds": ["him", "they"],
+    },
+    {
+        "answerWordId": "them",
+        "sentenceBefore": "Give it to ",
+        "sentenceAfter": ".",
+        "distractorWordIds": ["us", "him"],
+    },
+    {
+        "answerWordId": "mine",
+        "sentenceBefore": "That book is ",
+        "sentenceAfter": ".",
+        "distractorWordIds": ["your", "his"],
+    },
+    {
+        "answerWordId": "yours",
+        "sentenceBefore": "Is this ",
+        "sentenceAfter": "?",
+        "distractorWordIds": ["mine", "ours"],
+    },
+    {
+        "answerWordId": "ours",
+        "sentenceBefore": "The house is ",
+        "sentenceAfter": ".",
+        "distractorWordIds": ["their", "yours"],
+    },
+]
+
+
+def canonical_sign_id(word_id: str) -> str:
+    return SIGN_ALIAS_TO_CANONICAL.get(word_id, word_id)
+
+
+def same_sign(a: str, b: str) -> bool:
+    return canonical_sign_id(a) == canonical_sign_id(b)
+
+
+def is_sign_alias(word_id: str) -> bool:
+    return word_id in SIGN_ALIAS_TO_CANONICAL
+
+
+def filter_distinct_sign_words(words: list[str]) -> list[str]:
+    seen: set[str] = set()
+    result: list[str] = []
+    for word in words:
+        canonical = canonical_sign_id(word)
+        if canonical in seen:
+            continue
+        seen.add(canonical)
+        result.append(word)
+    return result
+
+
 MIN_SIGNS_PER_STONE = 10
+STONE1_NEW_SIGN_TARGET = 8
 STONE_COUNT = 3
 
 
 def _allocate_singles_to_stones(singles: list[str]) -> list[list[str]]:
-    """Give each stone nine new singles when the unit has enough vocabulary."""
+    """Give stone 1 a focused batch; spread the rest across stones 2–3."""
     batches: list[list[str]] = [[] for _ in range(STONE_COUNT)]
     total = len(singles)
     if total == 0:
         return batches
-    if total <= MIN_SIGNS_PER_STONE:
+    if total <= STONE1_NEW_SIGN_TARGET:
         batches[0] = singles
         return batches
 
-    idx = MIN_SIGNS_PER_STONE
+    idx = STONE1_NEW_SIGN_TARGET
     batches[0] = singles[:idx]
     for stone_idx in range(1, STONE_COUNT):
         remaining = total - idx
@@ -1160,23 +1270,40 @@ def build_unit_stone_subsets(words: list[str]) -> list[list[str]]:
     return batches[:STONE_COUNT]
 
 
+def _ease_stone1_subset(
+    batches: list[list[str]],
+    target: int = STONE1_NEW_SIGN_TARGET,
+) -> list[list[str]]:
+    """Move excess stone-1 atomic signs forward to stone 2 for a lighter first stone."""
+    if len(batches) < 2:
+        return batches
+    result = [list(batch) for batch in batches]
+    s1_atomic = [word for word in result[0] if word not in PHRASE_IDS]
+    while len(s1_atomic) > target:
+        word = s1_atomic.pop()
+        result[0].remove(word)
+        result[1].insert(0, word)
+    return result
+
+
 def normalize_unit_stone_subsets(
     words: list[str],
     manual: list[list[str]] | None,
 ) -> list[list[str]]:
-    minimum = min_unique_answers_for_unit(len(words))
+    minimum = min(STONE1_NEW_SIGN_TARGET, min_unique_answers_for_unit(len(words)))
     full_size_unit = len(words) >= MIN_SIGNS_PER_STONE * STONE_COUNT
     if manual and len(manual) == STONE_COUNT:
         flat = [word for batch in manual for word in batch]
         if set(flat) == set(words) and len(flat) == len(words):
             batches = [list(batch) for batch in manual]
-            # Respect intentional stone-1 sizing on compact units (e.g. Getting Started).
             if full_size_unit and len(batches[0]) < minimum:
                 batches = _rebalance_stone1_batch(batches, words, minimum)
+            batches = _ease_stone1_subset(batches)
             return batches
     batches = build_unit_stone_subsets(words)
     if full_size_unit:
-        return _rebalance_stone1_batch(batches, words, minimum)
+        batches = _rebalance_stone1_batch(batches, words, minimum)
+    batches = _ease_stone1_subset(batches)
     return batches
 
 

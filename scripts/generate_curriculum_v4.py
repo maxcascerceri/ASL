@@ -39,6 +39,7 @@ from pathlib import Path
 
 from curriculum_v5_data import (
     DISPLAY_OVERRIDES,
+    ENGLISH_ALIAS_FILL_SLOTS,
     PHASE_CHECKPOINT_BADGES,
     PHASE_SEGMENTS,
     PHRASE_COMPONENTS,
@@ -51,15 +52,18 @@ from curriculum_v5_data import (
     UNIT_ORDER_BY_TITLE,
     UNIT_SPECS,
     UNIT_STONE_WORD_SUBSETS,
+    canonical_sign_id,
     cumulative_stone_words,
+    is_sign_alias,
     min_unique_answers_for_unit,
+    same_sign,
     semantic_distractor_peer_ids,
     stone1_review_candidates,
     stone_display_title,
     stone_phrase_ids,
 )
 
-from asl_tips_catalog import alloc_asl_tip
+from asl_tips_catalog import alloc_asl_tip, pronoun_tip_for_word
 
 VERSION = "6.0.0"
 
@@ -93,14 +97,17 @@ MAX_MODULE_STEPS = 12
 # adds teach + confirm and mistake review on top).
 #   Stones 1–3         22-34 graded screens (+ teach confirm in runtime)
 STONE_MIN_STEPS = {1: 24, 2: 26, 3: 22}
-STONE_MIN_YOUR_TURN = {1: 1, 2: 1, 3: 0}
-STONE_MID_YOUR_TURN = {1: 1, 2: 1, 3: 0}
+STONE_MIN_YOUR_TURN = {1: 2, 2: 2, 3: 2}
+STONE_MID_YOUR_TURN = {1: 1, 2: 2, 3: 1}
 STONE_MIN_TRANSLATION_CHOOSE = {1: 3, 2: 2, 3: 2}
 STONE1_MIN_TRANSLATION_CHOOSE = STONE_MIN_TRANSLATION_CHOOSE[1]
 STONE1_TRANSLATION_CHOOSE_PROMPT = "Pick the meaning."
-STONE1_MIN_WORD_PICK_VIDEO = 2
-STONE_MIN_MATCH_PAIRS = {1: 1, 2: 1, 3: 1}
-STONE_MIN_CONTEXT_STEPS = {2: 2, 3: 3}
+STONE1_MIN_WORD_PICK_VIDEO = 5
+STONE_MIN_WORD_PICK_VIDEO = {1: 5, 2: 3, 3: 5}
+STONE_MIN_MATCH_PAIRS = {1: 2, 2: 2, 3: 3}
+STONE_MIN_CONTEXT_STEPS = {1: 1, 2: 2, 3: 3}
+# Stone 3 still introduces new signs, but far fewer than stones 1–2.
+STONE3_MAX_NEW_TEACHES = 3
 RECOGNITION_KINDS = frozenset({"watchChoose", "wordPickVideo"})
 CONTEXT_STEP_KINDS = frozenset({"fillSlot", "signSequence", "phraseSlot"})
 STONE_RECOGNITION_SHARE_CAP = {1: 0.68, 2: 0.62, 3: 0.55}
@@ -852,7 +859,7 @@ def semantic_distractor_candidates(answer: str, pool: list[str]) -> list[str]:
     pool_set = set(pool)
     peers = semantic_distractor_peer_ids(answer) & pool_set
     peers.discard(answer)
-    return sorted(peers)
+    return sorted(w for w in peers if not same_sign(w, answer))
 
 
 def normalize_choice_count(count: int) -> int:
@@ -886,7 +893,7 @@ def pick_distractors(
         )
         return picked + remainder
 
-    others = [w for w in pool if w != answer]
+    others = [w for w in pool if w != answer and not same_sign(w, answer)]
     if len(others) <= k:
         return others
     if answer in pool:
@@ -1252,6 +1259,9 @@ def match_pairs_step(
 QUIZ_KINDS = frozenset(
     {"watchChoose", "translationChoose", "fillSlot", "wordPickVideo"}
 )
+ALL_RECOGNITION_PICK_KINDS = frozenset(
+    {"watchChoose", "translationChoose", "wordPickVideo"}
+)
 SIGN_TO_WORD_KINDS = frozenset({"watchChoose", "translationChoose"})
 WORD_TO_SIGN_KINDS = frozenset({"wordPickVideo"})
 MAX_CONSECUTIVE_SAME_KIND = 1
@@ -1273,23 +1283,24 @@ PHRASE_SPRINKLE_BEATS = frozenset(
 )
 
 # Universal Unit Framework stone arcs. Stone 1 teaches + locks in; Stone 2 uses
-# signs in context; Stone 3 is a mastery mix with cross-unit review.
+# signs in context; Stone 3 is mostly review with a small number of new signs.
 STONE_BEATS: dict[int, list[str]] = {
     1: [
         "newSignTeach",
-        "newSignTeach",
-        "translationChoose",
+        "videoPickChallenge",
+        "videoPickChallenge",
         "recognitionQuiz",
         "newSignTeach",
         "translationChoose",
         "matchPairs",
         "recognitionQuiz",
-        "newSignTeach",
-        "useInContext",
-        "recognitionQuiz",
-        "newSignTeach",
         "videoPickChallenge",
+        "useInContext",
+        "yourTurn",
         "aslTip",
+        "recognitionQuiz",
+        "videoPickChallenge",
+        "videoPickChallenge",
         "funMixed",
         "matchPairs",
         "recognitionQuiz",
@@ -1302,6 +1313,7 @@ STONE_BEATS: dict[int, list[str]] = {
         "translationChoose",
         "recognitionQuiz",
         "warmUp",
+        "newSignTeach",
         "recognitionQuiz",
         "translationChoose",
         "videoPickChallenge",
@@ -1321,6 +1333,8 @@ STONE_BEATS: dict[int, list[str]] = {
     ],
     3: [
         "warmUp",
+        "newSignTeach",
+        "newSignTeach",
         "crossUnitReview",
         "recognitionQuiz",
         "translationChoose",
@@ -1330,6 +1344,7 @@ STONE_BEATS: dict[int, list[str]] = {
         "translationChoose",
         "funMixed",
         "useInContext",
+        "yourTurn",
         "aslTip",
         "fillSlotPad",
         "warmUp",
@@ -1337,6 +1352,7 @@ STONE_BEATS: dict[int, list[str]] = {
         "matchPairs",
         "translationChoose",
         "crossUnitReview",
+        "yourTurn",
         "funMixed",
     ],
 }
@@ -1380,6 +1396,9 @@ DENSITY_WINDOW_STONE234 = STONE_REPETITION_RULES[2]["density_window"]
 DENSITY_MAX_IN_WINDOW = STONE_REPETITION_RULES[2]["density_max_in_window"]
 DENSITY_MAX_IN_WINDOW_STONE1 = STONE_REPETITION_RULES[1]["density_max_in_window"]
 RECENT_ANSWER_EXCLUSION = STONE_REPETITION_RULES[2]["recent_answer_exclusion"]
+# After a teach, at most this many of the next window graded steps may reuse its answer.
+POST_TEACH_ANSWER_WINDOW = 3
+POST_TEACH_MAX_SAME_ANSWER = 2
 
 
 def repetition_rule(stone: int, key: str) -> int:
@@ -1490,6 +1509,57 @@ def your_turn_step(word: str) -> dict:
         "title": "Your Turn",
         "prompt": "Record yourself signing, then compare with the example.",
     }
+
+
+def is_phrase_teach_step(step: dict) -> bool:
+    return step.get("kind") == "teach" and step.get("wordId") in PHRASE_IDS
+
+
+def is_phrase_your_turn_followup(prev: dict, step: dict) -> bool:
+    word = prev.get("wordId")
+    return (
+        is_phrase_teach_step(prev)
+        and step.get("kind") == "yourTurn"
+        and bool(word)
+        and step.get("wordId") == word
+    )
+
+
+def ensure_your_turn_after_phrase_teaches(
+    steps: list[dict],
+    *,
+    stone: int,
+) -> list[dict]:
+    """Every phrase teach ('Watch this phrase') is followed immediately by Your Turn."""
+    if stone > 3:
+        return steps
+
+    result: list[dict] = []
+    index = 0
+    while index < len(steps):
+        step = steps[index]
+        result.append(step)
+        if is_phrase_teach_step(step):
+            word = step.get("wordId")
+            assert word
+            next_step = steps[index + 1] if index + 1 < len(steps) else None
+            if is_phrase_your_turn_followup(step, next_step or {}):
+                index += 1
+                result.append(next_step)
+                index += 1
+                continue
+            if (
+                next_step
+                and next_step.get("kind") in INTRO_CONFIRM_KINDS
+                and next_step.get("answerWordId") == word
+            ):
+                result.append(your_turn_step(word))
+                result.append(next_step)
+                index += 2
+                continue
+            result.append(your_turn_step(word))
+        index += 1
+    return result
 
 
 def module_lesson(
@@ -1839,7 +1909,72 @@ class LessonBuilder:
 
     def match_pair_eligible(self) -> list[str]:
         pool = self._introduced_pool()
-        return [w for w in self.unit["words"] if w in pool and w not in PHRASE_IDS]
+        return [
+            w
+            for w in self.unit["words"]
+            if w in pool and w not in PHRASE_IDS and not is_sign_alias(w)
+        ]
+
+    def _ensure_english_alias_fills(self) -> None:
+        """Stone 3 p1-u03: English grammar slots for alias glosses (text choices, not video picks)."""
+        if self.unit["id"] != "p1-u03" or self.stone != 3:
+            return
+        existing = {
+            step.get("answerWordId")
+            for step in self.steps
+            if step.get("kind") == "fillSlot"
+        }
+        missing = [
+            entry
+            for entry in ENGLISH_ALIAS_FILL_SLOTS
+            if str(entry["answerWordId"]) not in existing
+        ]
+        if not missing:
+            return
+        protected = {str(entry["answerWordId"]) for entry in ENGLISH_ALIAS_FILL_SLOTS}
+        droppable = {
+            "watchChoose",
+            "translationChoose",
+            "wordPickVideo",
+            "matchPairs",
+            "fillSlot",
+        }
+        for entry in missing:
+            answer = str(entry["answerWordId"])
+            if answer in existing:
+                continue
+            fill_step = fill_slot_step(
+                {
+                    "sentenceBefore": entry["sentenceBefore"],
+                    "sentenceAfter": entry["sentenceAfter"],
+                    "answerWordId": answer,
+                    "distractorWordIds": list(entry["distractorWordIds"]),
+                    "prompt": "What sign belongs here?",
+                }
+            )
+            if len(self.steps) >= self._step_limit():
+                replaced = False
+                for idx in range(len(self.steps) - 1, -1, -1):
+                    step = self.steps[idx]
+                    kind = step.get("kind")
+                    if kind not in droppable:
+                        continue
+                    if (
+                        kind == "fillSlot"
+                        and step.get("answerWordId") in protected
+                    ):
+                        continue
+                    self.steps[idx] = fill_step
+                    replaced = True
+                    break
+                if not replaced:
+                    while len(self.steps) >= self._step_limit():
+                        if not self._drop_trailing_pad_for_room(protected):
+                            return
+                    self.append(fill_step)
+            else:
+                self.append(fill_step)
+            existing.add(answer)
 
     def _step_limit(self) -> int:
         return STONE_MAX_STEPS.get(self.stone, MAX_MODULE_STEPS)
@@ -1951,7 +2086,11 @@ class LessonBuilder:
         kind = step["kind"]
         if kind in {"signSequence", "phraseSlot"}:
             for wid in step.get("sequenceWordIds", []):
-                if wid not in self.state.taught_set:
+                taught_wid = canonical_sign_id(wid) if is_sign_alias(wid) else wid
+                if (
+                    taught_wid not in self.state.taught_set
+                    and wid not in self.state.taught_set
+                ):
                     raise ValueError(
                         f"{kind} component {wid} not taught in {self.unit['id']}"
                     )
@@ -1973,13 +2112,26 @@ class LessonBuilder:
             return
         answer = step.get("answerWordId")
         if answer and kind not in {"teach", "selfSign"}:
-            if answer not in self.state.taught_set:
+            taught_answer = (
+                canonical_sign_id(answer)
+                if is_sign_alias(answer)
+                else answer
+            )
+            if (
+                taught_answer not in self.state.taught_set
+                and answer not in self.state.taught_set
+            ):
                 raise ValueError(f"{kind} answer {answer} not in taught_set")
-            if kind in QUIZ_KINDS and answer not in self._introduced_pool():
-                if kind != "watchChoose":
-                    raise ValueError(
-                        f"{kind} answer {answer} quizzed before new-sign introduction"
-                    )
+            if kind in QUIZ_KINDS:
+                pool_answer = taught_answer
+                if (
+                    pool_answer not in self._introduced_pool()
+                    and answer not in self._introduced_pool()
+                ):
+                    if kind != "watchChoose":
+                        raise ValueError(
+                            f"{kind} answer {answer} quizzed before new-sign introduction"
+                        )
 
     def _max_teach_confirm_pairs(self) -> int:
         return (
@@ -2010,9 +2162,34 @@ class LessonBuilder:
             )
         )
 
-    def append_teach_block(self, word: str) -> None:
-        if self.stone == 3:
+    def _intro_confirm_step_for_word(self, word: str, slot: int) -> dict:
+        """Rotate intro confirms — 50% Pick Out (wordPickVideo), 25% each for WC/TC."""
+        if word in PHRASE_IDS:
+            return intro_confirm_step(word, self.pool, choice_count=2)
+        teach_index = sum(1 for s in self.steps if s.get("kind") == "teach")
+        offset = self.unit.get("sortOrder", 0)
+        tc_choices = 3 if len(self.introduced_in_lesson) >= 3 else 2
+        if (teach_index + offset) % 2 == 0:
+            return word_pick_video_step(word, self.pool)
+        if teach_index % 2 == 0:
+            return intro_confirm_step(word, self.pool, choice_count=2)
+        if self.stone == 1:
+            return stone1_translation_choose_step(
+                word, self.pool, choice_count=tc_choices
+            )
+        choice_count = 4 if self.stone >= 2 else 2
+        return translation_choose_step(
+            word, self.pool, choice_count=choice_count
+        )
+
+    def append_teach_block(self, word: str, *, bypass_stone3_cap: bool = False) -> None:
+        if is_sign_alias(word):
             return
+        if self.stone == 3 and not bypass_stone3_cap:
+            if self.new_teaches_in_lesson >= self.max_new_teaches:
+                return
+            if word not in self._stone_subset_vocab() and word not in PHRASE_IDS:
+                return
         if word in self.state.ever_taught or word in self.introduced_in_lesson:
             return
         if len(self.steps) > self._step_limit() - 2:
@@ -2021,38 +2198,20 @@ class LessonBuilder:
         title, prompt = teach_meta_for_word(word, self.teach_meta)
         self.append(teach_step(word, title=title, prompt=prompt))
         self.last_taught_word = word
+        if self.unit["id"] == "p1-u03":
+            tip = pronoun_tip_for_word(word)
+            if tip and len(self.steps) < self._step_limit():
+                self.append(asl_tip_step(tip))
+        if not (self.stone == 3 and bypass_stone3_cap):
+            self.new_teaches_in_lesson += 1
+        if word in PHRASE_IDS and self.stone <= 3 and len(self.steps) < self._step_limit():
+            self.append(your_turn_step(word))
+            self.last_kind = "yourTurn"
         if len(self.steps) < self._step_limit():
-            if self.stone == 1:
-                slot = len(self.steps) + self._slot
-                self._slot += 1
-                if word in PHRASE_IDS:
-                    confirm = intro_confirm_step(word, self.pool, choice_count=2)
-                else:
-                    pick = slot % 3
-                    tc_choices = 3 if len(self.introduced_in_lesson) >= 3 else 2
-                    if pick == 0:
-                        confirm = intro_confirm_step(word, self.pool, choice_count=2)
-                    elif pick == 1:
-                        confirm = stone1_translation_choose_step(
-                            word, self.pool, choice_count=tc_choices
-                        )
-                    else:
-                        confirm = word_pick_video_step(word, self.pool)
-                self._append_quiz(confirm)
-            else:
-                slot = len(self.steps) + self._slot
-                self._slot += 1
-                pick = slot % 3
-                if pick == 0:
-                    confirm = intro_confirm_step(word, self.pool, choice_count=2)
-                elif pick == 1:
-                    choice_count = 4 if self.stone >= 2 else 2
-                    confirm = translation_choose_step(
-                        word, self.pool, choice_count=choice_count
-                    )
-                else:
-                    confirm = word_pick_video_step(word, self.pool)
-                self._append_quiz(confirm)
+            slot = len(self.steps) + self._slot
+            self._slot += 1
+            confirm = self._intro_confirm_step_for_word(word, slot)
+            self._append_quiz(confirm)
         gap = repetition_rule(self.stone, "min_answer_gap")
         self._requiz_blocked_until[word] = self._graded_step_count() + gap
         if word in PHRASE_CONTEXT_SIGN_SEQUENCES.get(self.unit["id"], {}):
@@ -2062,13 +2221,13 @@ class LessonBuilder:
         return [w for w in self.unit["words"] if w in self.state.taught_set]
 
     def untaught_words(self) -> list[str]:
-        if self.stone == 3:
-            return []
-        subsets = UNIT_STONE_WORD_SUBSETS.get(self.unit["id"])
-        if subsets and 1 <= self.stone <= len(subsets):
-            scope = [w for w in subsets[self.stone - 1] if w not in PHRASE_IDS]
-        else:
-            scope = [w for w in self.unit["words"] if w not in PHRASE_IDS]
+        scope = self._stone_subset_vocab()
+        if not scope and self.stone != 3:
+            subsets = UNIT_STONE_WORD_SUBSETS.get(self.unit["id"])
+            if subsets and 1 <= self.stone <= len(subsets):
+                scope = [w for w in subsets[self.stone - 1] if w not in PHRASE_IDS]
+            else:
+                scope = [w for w in self.unit["words"] if w not in PHRASE_IDS]
         return [w for w in scope if w not in self.state.ever_taught]
 
     def next_taught_word(self) -> str | None:
@@ -2086,13 +2245,34 @@ class LessonBuilder:
             return
         self.append_teach_block(word)
 
+    def _append_pronoun_refresher_tip(self, word: str) -> None:
+        """p1-u03: alias-awareness tip for pronouns already taught on the path."""
+        if self.unit["id"] != "p1-u03":
+            return
+        if any(
+            step.get("kind") == "aslTip" and step.get("wordId") == word
+            for step in self.steps
+        ):
+            return
+        tip = pronoun_tip_for_word(word)
+        if not tip or len(self.steps) >= self._step_limit():
+            return
+        self.append(asl_tip_step(tip))
+
     def _introduce_stone_subset_vocab(self) -> None:
-        """Front-load stone-subset words on Stone 2; Stone 1 uses beat arcs instead."""
-        if self.stone != 2:
+        """Front-load stone-subset words on Stone 2; p1-u03 Stone 1 introduces new pronouns early."""
+        compact_intro_stone = self.stone == 2 or (
+            self.unit["id"] == "p1-u03" and self.stone == 1
+        )
+        if not compact_intro_stone:
             return
         reserve = max(3, self._fill_untaught_reserve)
         for word in self._stone_subset_vocab():
             if word in self.state.ever_taught:
+                if self.unit["id"] == "p1-u03" and self.stone == 1:
+                    if len(self.steps) >= self._step_limit() - reserve:
+                        break
+                    self._append_pronoun_refresher_tip(word)
                 continue
             if len(self.steps) >= self._step_limit() - reserve:
                 break
@@ -2250,6 +2430,7 @@ class LessonBuilder:
     def _cap_answer_repetition(self, max_per_word: int | None = None) -> None:
         if max_per_word is None:
             max_per_word = repetition_rule(self.stone, "max_answer_reps")
+        min_steps = STONE_MIN_STEPS.get(self.stone, MIN_MODULE_STEPS)
         removable_kinds = frozenset(
             {
                 "watchChoose",
@@ -2279,6 +2460,8 @@ class LessonBuilder:
                     self.steps[idx] = rebuilt
                     changed = True
                     break
+                if len(self.steps) <= min_steps:
+                    break
                 self.steps.pop(idx)
                 changed = True
                 break
@@ -2295,6 +2478,8 @@ class LessonBuilder:
                     drop_idx = idx
                     break
             if drop_idx is None:
+                break
+            if len(self.steps) <= min_steps:
                 break
             dropped = self.steps.pop(drop_idx)
             for answer in _graded_answer_word_ids(dropped):
@@ -2370,6 +2555,7 @@ class LessonBuilder:
         steps = enforce_min_answer_gap(self.steps, min_gap=min_gap)
         steps = enforce_max_answer_density(steps, density_window, density_max)
         steps = enforce_no_adjacent_same_graded_answer(steps, self.pool)
+        steps = enforce_post_teach_answer_window(steps, self.pool)
         self.steps = steps
 
     def _convert_recognition_to_context(self) -> None:
@@ -2514,7 +2700,17 @@ class LessonBuilder:
             )
 
         ordered = sorted(dict.fromkeys(eligible), key=sort_key)
-        return ordered[:count]
+        picked: list[str] = []
+        seen_canonical: set[str] = set()
+        for word in ordered:
+            canonical = canonical_sign_id(word)
+            if canonical in seen_canonical:
+                continue
+            seen_canonical.add(canonical)
+            picked.append(word)
+            if len(picked) >= count:
+                break
+        return picked
 
     def _word_new_this_lesson(self, word: str) -> bool:
         """True when the word is first taught or quizzed in the current lesson."""
@@ -2530,6 +2726,81 @@ class LessonBuilder:
         answer = step.get("answerWordId")
         if phrase_id in PHRASE_IDS and answer:
             self.state.phrase_fill_emitted.add((self.unit["id"], answer))
+
+    def _drop_trailing_pad_for_room(self, protected_fill_answers: set[str]) -> bool:
+        """Drop one trailing review pad to stay under the step limit."""
+        if len(self.steps) < self._step_limit():
+            return True
+        droppable = {
+            "watchChoose",
+            "translationChoose",
+            "wordPickVideo",
+            "matchPairs",
+            "fillSlot",
+        }
+        while self.steps and len(self.steps) >= self._step_limit():
+            last = self.steps[-1]
+            kind = last.get("kind")
+            if kind == "fillSlot" and last.get("answerWordId") in protected_fill_answers:
+                return False
+            if kind in droppable:
+                self.steps.pop()
+                return True
+            return False
+        return len(self.steps) < self._step_limit()
+
+    def _top_up_word_candidates(self) -> list[str]:
+        if self.stone == 1:
+            pool = [
+                w
+                for w in self._stone_subset_vocab()
+                if w not in PHRASE_IDS and w in self._introduced_pool()
+            ]
+        else:
+            pool = [
+                w
+                for w in self._eligible_quiz_words()
+                if w not in PHRASE_IDS
+            ]
+        if not pool:
+            pool = [
+                w
+                for w in self.unit["words"]
+                if w in self._introduced_pool() and w not in PHRASE_IDS
+            ]
+        counts = self._graded_answer_counts()
+        return sorted(pool, key=lambda w: (counts.get(w, 0), w))
+
+    def _append_top_up_padding(self) -> bool:
+        """Append one padding quiz, rotating through least-used candidates."""
+        for word in self._top_up_word_candidates():
+            before = len(self.steps)
+            if self.stone == 1:
+                self._append_stone1_recognition_quiz(word)
+            else:
+                slot = len(self.steps) + self._slot
+                self._slot += 1
+                pick = slot % 3
+                if pick == 0:
+                    self._append_quiz(
+                        word_pick_video_step(word, self.pool),
+                        _spacing_guard=False,
+                    )
+                elif pick == 1 and len(self.match_pair_eligible()) >= MIN_MATCH_PAIRS_ELIGIBLE:
+                    self.append_match_pairs()
+                elif pick == 1:
+                    self._append_quiz(
+                        watch_choose_step(word, self.pool, choice_count=2),
+                        _spacing_guard=False,
+                    )
+                else:
+                    self.append_fill_slot() or self._append_quiz(
+                        word_pick_video_step(word, self.pool),
+                        _spacing_guard=False,
+                    )
+            if len(self.steps) > before:
+                return True
+        return False
 
     def _make_room_for_step(self, slots_needed: int = 1) -> bool:
         """Drop trailing review pads until `slots_needed` steps can fit."""
@@ -2614,11 +2885,12 @@ class LessonBuilder:
             self._append_phrase_context_sign_sequence(word)
 
     def append_fill_slot(self) -> bool:
+        introduced = self._introduced_pool()
         for word in self.unit["words"]:
             if (
                 word in self.fill_by_word
                 and word in self.state.taught_set
-                and word in self.introduced_in_lesson
+                and word in introduced
             ):
                 self.append(fill_slot_step(self.fill_by_word[word]))
                 return True
@@ -2783,17 +3055,38 @@ class LessonBuilder:
         self._rebalance_graded_mix()
         self._rebalance_graded_mix()
         self.steps = _trim_to_limit(self.steps, limit)
+        self._enforce_no_wc_tc_same_word()
+        self._enforce_second_exposure_channels()
         self._finalize_answer_spacing()
         self._cap_answer_repetition()
+        self._enforce_second_exposure_channels()
         self._finalize_answer_spacing()
         self._cap_answer_repetition()
         self.steps = _trim_to_limit(self.steps, limit)
-        self.steps = anchor_phrase_preview_sign_sequences(self.steps, self.unit["id"])
         self.steps = enforce_one_recognition_modality(
             self.steps, self.pool, stone=self.stone
         )
-        if self.stone <= 2:
-            self.steps = cap_your_turn_steps(self.steps, stone=self.stone, max_count=1)
+        self._ensure_word_pick_video_min()
+        self._ensure_min_match_pairs()
+        self._top_up_to_min_steps()
+        self.steps = _trim_to_limit(self.steps, limit)
+        self.steps = anchor_phrase_preview_sign_sequences(self.steps, self.unit["id"])
+        if self.stone <= 3:
+            max_your_turn = {1: 2, 2: 3, 3: 3}.get(self.stone, 1)
+            self.steps = ensure_your_turn_after_phrase_teaches(
+                self.steps, stone=self.stone
+            )
+            self.steps = cap_your_turn_steps(
+                self.steps, stone=self.stone, max_count=max_your_turn
+            )
+        self._top_up_to_min_steps()
+        self._ensure_word_pick_video_min()
+        self._ensure_min_match_pairs()
+        self._rebalance_graded_mix()
+        self.steps = _trim_to_limit(self.steps, limit)
+        self._finalize_answer_spacing()
+        self._ensure_word_pick_video_min()
+        self._ensure_english_alias_fills()
         return self.steps
 
     def _graded_kinds_set(self) -> frozenset[str]:
@@ -2803,7 +3096,9 @@ class LessonBuilder:
         graded = [s for s in self.steps if s.get("kind") in self._graded_kinds_set()]
         if not graded:
             return 0.0
-        recognition = sum(1 for s in graded if s.get("kind") in RECOGNITION_KINDS)
+        recognition = sum(
+            1 for s in graded if s.get("kind") in ALL_RECOGNITION_PICK_KINDS
+        )
         return recognition / len(graded)
 
     def _is_teach_adjacent_confirm(self, index: int) -> bool:
@@ -2823,7 +3118,7 @@ class LessonBuilder:
         """Swap one recognition step for match, translation, or fill when over cap."""
         step = self.steps[index]
         word = step.get("answerWordId")
-        if not word or step.get("kind") not in RECOGNITION_KINDS:
+        if not word or step.get("kind") not in ALL_RECOGNITION_PICK_KINDS:
             return False
         if self._is_teach_adjacent_confirm(index):
             return False
@@ -2921,7 +3216,7 @@ class LessonBuilder:
                 break
             swapped = False
             for index in range(len(self.steps) - 1, -1, -1):
-                if self.steps[index].get("kind") not in RECOGNITION_KINDS:
+                if self.steps[index].get("kind") not in ALL_RECOGNITION_PICK_KINDS:
                     continue
                 if self._convert_recognition_step(index):
                     swapped = True
@@ -2931,7 +3226,7 @@ class LessonBuilder:
         while self._recognition_share() > cap + 0.01:
             converted = False
             for index in range(len(self.steps) - 1, -1, -1):
-                if self.steps[index].get("kind") not in RECOGNITION_KINDS:
+                if self.steps[index].get("kind") not in ALL_RECOGNITION_PICK_KINDS:
                     continue
                 if self._is_teach_adjacent_confirm(index):
                     continue
@@ -3010,18 +3305,211 @@ class LessonBuilder:
                 stall = 0
 
     def _ensure_min_match_pairs(self) -> None:
-        """Guarantee at least one matchPairs step when eligible."""
+        """Guarantee minimum matchPairs steps when eligible."""
         minimum = STONE_MIN_MATCH_PAIRS.get(self.stone, 0)
         if minimum <= 0:
             return
-        if sum(1 for s in self.steps if s.get("kind") == "matchPairs") >= minimum:
-            return
-        if len(self.match_pair_eligible()) < MIN_MATCH_PAIRS_ELIGIBLE:
-            return
-        if len(self.steps) >= self._step_limit():
-            if not self._make_room_for_step(slots_needed=1):
+        stall = 0
+        while (
+            sum(1 for s in self.steps if s.get("kind") == "matchPairs") < minimum
+            and len(self.steps) < self._step_limit()
+        ):
+            if len(self.match_pair_eligible()) < MIN_MATCH_PAIRS_ELIGIBLE:
                 return
-        self.append_match_pairs()
+            before = sum(1 for s in self.steps if s.get("kind") == "matchPairs")
+            if len(self.steps) >= self._step_limit():
+                if not self._make_room_for_step(slots_needed=1):
+                    break
+            if not self.append_match_pairs():
+                break
+            after = sum(1 for s in self.steps if s.get("kind") == "matchPairs")
+            if after == before:
+                stall += 1
+                if stall >= 4:
+                    break
+            else:
+                stall = 0
+
+    def _word_pick_video_count(self) -> int:
+        return sum(1 for s in self.steps if s.get("kind") == "wordPickVideo")
+
+    def _ensure_word_pick_video_min(self) -> None:
+        """Guarantee minimum Pick Out (wordPickVideo) steps per stone."""
+        minimum = STONE_MIN_WORD_PICK_VIDEO.get(self.stone, 0)
+        if minimum <= 0:
+            return
+
+        def wpv_words() -> set[str]:
+            return {
+                s.get("answerWordId")
+                for s in self.steps
+                if s.get("kind") == "wordPickVideo" and s.get("answerWordId")
+            }
+
+        convert_kinds = {"translationChoose"}
+        if self.stone == 1:
+            convert_kinds.add("watchChoose")
+
+        for index, step in enumerate(list(self.steps)):
+            if self._word_pick_video_count() >= minimum:
+                return
+            kind = step.get("kind")
+            if kind not in convert_kinds:
+                continue
+            if self._is_teach_adjacent_confirm(index):
+                continue
+            word = step.get("answerWordId")
+            if not word or word in wpv_words():
+                continue
+            if kind == "translationChoose" and any(
+                s.get("kind") == "watchChoose" and s.get("answerWordId") == word
+                for s in self.steps
+            ):
+                continue
+            self.steps[index] = word_pick_video_step(word, self.pool)
+
+        stall = 0
+        while self._word_pick_video_count() < minimum:
+            if len(self.steps) >= self._step_limit():
+                break
+            before = self._word_pick_video_count()
+            used = wpv_words()
+            candidates = [
+                w
+                for w in self._eligible_quiz_words()
+                if w not in used
+                and not any(
+                    s.get("kind") == "watchChoose" and s.get("answerWordId") == w
+                    for s in self.steps
+                )
+            ]
+            word = self._pick_least_used_word(candidates) or self._pick_review_word()
+            if not word:
+                word = self._pick_padding_word()
+            if not word:
+                break
+            self._append_quiz(
+                word_pick_video_step(word, self.pool),
+                _spacing_guard=False,
+            )
+            if self._word_pick_video_count() == before:
+                stall += 1
+                if stall >= 8:
+                    break
+            else:
+                stall = 0
+
+    def _coerce_repeat_step_for_word(
+        self, word: str, index: int, first_kind: str
+    ) -> bool:
+        """Swap a repeat recognition step to a different UI channel."""
+        prior = self.steps[:index]
+        if first_kind in SIGN_TO_WORD_KINDS:
+            candidate = word_pick_video_step(word, self.pool)
+            if _pacing_ok(prior, candidate):
+                self.steps[index] = candidate
+                return True
+            if word in self.fill_by_word and word in self.introduced_in_lesson:
+                candidate = fill_slot_step(self.fill_by_word[word])
+                if _pacing_ok(prior, candidate):
+                    self.steps[index] = candidate
+                    return True
+            if len(self.match_pair_eligible()) >= MIN_MATCH_PAIRS_ELIGIBLE:
+                pair_ids = self._pick_match_pair_words(
+                    2, self.match_pair_eligible()
+                )
+                candidate = match_pairs_step(
+                    pair_ids, STEP_PROMPTS["matchPairs"]
+                )
+                if _pacing_ok(prior, candidate):
+                    self.steps[index] = candidate
+                    return True
+        elif first_kind == "wordPickVideo":
+            if word in self.fill_by_word and word in self.introduced_in_lesson:
+                candidate = fill_slot_step(self.fill_by_word[word])
+                if _pacing_ok(prior, candidate):
+                    self.steps[index] = candidate
+                    return True
+            if len(self.match_pair_eligible()) >= MIN_MATCH_PAIRS_ELIGIBLE:
+                pair_ids = self._pick_match_pair_words(
+                    2, self.match_pair_eligible()
+                )
+                candidate = match_pairs_step(
+                    pair_ids, STEP_PROMPTS["matchPairs"]
+                )
+                if _pacing_ok(prior, candidate):
+                    self.steps[index] = candidate
+                    return True
+            choice_count = 4 if self.stone >= 3 else 2
+            candidate = watch_choose_step(
+                word, self.pool, choice_count=choice_count
+            )
+            if _pacing_ok(prior, candidate):
+                self.steps[index] = candidate
+                return True
+        return False
+
+    def _enforce_second_exposure_channels(self) -> None:
+        """Second graded hit on a word must use a different UI channel than the first."""
+        first_kind_by_word: dict[str, str] = {}
+        for index, step in enumerate(self.steps):
+            if self._is_teach_adjacent_confirm(index):
+                continue
+            for answer in _graded_answer_word_ids(step):
+                kind = step.get("kind")
+                if kind not in ALL_RECOGNITION_PICK_KINDS:
+                    continue
+                if answer not in first_kind_by_word:
+                    first_kind_by_word[answer] = kind
+                    continue
+                first = first_kind_by_word[answer]
+                if first == kind or (
+                    first in SIGN_TO_WORD_KINDS and kind in SIGN_TO_WORD_KINDS
+                ):
+                    if not self._coerce_repeat_step_for_word(answer, index, first):
+                        self.steps.pop(index)
+                        return self._enforce_second_exposure_channels()
+                    first_kind_by_word[answer] = self.steps[index].get("kind", first)
+
+    def _enforce_no_wc_tc_same_word(self) -> None:
+        """Never quiz the same word with both watchChoose and translationChoose."""
+        modalities: dict[str, set[str]] = {}
+        for step in self.steps:
+            kind = step.get("kind")
+            if kind not in SIGN_TO_WORD_KINDS:
+                continue
+            answer = step.get("answerWordId")
+            if not answer:
+                continue
+            modalities.setdefault(answer, set()).add(kind)
+        for word, kinds in modalities.items():
+            if "watchChoose" not in kinds or "translationChoose" not in kinds:
+                continue
+            converted = False
+            for index in range(len(self.steps) - 1, -1, -1):
+                step = self.steps[index]
+                if (
+                    step.get("answerWordId") == word
+                    and step.get("kind") == "translationChoose"
+                ):
+                    prior = self.steps[:index]
+                    candidate = word_pick_video_step(word, self.pool)
+                    if _pacing_ok(prior, candidate):
+                        self.steps[index] = candidate
+                        converted = True
+                        break
+            if not converted:
+                for index in range(len(self.steps) - 1, -1, -1):
+                    step = self.steps[index]
+                    if (
+                        step.get("answerWordId") == word
+                        and step.get("kind") == "watchChoose"
+                    ):
+                        prior = self.steps[:index]
+                        candidate = word_pick_video_step(word, self.pool)
+                        if _pacing_ok(prior, candidate):
+                            self.steps[index] = candidate
+                            break
 
     def _context_step_count(self) -> int:
         return sum(1 for s in self.steps if s.get("kind") in CONTEXT_STEP_KINDS)
@@ -3029,6 +3517,8 @@ class LessonBuilder:
     def _unit_has_context_data(self) -> bool:
         unit_id = self.unit["id"]
         if PHRASE_FILL_SLOTS.get(unit_id) or PHRASE_CONTEXT_SIGN_SEQUENCES.get(unit_id):
+            return True
+        if self.fill_by_word:
             return True
         if unit_id in PHRASE_SEQUENCE_UNITS:
             return any(
@@ -3038,11 +3528,17 @@ class LessonBuilder:
         return False
 
     def _ensure_context_steps_min(self) -> None:
-        """Inject phrase/fill context steps on stones 3–4 when data exists."""
+        """Inject phrase/fill context steps when data exists."""
         minimum = STONE_MIN_CONTEXT_STEPS.get(self.stone, 0)
         if minimum <= 0:
             return
-        if not self._unit_has_context_data():
+        if self.stone == 1 and not (
+            PHRASE_FILL_SLOTS.get(self.unit["id"])
+            or self.fill_by_word
+            or self.unit["id"] in PHRASE_SEQUENCE_UNITS
+        ):
+            return
+        if not self._unit_has_context_data() and not self.fill_by_word:
             return
         stall = 0
         while (
@@ -3056,6 +3552,19 @@ class LessonBuilder:
                 if self._context_step_count() >= minimum:
                     break
                 self._append_phrase_context_fill(word)
+            if self.stone == 1 and self.fill_by_word:
+                for word in sorted(self.fill_by_word):
+                    if self._context_step_count() >= minimum:
+                        break
+                    if word not in self.introduced_in_lesson:
+                        continue
+                    if any(
+                        s.get("kind") == "fillSlot"
+                        and s.get("answerWordId") == word
+                        for s in self.steps
+                    ):
+                        continue
+                    self.append(fill_slot_step(self.fill_by_word[word]))
             for word in PHRASE_CONTEXT_SIGN_SEQUENCES.get(self.unit["id"], {}):
                 if self._context_step_count() >= minimum:
                     break
@@ -3423,8 +3932,8 @@ class LessonBuilder:
 
             stall = 0
             while (
-                sum(1 for step in self.steps if step.get("kind") == "wordPickVideo")
-                < STONE1_MIN_WORD_PICK_VIDEO
+                self._word_pick_video_count()
+                < STONE_MIN_WORD_PICK_VIDEO.get(1, STONE1_MIN_WORD_PICK_VIDEO)
                 and len(self.steps) < limit
             ):
                 before = len(self.steps)
@@ -3539,38 +4048,28 @@ class LessonBuilder:
         return self._pick_least_used_word(pool)
 
     def _top_up_to_min_steps(self) -> None:
-        """Append review pads until the stone hits STONE_MIN_STEPS (after trimming)."""
+        """Append rhythm-breaker pads until the stone hits STONE_MIN_STEPS."""
         min_steps = STONE_MIN_STEPS.get(self.stone, MIN_MODULE_STEPS)
         stall = 0
         while len(self.steps) < min_steps:
             if len(self.steps) >= self._step_limit():
                 break
             before = len(self.steps)
-            if not self._append_review_pad():
-                word = self._pick_review_word() or self._pick_padding_word()
-                if not word:
+            if (
+                sum(1 for s in self.steps if s.get("kind") == "matchPairs")
+                < STONE_MIN_MATCH_PAIRS.get(self.stone, 0)
+                and len(self.match_pair_eligible()) >= MIN_MATCH_PAIRS_ELIGIBLE
+            ):
+                self.append_match_pairs()
+            elif self._word_pick_video_count() < STONE_MIN_WORD_PICK_VIDEO.get(
+                self.stone, 0
+            ):
+                self._append_top_up_padding()
+            elif self.append_fill_slot():
+                pass
+            elif not self._append_review_pad():
+                if not self._append_top_up_padding():
                     break
-                before_pad = len(self.steps)
-                self._append_stone1_recognition_quiz(word)
-                if len(self.steps) == before_pad:
-                    slot = len(self.steps) + self._slot
-                    self._slot += 1
-                    pick = slot % 3
-                    if pick == 0:
-                        self._append_quiz(
-                            word_pick_video_step(word, self.pool),
-                            _spacing_guard=False,
-                        )
-                    elif pick == 1:
-                        self._append_quiz(
-                            watch_choose_step(word, self.pool, choice_count=2),
-                            _spacing_guard=False,
-                        )
-                    else:
-                        self._append_quiz(
-                            stone1_translation_choose_step(word, self.pool),
-                            _spacing_guard=False,
-                        )
             if len(self.steps) == before:
                 stall += 1
                 if stall >= 16:
@@ -3591,10 +4090,11 @@ class LessonBuilder:
             elif pick == 2:
                 self._append_quiz(word_pick_video_step(word, self.pool))
             else:
+                introduced = self._introduced_pool()
                 fill_candidates = [
                     w
                     for w in self._eligible_quiz_words()
-                    if w in self.fill_by_word and w in self.introduced_in_lesson
+                    if w in self.fill_by_word and w in introduced
                 ]
                 fill_word = self._pick_least_used_word(fill_candidates) or word
                 if fill_word in self.fill_by_word:
@@ -3637,6 +4137,8 @@ class LessonBuilder:
         subsets = UNIT_STONE_WORD_SUBSETS.get(self.unit["id"])
         if subsets and 1 <= stone <= len(subsets):
             self.max_new_teaches = len(subsets[stone - 1])
+            if stone == 3:
+                self.max_new_teaches = min(self.max_new_teaches, STONE3_MAX_NEW_TEACHES)
         else:
             unit_words = [w for w in self.unit["words"] if w not in PHRASE_IDS]
             self.max_new_teaches = max(1, math.ceil(len(unit_words) / 3))
@@ -3696,7 +4198,7 @@ class LessonBuilder:
             _append_phrase_block(self, reserved_phrase)
             phrase_queue = [p for p in phrase_queue if p != reserved_phrase]
 
-        if stone < 3:
+        if stone <= 3:
             if subsets and stone <= len(subsets):
                 self.fill_untaught_vocab(reserve=self._fill_untaught_reserve)
             elif stone <= 2:
@@ -3711,8 +4213,7 @@ class LessonBuilder:
 
         if stone in (2, 3):
             _inject_phrase_slot_reviews(self)
-        if stone != 3:
-            self._catch_up_untaught()
+        self._catch_up_untaught()
 
         pad_target = self._step_limit()
         stall = 0
@@ -3735,18 +4236,17 @@ class LessonBuilder:
         # Coverage and repetition caps run in finish() after beats and padding.
 
     def _catch_up_untaught(self) -> None:
-        if self.stone == 3:
-            return
         for word in self.untaught_words():
             if word in PHRASE_IDS:
                 continue
             if word in self.state.ever_taught:
                 continue
+            if self.stone == 3 and self.new_teaches_in_lesson >= self.max_new_teaches:
+                break
             if len(self.steps) >= self._step_limit() - 2:
                 break
             if self._intro_streak >= MAX_BACK_TO_BACK_NEW_INTROS:
                 self._flush_pending_intro_batch()
-            self.new_teaches_in_lesson += 1
             self.append_teach_block(word)
             if word not in self._unique_graded_answers():
                 while (
@@ -3842,10 +4342,11 @@ class LessonBuilder:
             else:
                 self._append_quiz(watch_choose_step(word, self.pool, choice_count=2))
         elif kind == "fillSlot":
+            introduced = self._introduced_pool()
             fill_candidates = [
                 w
                 for w in self._eligible_quiz_words()
-                if w in self.fill_by_word and w in self.introduced_in_lesson
+                if w in self.fill_by_word and w in introduced
             ]
             fill_word = self._pick_least_used_word(fill_candidates)
             if fill_word:
@@ -3882,7 +4383,7 @@ class LessonBuilder:
                 last_answer == answer
                 and not _allows_teach_intro_confirm_pair(last, step)
             ):
-                alt = self._pick_review_word()
+                alt = self._pick_review_word() or self._pick_padding_word()
                 if alt and alt != answer:
                     kind = step.get("kind")
                     if kind in {"fillSlot", "phraseSlot"}:
@@ -3929,7 +4430,7 @@ class LessonBuilder:
             and answer not in PHRASE_IDS
             and answer not in self._introduced_pool()
         )
-        if needs_lesson_intro and kind != "watchChoose":
+        if needs_lesson_intro and kind not in INTRO_CONFIRM_KINDS:
             step = watch_choose_step(answer, self.pool, choice_count=2)
             kind = step.get("kind")
         if kind == "watchChoose" and self.steps:
@@ -3966,32 +4467,39 @@ class LessonBuilder:
                 elif kind == "watchChoose" and word in self._introduced_pool():
                     step = word_pick_video_step(word, self.pool)
                 elif kind == "translationChoose":
-                    step = watch_choose_step(
-                        word,
-                        self.pool,
-                        choice_count=step.get("choiceCount", 4),
-                    )
+                    step = word_pick_video_step(word, self.pool)
                 elif kind == "wordPickVideo":
-                    step = watch_choose_step(
-                        word,
-                        self.pool,
-                        choice_count=step.get("choiceCount", 2),
-                    )
+                    pass
                 was_new_intro = self._would_be_new_sign_intro(step)
         step = self._coerce_step_pacing(step)
         answer = step.get("answerWordId")
         kind = step.get("kind")
-        if answer and kind in RECOGNITION_KINDS:
+        if answer and kind in ALL_RECOGNITION_PICK_KINDS:
             existing = self._recognition_modality_by_word.get(answer)
             if existing and existing != kind:
-                choice_count = 4 if self.stone >= 2 else 2
-                if self.stone == 1:
-                    step = stone1_translation_choose_step(answer, self.pool)
-                else:
-                    step = translation_choose_step(
-                        answer, self.pool, choice_count=choice_count
-                    )
-                kind = step.get("kind")
+                alt = self._pick_review_word() or self._pick_padding_word()
+                if alt and alt != answer and alt not in self._recognition_modality_by_word:
+                    if kind == "wordPickVideo":
+                        step = word_pick_video_step(alt, self.pool)
+                    elif kind == "translationChoose":
+                        if self.stone == 1:
+                            step = stone1_translation_choose_step(alt, self.pool)
+                        else:
+                            step = translation_choose_step(
+                                alt, self.pool, choice_count=step.get("choiceCount", 4)
+                            )
+                    else:
+                        step = watch_choose_step(
+                            alt, self.pool, choice_count=step.get("choiceCount", 2)
+                        )
+                    answer = step.get("answerWordId")
+                    kind = step.get("kind")
+                elif existing in SIGN_TO_WORD_KINDS and kind in SIGN_TO_WORD_KINDS:
+                    return
+                elif existing == "wordPickVideo" and kind == "watchChoose":
+                    return
+                elif existing == "watchChoose" and kind == "wordPickVideo":
+                    return
             if kind in RECOGNITION_KINDS and answer:
                 self._recognition_modality_by_word[answer] = kind
         self.append(step)
@@ -4048,7 +4556,6 @@ class LessonBuilder:
             word = self._next_untaught_vocab()
             if not word:
                 return self._apply_beat("recognitionQuiz")
-            self.new_teaches_in_lesson += 1
             self.append_teach_block(word)
             return True
 
@@ -4166,14 +4673,12 @@ class LessonBuilder:
             return True
 
         if beat == "funMixed":
+            if self._apply_beat("videoPickChallenge"):
+                return True
             if self.stone <= 2:
-                if self._apply_beat("translationChoose"):
-                    return True
                 if self._apply_beat("matchPairs"):
                     return True
                 return self._apply_beat("recognitionQuiz")
-            if self._apply_beat("videoPickChallenge"):
-                return True
             if self._apply_beat("translationChoose"):
                 return True
             return self._apply_beat("recognitionQuiz")
@@ -4233,8 +4738,6 @@ class LessonBuilder:
             return True
 
         if beat == "yourTurn":
-            if self.stone < 2:
-                return self._apply_beat("recognitionQuiz")
             used_your_turn = {
                 step.get("wordId")
                 for step in self.steps
@@ -4457,6 +4960,18 @@ def _graded_step_answer_tokens(step: dict) -> frozenset[str]:
 def _graded_answer_id(step: dict) -> str | None:
     """Correct-answer word id for a graded pick step, else None."""
     kind = step.get("kind")
+    if kind in QUIZ_KINDS or kind in {"fillSlot", "phraseSlot"}:
+        return step.get("answerWordId")
+    return None
+
+
+def _graded_step_primary_answer(step: dict) -> str | None:
+    """Primary correct-answer id for post-teach spacing (not every matchPairs tile)."""
+    kind = step.get("kind")
+    if kind == "signSequence":
+        return step.get("wordId")
+    if kind == "matchPairs":
+        return step.get("answerWordId")
     if kind in QUIZ_KINDS or kind in {"fillSlot", "phraseSlot"}:
         return step.get("answerWordId")
     return None
@@ -4975,16 +5490,23 @@ def enforce_one_recognition_modality(
     for step in steps:
         kind = step.get("kind")
         answer = step.get("answerWordId")
-        if kind in RECOGNITION_KINDS and answer:
+        if kind in ALL_RECOGNITION_PICK_KINDS and answer:
             existing = seen.get(answer)
             if existing:
-                choice_count = 4 if stone >= 2 else 2
-                if stone == 1:
-                    step = stone1_translation_choose_step(answer, pool)
+                if existing == "wordPickVideo" or kind == "wordPickVideo":
+                    if stone == 1:
+                        step = stone1_translation_choose_step(answer, pool)
+                    else:
+                        choice_count = 4 if stone >= 2 else 2
+                        step = translation_choose_step(
+                            answer, pool, choice_count=choice_count
+                        )
+                elif existing in SIGN_TO_WORD_KINDS and kind in SIGN_TO_WORD_KINDS:
+                    step = word_pick_video_step(answer, pool)
+                elif existing == kind:
+                    step = word_pick_video_step(answer, pool)
                 else:
-                    step = translation_choose_step(
-                        answer, pool, choice_count=choice_count
-                    )
+                    step = word_pick_video_step(answer, pool)
                 kind = step.get("kind")
             else:
                 seen[answer] = kind
@@ -4993,13 +5515,20 @@ def enforce_one_recognition_modality(
 
 
 def cap_your_turn_steps(steps: list[dict], *, stone: int, max_count: int = 1) -> list[dict]:
-    """Keep at most `max_count` yourTurn beats per lesson."""
+    """Keep at most `max_count` discretionary yourTurn beats per lesson.
+
+    Phrase-teach follow-ups (Watch this phrase → Your Turn) are always kept.
+    """
     if max_count <= 0:
         return [step for step in steps if step.get("kind") != "yourTurn"]
     kept = 0
     result: list[dict] = []
     for step in steps:
         if step.get("kind") == "yourTurn":
+            prev = result[-1] if result else None
+            if prev and is_phrase_your_turn_followup(prev, step):
+                result.append(step)
+                continue
             if kept >= max_count:
                 continue
             kept += 1
@@ -5094,16 +5623,24 @@ def anchor_teach_confirm_pairs(steps: list[dict]) -> list[dict]:
 
     result: list[dict] = []
     used_confirms: set[str] = set()
-    for step in body:
+    index = 0
+    while index < len(body):
+        step = body[index]
         result.append(step)
-        if step.get("kind") != "teach":
-            continue
-        word = step.get("wordId")
-        if not word or word in used_confirms:
-            continue
-        if confirm := confirms_by_answer.get(word):
-            result.append(confirm)
-            used_confirms.add(word)
+        if step.get("kind") == "teach":
+            word = step.get("wordId")
+            if word and word not in used_confirms:
+                next_step = body[index + 1] if index + 1 < len(body) else None
+                if next_step and is_phrase_your_turn_followup(step, next_step):
+                    result.append(next_step)
+                    index += 1
+                    if confirm := confirms_by_answer.get(word):
+                        result.append(confirm)
+                        used_confirms.add(word)
+                elif confirm := confirms_by_answer.get(word):
+                    result.append(confirm)
+                    used_confirms.add(word)
+        index += 1
 
     for step in steps:
         answer = step.get("answerWordId")
@@ -5239,6 +5776,153 @@ def enforce_variety(
     return result
 
 
+def _post_teach_graded_indices(
+    steps: list[dict], teach_index: int, window: int
+) -> list[int]:
+    indices: list[int] = []
+    for index in range(teach_index + 1, len(steps)):
+        if _is_graded_exercise_step(steps[index]):
+            indices.append(index)
+            if len(indices) >= window:
+                break
+    return indices
+
+
+def _post_teach_window_same_count(
+    steps: list[dict],
+    teach_index: int,
+    word: str,
+    window: int,
+) -> tuple[int, list[int]]:
+    graded_indices = _post_teach_graded_indices(steps, teach_index, window)
+    if len(graded_indices) < window:
+        return 0, graded_indices
+    same_indices = [
+        gi
+        for gi in graded_indices
+        if _graded_step_primary_answer(steps[gi]) == word
+    ]
+    return len(same_indices), graded_indices
+
+
+def _rewrite_graded_step_for_word(step: dict, word: str, pool: list[str]) -> dict | None:
+    kind = step.get("kind")
+    if kind == "wordPickVideo":
+        return word_pick_video_step(word, pool)
+    if kind == "translationChoose":
+        return translation_choose_step(
+            word, pool, choice_count=step.get("choiceCount", 2)
+        )
+    if kind == "watchChoose":
+        return watch_choose_step(
+            word, pool, choice_count=step.get("choiceCount", 2)
+        )
+    if kind == "matchPairs":
+        return translation_choose_step(
+            word, pool, choice_count=step.get("choiceCount", 4)
+        )
+    return None
+
+
+def enforce_post_teach_answer_window(
+    steps: list[dict],
+    pool: list[str],
+    *,
+    window: int = POST_TEACH_ANSWER_WINDOW,
+    max_same: int = POST_TEACH_MAX_SAME_ANSWER,
+) -> list[dict]:
+    """After each teach, cap how often its answer repeats in the next graded window."""
+    if len(steps) < window + 1:
+        return steps
+
+    earliest = _answer_first_intro_index(steps)
+    result = list(steps)
+
+    for _ in range(len(result) * 3):
+        changed = False
+        for teach_index, step in enumerate(result):
+            if step.get("kind") != "teach":
+                continue
+            word = step.get("wordId")
+            if not word:
+                continue
+
+            same_count, graded_indices = _post_teach_window_same_count(
+                result, teach_index, word, window
+            )
+            if same_count <= max_same or len(graded_indices) < window:
+                continue
+
+            same_indices = [
+                gi
+                for gi in graded_indices
+                if _graded_step_primary_answer(result[gi]) == word
+            ]
+            for excess_index in reversed(same_indices[max_same:]):
+                swap_idx = None
+                for later in range(max(graded_indices) + 1, len(result)):
+                    if not _is_graded_exercise_step(result[later]):
+                        continue
+                    if _graded_step_primary_answer(result[later]) == word:
+                        continue
+                    if not _swap_preserves_intro_order(
+                        earliest, excess_index, later, result
+                    ):
+                        continue
+                    trial = list(result)
+                    trial[excess_index], trial[later] = (
+                        trial[later],
+                        trial[excess_index],
+                    )
+                    trial_same, _ = _post_teach_window_same_count(
+                        trial, teach_index, word, window
+                    )
+                    if trial_same > max_same:
+                        continue
+                    if excess_index > 0 and _adjacent_graded_answer_conflict(
+                        trial[excess_index - 1], trial[excess_index]
+                    ):
+                        continue
+                    if excess_index + 1 < len(trial) and _adjacent_graded_answer_conflict(
+                        trial[excess_index], trial[excess_index + 1]
+                    ):
+                        continue
+                    swap_idx = later
+                    break
+
+                if swap_idx is not None:
+                    result[excess_index], result[swap_idx] = (
+                        result[swap_idx],
+                        result[excess_index],
+                    )
+                    changed = True
+                    break
+
+                alt = next(
+                    (
+                        candidate
+                        for candidate in pool
+                        if candidate != word and candidate not in PHRASE_IDS
+                    ),
+                    None,
+                )
+                if alt:
+                    replacement = _rewrite_graded_step_for_word(
+                        result[excess_index], alt, pool
+                    )
+                    if replacement:
+                        result[excess_index] = replacement
+                        changed = True
+                        break
+
+            if changed:
+                break
+        if not changed:
+            break
+
+    return result
+
+
 def enforce_max_answer_density(
     steps: list[dict],
     window: int,
@@ -5297,6 +5981,12 @@ def ensure_intro_before_quiz_steps(
     result: list[dict] = []
     for step in steps:
         kind = step.get("kind")
+        if kind == "teach":
+            word = step.get("wordId")
+            if word:
+                introduced.add(word)
+            result.append(step)
+            continue
         if kind in {"signSequence", "phraseSlot"}:
             for wid in step.get("sequenceWordIds", []):
                 if wid:
@@ -5649,17 +6339,11 @@ def _append_phrase_block(builder: LessonBuilder, phrase_id: str) -> None:
     for comp in components:
         if comp in builder.state.ever_taught:
             continue
-        if builder.stone == 3:
-            if comp not in builder.state.taught_set:
-                return
-            continue
-        builder.append_teach_block(comp)
-    if builder.stone == 3 and phrase_id not in builder.state.ever_taught:
-        return
+        builder.append_teach_block(comp, bypass_stone3_cap=builder.stone == 3)
     if len(builder.steps) + 1 > builder._step_limit():
         return
     if phrase_id not in builder.state.ever_taught:
-        builder.append_teach_block(phrase_id)
+        builder.append_teach_block(phrase_id, bypass_stone3_cap=builder.stone == 3)
     if builder.steps:
         last = builder.steps[-1]
         if (
@@ -5672,7 +6356,7 @@ def _append_phrase_block(builder: LessonBuilder, phrase_id: str) -> None:
 
 
 def _append_phrase_slot_review(builder: LessonBuilder, phrase_id: str) -> bool:
-    """signSequence review for a phrase already built on a prior stone."""
+    """phraseSlot or signSequence review for a phrase built on a prior stone."""
     if phrase_id not in builder.state.sequenced_phrases:
         return False
     if any(
@@ -5683,7 +6367,20 @@ def _append_phrase_slot_review(builder: LessonBuilder, phrase_id: str) -> bool:
     components = sign_sequence_components(phrase_id)
     if len(components) < 2:
         return False
-    seq = sign_sequence_step(phrase_id, components, builder.pool)
+    use_phrase_slot = (hash(phrase_id) + builder.stone + builder.unit.get("sortOrder", 0)) % 2 == 0
+    seq: dict | None = None
+    if use_phrase_slot:
+        intro = set(builder._introduced_pool()) | set(builder.state.taught_set)
+        slot_index = len(components) // 2
+        seq = phrase_slot_step(
+            phrase_id,
+            slot_index,
+            intro,
+            pool=builder.pool,
+            taught_set=builder.state.taught_set,
+        )
+    if not seq:
+        seq = sign_sequence_step(phrase_id, components, builder.pool)
     if len(builder.steps) + 1 > builder._step_limit():
         return False
     if builder.steps and _phrase_video_exercise_id(builder.steps[-1]) == phrase_id:
@@ -5911,6 +6608,7 @@ def review_lesson(unit: dict, state: CurriculumState) -> dict:
     steps = separate_adjacent_phrase_video_exercises(steps)
     steps = separate_adjacent_match_pairs(steps, pool)
     steps = enforce_no_adjacent_same_graded_answer(steps, pool)
+    steps = enforce_post_teach_answer_window(steps, pool)
     steps = enforce_step_pacing(steps, pool)
     try:
         validate_lesson(steps, state.taught_set, set(state.taught_set))
@@ -6322,8 +7020,8 @@ def _print_stone_mix_acceptance(data: dict) -> None:
         if not total:
             continue
         graded = sum(counts[k] for k in graded_kinds if k in counts)
-        recognition = sum(counts[k] for k in RECOGNITION_KINDS)
-        rec_share = recognition / graded if graded else 0.0
+        all_rec = sum(counts[k] for k in ALL_RECOGNITION_PICK_KINDS if k in counts)
+        rec_share = all_rec / graded if graded else 0.0
         watch = counts.get("watchChoose", 0)
         pick = counts.get("wordPickVideo", 0)
         rec_total = watch + pick
@@ -6332,11 +7030,12 @@ def _print_stone_mix_acceptance(data: dict) -> None:
         context = sum(counts[k] for k in context_kinds)
         cap = STONE_RECOGNITION_SHARE_CAP.get(stone, 0.65)
         print(
-            f"    Stone {stone}: steps={total} recognition={rec_share:.0%} "
+            f"    Stone {stone}: steps={total} allRec={rec_share:.0%} "
             f"(cap {cap:.0%}) watch/pick={watch_pct:.0f}/{pick_pct:.0f}% "
             f"yourTurn={counts.get('yourTurn', 0)} "
             f"match={counts.get('matchPairs', 0)} "
             f"translation={counts.get('translationChoose', 0)} "
+            f"pickOut={counts.get('wordPickVideo', 0)} "
             f"context={context}"
         )
 

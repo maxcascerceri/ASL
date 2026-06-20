@@ -18,6 +18,84 @@ enum MatchPairFlash: Equatable {
     case correct(matchedWordId: String)
 }
 
+/// Correct/wrong styling aligned with `ChoiceTile` (pale panels + accent borders).
+private struct MatchPairFeedbackColors {
+    let fill: Color
+    let foreground: Color
+    let stroke: Color
+    let strokeWidth: CGFloat
+
+    static func resolve(
+        isResolved: Bool,
+        isSelected: Bool,
+        flashWrong: Bool,
+        flashCorrect: Bool,
+        palette: Color,
+        restingFill: Color
+    ) -> MatchPairFeedbackColors {
+        if isResolved {
+            return MatchPairFeedbackColors(
+                fill: Brand.neutralFill,
+                foreground: Brand.textPrimary,
+                stroke: Brand.neutralBorder,
+                strokeWidth: 2
+            )
+        }
+        if flashWrong {
+            return MatchPairFeedbackColors(
+                fill: Color.lessonErrorPanel,
+                foreground: Color.lessonWrongText,
+                stroke: Color.lessonCoralButton,
+                strokeWidth: 3
+            )
+        }
+        if flashCorrect {
+            return MatchPairFeedbackColors(
+                fill: Color.lessonCorrectPanel,
+                foreground: Color.lessonCorrectText,
+                stroke: Color.lessonGreen,
+                strokeWidth: 3
+            )
+        }
+        if isSelected {
+            return MatchPairFeedbackColors(
+                fill: restingFill,
+                foreground: Brand.textPrimary,
+                stroke: palette,
+                strokeWidth: 2
+            )
+        }
+        return MatchPairFeedbackColors(
+            fill: restingFill,
+            foreground: Brand.textPrimary,
+            stroke: Brand.neutralBorder,
+            strokeWidth: 2
+        )
+    }
+
+    static func videoBorder(
+        isResolved: Bool,
+        isSelected: Bool,
+        flashWrong: Bool,
+        flashCorrect: Bool,
+        palette: Color
+    ) -> (color: Color, width: CGFloat) {
+        if isResolved {
+            return (Brand.neutralBorder, 1.5)
+        }
+        if flashWrong {
+            return (Color.lessonCoralButton, 3)
+        }
+        if flashCorrect {
+            return (Color.lessonGreen, 3)
+        }
+        if isSelected {
+            return (palette, 3)
+        }
+        return (Brand.neutralBorder, 1.5)
+    }
+}
+
 struct MatchPairMicrocopyBanner: View {
     let text: String
     let palette: Color
@@ -36,13 +114,16 @@ struct MatchPairMicrocopyBanner: View {
 /// Match-pairs layout: title + video at top, controls pinned just above the action tray.
 struct MatchPairsStepLayout<Media: View, Controls: View>: View {
     let prompt: String
-    /// Number of sign/word pairs on the board — up to four use a fixed video-to-controls gap.
+    var promptEyebrow: String? = nil
+    /// Number of sign/word pairs on the board — up to three use a fixed video-to-controls gap.
     var pairCount: Int = 3
+    /// When set, overrides the default pair-count rule for where controls sit under the video.
+    var compactControlsPlacement: Bool? = nil
     @ViewBuilder var media: () -> Media
     @ViewBuilder var controls: () -> Controls
 
     private var usesCompactControlsPlacement: Bool {
-        pairCount <= MatchPairLayout.compactPairCountThreshold
+        compactControlsPlacement ?? (pairCount <= MatchPairLayout.compactPairCountThreshold)
     }
 
     var body: some View {
@@ -50,7 +131,9 @@ struct MatchPairsStepLayout<Media: View, Controls: View>: View {
             VStack(spacing: MatchPairLayout.sectionSpacing) {
                 LessonPromptLabel(
                     text: prompt,
-                    useInstructionWeight: true
+                    useInstructionWeight: true,
+                    eyebrow: promptEyebrow,
+                    eyebrowStyle: promptEyebrow == nil ? .standard : .refresher
                 )
                 media()
             }
@@ -99,9 +182,11 @@ enum MatchPairLayout {
         return UIFont.systemFont(ofSize: size, weight: weight)
     }
     /// Boards with this many pairs or fewer use a fixed gap under the video so
-    /// word/play rows align with the 2-pair layout instead of collapsing upward.
-    static let compactPairCountThreshold: Int = 4
-    static let compactVideoToControlsGap: CGFloat = 28
+    /// word/play rows sit directly under the video like other lesson steps.
+    /// Larger boards also use compact placement when `compactControlsPlacement`
+    /// is true so controls do not float above the action tray.
+    static let compactPairCountThreshold: Int = 3
+    static let compactVideoToControlsGap: CGFloat = LessonQuestionLayout.sectionSpacing
     /// Tight gap between the last play/word row and the bottom action tray.
     static let controlsBottomPadding: CGFloat = 4
 }
@@ -240,31 +325,22 @@ struct MatchPairGridTextTile: View {
     let height: CGFloat
     let action: () -> Void
 
-    private var fillColor: Color {
-        if isResolved { return Brand.neutralFill }
-        if flashWrong { return Color.lessonCoral }
-        if flashCorrect { return Color.lessonGreen }
-        return Color(.systemBackground)
-    }
-
-    private var textColor: Color {
-        if flashWrong || flashCorrect { return .white }
-        return Brand.textPrimary
-    }
-
-    private var strokeColor: Color {
-        if isResolved { return Brand.neutralBorder }
-        if flashWrong { return Color.lessonCoral }
-        if flashCorrect { return Color.lessonGreenShadow }
-        if isSelected { return palette }
-        return Brand.neutralBorder
+    private var feedbackColors: MatchPairFeedbackColors {
+        MatchPairFeedbackColors.resolve(
+            isResolved: isResolved,
+            isSelected: isSelected,
+            flashWrong: flashWrong,
+            flashCorrect: flashCorrect,
+            palette: palette,
+            restingFill: Color(.systemBackground)
+        )
     }
 
     var body: some View {
         Button(action: action) {
             Text(title)
                 .font(LessonQuestionLayout.chipFont)
-                .foregroundStyle(textColor)
+                .foregroundStyle(feedbackColors.foreground)
                 .opacity(isResolved ? 0 : 1)
                 .multilineTextAlignment(.center)
                 .lineLimit(3)
@@ -274,11 +350,11 @@ struct MatchPairGridTextTile: View {
                 .padding(.horizontal, 12)
                 .background(
                     RoundedRectangle(cornerRadius: MatchPairGridLayout.textCornerRadius, style: .continuous)
-                        .fill(fillColor)
+                        .fill(feedbackColors.fill)
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: MatchPairGridLayout.textCornerRadius, style: .continuous)
-                        .strokeBorder(strokeColor, lineWidth: 2)
+                        .strokeBorder(feedbackColors.stroke, lineWidth: feedbackColors.strokeWidth)
                 )
         }
         .buttonStyle(.plain)
@@ -303,12 +379,14 @@ struct MatchPairGridVideoTile: View {
     @StateObject private var controller = LessonPlayerController()
     @State private var attachedWordId: String?
 
-    private var strokeColor: Color {
-        if isResolved { return Brand.neutralBorder }
-        if flashWrong { return Color.lessonCoral }
-        if flashCorrect { return Color.lessonGreenShadow }
-        if isSelected { return palette }
-        return Brand.neutralBorder
+    private var videoBorder: (color: Color, width: CGFloat) {
+        MatchPairFeedbackColors.videoBorder(
+            isResolved: isResolved,
+            isSelected: isSelected,
+            flashWrong: flashWrong,
+            flashCorrect: flashCorrect,
+            palette: palette
+        )
     }
 
     private var showsVideoPlaceholder: Bool {
@@ -330,7 +408,7 @@ struct MatchPairGridVideoTile: View {
             .clipShape(RoundedRectangle(cornerRadius: SignVideoCardMetrics.cornerRadius, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: SignVideoCardMetrics.cornerRadius, style: .continuous)
-                    .strokeBorder(strokeColor, lineWidth: isSelected || flashWrong || flashCorrect ? 3 : 1.5)
+                    .strokeBorder(videoBorder.color, lineWidth: videoBorder.width)
             )
             .elevation(.insetField)
             .opacity(isResolved ? 0.55 : 1)
@@ -416,45 +494,34 @@ struct MatchPairPlayTile: View {
 
     private let side: CGFloat = 58
 
-    private var fillColor: Color {
-        if isResolved { return Brand.neutralFill }
-        if flashWrong { return Color.lessonCoral }
-        if flashCorrect { return Color.lessonGreen }
-        return Color.white
-    }
-
-    private var iconColor: Color {
-        if flashWrong || flashCorrect { return .white }
-        return palette
-    }
-
-    private var strokeColor: Color {
-        if isResolved { return Brand.neutralBorder }
-        if flashWrong { return Color.lessonCoral }
-        if flashCorrect { return Color.lessonGreenShadow }
-        if isSelected { return palette }
-        return Brand.neutralBorder
-    }
-
-    private var strokeWidth: CGFloat {
-        2
+    private var feedbackColors: MatchPairFeedbackColors {
+        MatchPairFeedbackColors.resolve(
+            isResolved: isResolved,
+            isSelected: isSelected,
+            flashWrong: flashWrong,
+            flashCorrect: flashCorrect,
+            palette: palette,
+            restingFill: Color.white
+        )
     }
 
     var body: some View {
         Button(action: action) {
             ZStack {
                 RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .fill(fillColor)
+                    .fill(feedbackColors.fill)
 
                 Image(systemName: "play.fill")
                     .font(.asl(LessonQuestionLayout.chipFontSize, weight: LessonQuestionLayout.chipWeight))
-                    .foregroundStyle(iconColor)
+                    .foregroundStyle(
+                        flashWrong || flashCorrect ? feedbackColors.foreground : palette
+                    )
                     .opacity(isResolved ? 0 : 1)
             }
             .frame(width: side, height: side)
             .overlay(
                 RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .strokeBorder(strokeColor, lineWidth: strokeWidth)
+                    .strokeBorder(feedbackColors.stroke, lineWidth: feedbackColors.strokeWidth)
             )
         }
         .buttonStyle(.plain)
@@ -476,35 +543,22 @@ struct MatchPairWordTile: View {
     var flashCorrect: Bool = false
     let action: () -> Void
 
-    private var fillColor: Color {
-        if isResolved { return Brand.neutralFill }
-        if flashWrong { return Color.lessonCoral }
-        if flashCorrect { return Color.lessonGreen }
-        return Color(.systemBackground)
-    }
-
-    private var textColor: Color {
-        if flashWrong || flashCorrect { return .white }
-        return Brand.textPrimary
-    }
-
-    private var strokeColor: Color {
-        if isResolved { return Brand.neutralBorder }
-        if flashWrong { return Color.lessonCoral }
-        if flashCorrect { return Color.lessonGreenShadow }
-        if isSelected { return palette }
-        return Brand.neutralBorder
-    }
-
-    private var strokeWidth: CGFloat {
-        2
+    private var feedbackColors: MatchPairFeedbackColors {
+        MatchPairFeedbackColors.resolve(
+            isResolved: isResolved,
+            isSelected: isSelected,
+            flashWrong: flashWrong,
+            flashCorrect: flashCorrect,
+            palette: palette,
+            restingFill: Color(.systemBackground)
+        )
     }
 
     var body: some View {
         Button(action: action) {
             Text(title)
                 .font(LessonQuestionLayout.chipFont)
-                .foregroundStyle(textColor)
+                .foregroundStyle(feedbackColors.foreground)
                 .opacity(isResolved ? 0 : 1)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
@@ -513,11 +567,11 @@ struct MatchPairWordTile: View {
                 .padding(.horizontal, MatchPairLayout.wordTileHorizontalPadding)
                 .background(
                     RoundedRectangle(cornerRadius: 16, style: .continuous)
-                        .fill(fillColor)
+                        .fill(feedbackColors.fill)
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: 16, style: .continuous)
-                        .strokeBorder(strokeColor, lineWidth: strokeWidth)
+                        .strokeBorder(feedbackColors.stroke, lineWidth: feedbackColors.strokeWidth)
                 )
         }
         .buttonStyle(.plain)
@@ -589,7 +643,11 @@ struct MatchPairsBoardView: View {
     @State private var attachedVideoWordId: String?
 
     var body: some View {
-        MatchPairsStepLayout(prompt: prompt, pairCount: wordIds.count) {
+        MatchPairsStepLayout(
+            prompt: prompt,
+            pairCount: wordIds.count,
+            compactControlsPlacement: true
+        ) {
             LessonVideoStage(
                 controller: playerController,
                 wordId: selectedVideoWordId,

@@ -120,6 +120,14 @@ enum ASLTipCatalog {
         Tip(id: "sign-look-at-them", text: "When you sign, look at their face — not down at your own hands.", wordId: "see"),
         Tip(id: "meet-on-camera", text: "On video or in person, face the light and frame yourself chest-up with both hands visible.", wordId: "video"),
         Tip(id: "sign-voice-or-hands", text: "Pick signing or speaking — doing both at once is tough for others to follow.", wordId: "signlanguage"),
+        Tip(id: "pronoun-i-me", text: "I and me use the same sign — point to yourself. English uses two words; ASL uses one.", wordId: "i"),
+        Tip(id: "pronoun-we-us", text: "We and us share one sign — point toward your group in space.", wordId: "we"),
+        Tip(id: "pronoun-he-him", text: "He and him are the same sign — point to where you set up that person.", wordId: "he"),
+        Tip(id: "pronoun-she-her", text: "She and her share one sign — point back to her spot in space.", wordId: "she"),
+        Tip(id: "pronoun-they-them", text: "They and them use the same sign — point to that group in space.", wordId: "they"),
+        Tip(id: "pronoun-my-mine", text: "My and mine are the same possessive sign toward yourself.", wordId: "my"),
+        Tip(id: "pronoun-your-yours", text: "Your and yours share one possessive sign toward the other person.", wordId: "your"),
+        Tip(id: "pronoun-our-ours", text: "Our and ours use the same possessive sign toward your group.", wordId: "our"),
     ]
 
     private static let byId: [String: Tip] = Dictionary(uniqueKeysWithValues: all.map { ($0.id, $0) })

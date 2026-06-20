@@ -5,18 +5,20 @@
 
 import Foundation
 
-protocol PremiumManaging {
-    var hasAccess: Bool { get }
-    func purchase(productId: String) async throws
-    func restore() async throws
-}
-
 enum ASLPremiumAccess {
-    static let mockTrialKey = "asl.premium.mockTrialActive.v1"
+    static let entitlementID = ASLSubscriptionStore.entitlementID
     static let onboardingStarEventId = "onboarding:microLesson"
 
-    static var hasAccess: Bool {
+    #if DEBUG
+    private static let mockTrialKey = "asl.premium.mockTrialActive.v1"
+    private static let debugReplayOnboardingKey = "asl.debug.replayOnboarding.v1"
+
+    static var hasMockAccess: Bool {
         UserDefaults.standard.bool(forKey: mockTrialKey)
+    }
+
+    static var isDebugReplayOnboardingActive: Bool {
+        UserDefaults.standard.bool(forKey: debugReplayOnboardingKey)
     }
 
     static func activateMockTrial() {
@@ -27,21 +29,27 @@ enum ASLPremiumAccess {
         UserDefaults.standard.removeObject(forKey: mockTrialKey)
     }
 
-    static func resetAll() {
-        deactivateMockTrial()
+    static func beginDebugOnboardingReplay() {
+        UserDefaults.standard.set(true, forKey: debugReplayOnboardingKey)
         NotificationCenter.default.post(name: ASLOnboarding.debugResetNotification, object: nil)
     }
-}
 
-/// Placeholder for future StoreKit 2 integration.
-struct MockPremiumManager: PremiumManaging {
-    var hasAccess: Bool { ASLPremiumAccess.hasAccess }
-
-    func purchase(productId: String) async throws {
-        ASLPremiumAccess.activateMockTrial()
+    static func endDebugOnboardingReplay() {
+        UserDefaults.standard.removeObject(forKey: debugReplayOnboardingKey)
+        NotificationCenter.default.post(name: ASLOnboarding.debugResetNotification, object: nil)
     }
+    #else
+    static var isDebugReplayOnboardingActive: Bool { false }
 
-    func restore() async throws {
-        // No-op until StoreKit is wired up.
+    static func beginDebugOnboardingReplay() {}
+
+    static func endDebugOnboardingReplay() {}
+    #endif
+
+    static func resetAll() {
+        #if DEBUG
+        deactivateMockTrial()
+        #endif
+        NotificationCenter.default.post(name: ASLOnboarding.debugResetNotification, object: nil)
     }
 }

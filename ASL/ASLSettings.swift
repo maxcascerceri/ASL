@@ -11,6 +11,7 @@ enum ASLLegalLinks {
     static let contactUs = URL(string: "mailto:maxcascerceri@verizon.net")
     static let privacyPolicy = pagesBase.appendingPathComponent("privacy.html")
     static let termsOfUse = pagesBase.appendingPathComponent("terms.html")
+    static let appleEULA = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
 }
 
 enum ASLSettings {

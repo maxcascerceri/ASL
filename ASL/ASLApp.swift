@@ -7,6 +7,7 @@
 
 import FirebaseCore
 import FirebaseFirestore
+import RevenueCat
 import SwiftUI
 import UIKit
 
@@ -25,6 +26,9 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         UITextView.appearance().textColor = Brand.textPrimaryUIColor
         _ = UIImage(named: "onboarding-splash")
         UnitMascot.preloadAllImages()
+        Task { @MainActor in
+            ASLSubscriptionStore.shared.configureIfNeeded()
+        }
         return true
     }
 }
@@ -36,6 +40,7 @@ struct ASLApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
+                .environmentObject(ASLSubscriptionStore.shared)
                 .preferredColorScheme(.light)
         }
     }

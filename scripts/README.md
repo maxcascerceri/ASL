@@ -311,27 +311,29 @@ python3 generate_asl_tip_catalog_swift.py
 Each unit has **three module stones** plus optional **phase review** lessons.
 Pedagogy rules enforced at generation time:
 
-- New signs use an explicit **`teach`** step followed by a recognition confirm within two steps. Stone 1 confirms rotate **`watchChoose`**, **`translationChoose`**, and **`wordPickVideo`** (one recognition modality per word per stone), plus **one `yourTurn`**. Stone 2 adds context, phrases, and **one `yourTurn`**. Stone 3 is challenge-only (**no teaches**).
+- New signs use an explicit **`teach`** step followed by a recognition confirm within two steps. Intro confirms rotate **50% `wordPickVideo` (Pick Out)**, **25% `watchChoose`**, **25% `translationChoose`**. Stone 1 includes **two discretionary `yourTurn`** steps; stone 2 includes **one**; every **Watch this phrase** teach is followed immediately by **Your Turn** for that phrase. Stone 1 targets **~8** new atomic signs per unit (down from 10); Stone 3 may introduce **up to 3** new atomic signs from its stone subset per lesson; phrase blocks on stone 3 still teach components and phrases assigned to that stone.
 - Each atomic word is taught at most once (`teach` never repeats for the same word).
-- **One recognition channel per word per stone** — never both `watchChoose` and `wordPickVideo` for the same answer in one lesson.
+- **One recognition channel per word per stone** — never both `watchChoose` and `wordPickVideo` for the same answer; never both `watchChoose` and `translationChoose` for the same answer.
+- Second exposure on a word must use a **different UI channel** (Pick Out, `fillSlot`, or `matchPairs` — not a second sign-to-word pick).
 - No back-to-back steps in the same quiz family (`watchChoose`/`translationChoose` vs `wordPickVideo`).
 - No back-to-back **new-sign introductions** on any stone (each teach or first-exposure pick is followed by a recognition confirm before the next new sign).
 - At most **two** consecutive teach → intro-confirm pairs (e.g. teach then "What sign is this?") before a varied review step.
+- After each **`teach`**, at most **2 of the next 3** graded exercises may use that sign as the correct answer (intro confirm counts toward the window).
 - Graded answers must already be in the cumulative `taughtSet`; distractors may be untaught or from earlier units.
 - Module stones target **22–34 total steps** with **≥10 unique graded answer words** on stone 1 (subset size per stone in `UNIT_STONE_WORD_SUBSETS`).
 - Answer spacing: max **2** graded correct answers per word per lesson; stone 1 min gap **6** graded steps between repeats (stones 2–3 gap **4**). Spacing runs as the **final** `finish()` pass after top-up.
-- Stone 1 mixes **`watchChoose`**, **`wordPickVideo`**, **`translationChoose`**, **`matchPairs`**, and **`fillSlot`** (when the unit has phrase fills). A post-pass **`_rebalance_graded_mix`** keeps combined recognition under stone caps (68% / 62% / 55% for stones 1–3).
-- Phrase pedagogy is **teach components → `signSequence`** on the learning stone (`_append_phrase_block`); **`phraseSlot`** review runs on **stones 2–3** for phrases already sequenced earlier. Filmed phrase units must emit `signSequence` on at least one stone 1–3 lesson.
-- **`speedBurst` is removed**; stone 3 has **no `teach` steps** and ends on **`matchPairs`** when possible.
-- Max **2 `yourTurn` steps per unit** (stones 1–2 only).
+- Stone 1 mixes **`wordPickVideo` (Pick Out)**, **`watchChoose`**, **`translationChoose`**, **`matchPairs`**, and **`fillSlot`**. Minimum per lesson: **5 Pick Out**, **2 matchPairs**, **24 steps**. Combined recognition (all three pick kinds) capped at **68% / 62% / 55%** for stones 1–3.
+- Phrase pedagogy is **teach components → `signSequence`** on the learning stone (`_append_phrase_block`); **`phraseSlot`** review alternates with `signSequence` on **stones 2–3** for phrases already sequenced earlier. Filmed phrase units must emit `signSequence` on at least one stone 1–3 lesson.
+- **`speedBurst` is removed**; stone 3 ends on **`matchPairs`** when possible and caps new atomic subset **`teach`** steps at **3** per lesson (phrase component teaches are separate).
+- Max **2 discretionary `yourTurn` steps per unit** (stones 1–2 only), plus **Your Turn** after every phrase teach.
 
 | Stone | Title               | Emotional arc (summary)                                |
 | ----- | ------------------- | ------------------------------------------------------ |
-| 1     | Learn & Lock In     | teach → confirm → recognition mix → yourTurn → match → translation → phrase sprinkle |
+| 1     | Learn & Lock In     | teach → Pick Out confirm → recognition mix → yourTurn (×2) → match → context → phrase sprinkle |
 | 2     | Use It              | warm-up → teach → confirm → phrase/context → yourTurn → fillSlot → match |
-| 3     | Challenge Mix       | warm-up → cross-unit review → match capstone → mixed challenge (**no new teaches**) |
+| 3     | Challenge Mix       | warm-up → up to 2 new teaches → cross-unit review → match capstone → mixed challenge |
 
-**Target graded mix (module stones, approximate):** recognition 62–68%; `matchPairs` 9–11%; `translationChoose` 10–14%; `yourTurn` on stones 1–2 only; context cluster (`fillSlot` + `signSequence` + `phraseSlot`) 7–10% on stones 2–3 when phrase/fill data exists. Within recognition, stone 1 targets **60/40** `watchChoose`/`wordPickVideo`; stones 2–3 target **50/50** and **45/55**.
+**Target graded mix (module stones, approximate):** combined recognition ≤68% / 62% / 55%; **`wordPickVideo` (Pick Out) minimum 5 / 3 / 5** per stone; **`matchPairs` minimum 2 / 2 / 3**; `yourTurn` on stones 1–2 only; context cluster (`fillSlot` + `signSequence` + `phraseSlot`) ≥5% / 8% / 8%. Pick Out uses two stacked video cards with prompt **"Pick out [Word]."**
 
 **Phase review** lessons reuse the phrase recipe: `signSequence` + `phraseSlot` per phrase (no `signSequence` → `watchChoose` pairs for the same phrase).
 
@@ -346,7 +348,7 @@ Supported module step kinds:
 - `teach`: `{ kind, wordId, title, prompt }` — passive intro; confirm quiz follows
 - `watchChoose`: `{ kind, answerWordId, distractorWordIds, choiceCount, prompt }`
 - `translationChoose`: same shape; allowed on stone 1+; meaning-first UI in app
-- `wordPickVideo`: two stacked videos; prompt "Pick out [Word]."
+- `wordPickVideo`: **Pick Out** — two stacked tappable videos; prompt `"Pick out [Word]."` (primary variety break vs single-video picks)
 - `fillSlot`: `{ kind, sentenceBefore, sentenceAfter, answerWordId, distractorWordIds }`
 - `matchPairs`: `{ kind, pairWordIds, prompt }` (2–4 pairs from words introduced on prior stones or earlier in the same stone)
 - `signSequence`: `{ kind, wordId, sequenceWordIds, distractorWordIds, prompt }`
@@ -361,6 +363,35 @@ the same semantic category as the answer when enough peers exist in the pool
 (see `SEMANTIC_DISTRACTOR_CATEGORIES` in `curriculum_v5_data.py`); otherwise it
 falls back to positional rotation. The app mirrors this for runtime top-up via
 `ASLSemanticDistractors.swift`.
+
+### Sign equivalence (pronoun aliases)
+
+Some English glosses share one ASL production and one filmed clip (e.g. **I / Me**,
+**He / Him**). Authoring uses a **canonical** `wordId` for teaches, video playback,
+Pick Out, and match pairs; **alias** ids appear only where English grammar differs
+(stone 3 `fillSlot` prompts on **You & Me**).
+
+| Aliases | Canonical |
+| ------- | --------- |
+| me | i |
+| us | we |
+| him | he |
+| her | she |
+| them | they |
+| mine | my |
+| yours | your |
+| ours | our |
+
+Python: `SIGN_ALIAS_TO_CANONICAL`, `same_sign()`, `filter_distinct_sign_words()` in
+`curriculum_v5_data.py`; `validate_same_sign_exercises()` rejects alias teaches and
+same-sign distractor pairs. iOS: `SignEquivalence.swift` and canonical resolution in
+`BundledSignMedia.swift`; the dictionary groups pronouns into 11 cards with alias-aware
+search.
+
+**p1-u03 You & Me** keeps 11 canonical signs across three stones: stone 1 refreshes
+**i / you / my / your** (from p1-u01) and teaches **we**; stone 2 adds **he / she /
+they / his / their / our**; stone 3 mixes review with English-only alias `fillSlot`
+grammar. Pinned `aslTip` steps after each new teach explain the shared-sign pairs.
 
 ### Migration from v3
 

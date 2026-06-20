@@ -51,7 +51,7 @@ struct OnboardingMiniModuleView: View {
 
     private var lessonProgress: Double {
         guard !steps.isEmpty else { return 0 }
-        return Double(stepIndex + 1) / Double(steps.count)
+        return Double(stepIndex) / Double(steps.count)
     }
 
     private var currentStep: OnboardingMiniStep {
@@ -122,9 +122,7 @@ struct OnboardingMiniModuleView: View {
     }
 
     private var progressHeader: some View {
-        OnboardingFlowProgressHeader(progress: lessonProgress, animatesFill: false)
-            .animation(nil, value: stepIndex)
-            .animation(nil, value: lessonProgress)
+        OnboardingFlowProgressHeader(progress: lessonProgress, animatesFill: true)
     }
 
     private var stepContentContainer: some View {
@@ -337,7 +335,8 @@ struct OnboardingMiniModuleView: View {
     private var matchPairsView: some View {
         MatchPairsStepLayout(
             prompt: matchPairsPrompt,
-            pairCount: currentStep.choices.count
+            pairCount: currentStep.choices.count,
+            compactControlsPlacement: true
         ) {
             matchPairsVideoStage
         } controls: {
@@ -819,11 +818,7 @@ struct OnboardingMiniModuleView: View {
             let score = totalGraded > 0 ? Int(Double(correctCount) / Double(totalGraded) * 100) : 100
             onFinished(score, signsLearned)
         } else {
-            var transaction = Transaction()
-            transaction.disablesAnimations = true
-            withTransaction(transaction) {
-                stepIndex += 1
-            }
+            stepIndex += 1
         }
     }
 

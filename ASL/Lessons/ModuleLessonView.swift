@@ -8,6 +8,7 @@
 
 import AVKit
 import SwiftUI
+import UIKit
 
 struct ModuleLessonView: View {
     let lesson: ASLLesson
@@ -64,16 +65,25 @@ struct ModuleLessonView: View {
     @State private var firstPassGradedCount: Int = 0
     @State private var firstPassCompleted: Int = 0
     @State private var pendingReviewStepCount: Int = 0
+    /// Graded-question stats for the full stone (initial pass + redrill), preserved
+    /// when `StoneSession.reload` resets per-phase session counters.
+    @State private var stoneSessionCorrectCount = 0
+    @State private var stoneSessionBestStreak = 0
 
     private let phaseReviewRoundPlan: PhaseReviewRoundPlan?
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.lessonPortalDismiss) private var portalDismiss
+    @Environment(LessonEntryRevealCoordinator.self) private var lessonEntryRevealCoordinator
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    private let pathIntroducedAtLessonStart: Set<String>
 
     init(lesson: ASLLesson, unit: ASLUnit, store: ASLDataStore) {
         self.lesson = lesson
         self.unit = unit
         self.store = store
+        pathIntroducedAtLessonStart = store.introducedWordIdsOnPath
         let steps = store.modulePlaySteps(for: lesson)
         phaseReviewRoundPlan = unit.isPhaseReview ? PhaseReviewRoundPlan.build(from: steps) : nil
         let savedIndex = store.savedStepIndex(for: lesson.id, totalSteps: steps.count)
@@ -107,7 +117,7 @@ struct ModuleLessonView: View {
                         ZStack(alignment: .top) {
                             content
                                 .padding(.top, lessonContentTopPadding)
-                                .padding(.bottom, LessonActionTrayLayout.contentInsetAboveTray(for: navigationButton))
+                                .padding(.bottom, lessonContentBottomInset)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                                 .clipped()
 
@@ -140,9 +150,10 @@ struct ModuleLessonView: View {
                     palette: paletteColor,
                     paletteShadow: paletteShadowColor,
                     starAward: stoneCompletionAward,
-                    correctCount: session.correctCount,
-                    totalCount: gradedQuestionTotal(for: session.questions),
-                    bestStreak: session.bestStreak,
+                    correctCount: stoneCelebrationCorrectCount,
+                    totalCount: stoneCelebrationGradedTotal,
+                    bestStreak: stoneCelebrationBestStreak,
+                    continueTitle: stoneCelebrationContinueTitle,
                     onContinue: continueAfterStoneCelebration
                 )
                 .transition(.opacity)
@@ -167,7 +178,7 @@ struct ModuleLessonView: View {
                     palette: paletteColor,
                     paletteShadow: paletteShadowColor,
                     starAward: stoneCompletionAward,
-                    bestStreak: session.bestStreak,
+                    bestStreak: stoneCelebrationBestStreak,
                     signsInUnit: PracticePathContext.wordIds(forUnitId: unit.id, store: store).count,
                     nextUnit: nextPlayableUnit,
                     nextUnitPalette: nextUnitPaletteColor,
@@ -220,9 +231,9 @@ struct ModuleLessonView: View {
                     phaseTitle: unit.phaseTitle ?? unit.title,
                     phaseKey: unit.phaseKey ?? "",
                     starAward: stoneCompletionAward,
-                    correctCount: session.correctCount,
-                    totalCount: gradedQuestionTotal(for: session.questions),
-                    bestStreak: session.bestStreak,
+                    correctCount: stoneCelebrationCorrectCount,
+                    totalCount: stoneCelebrationGradedTotal,
+                    bestStreak: stoneCelebrationBestStreak,
                     nextUnit: nextPlayableUnit,
                     nextUnitPalette: nextUnitPaletteColor,
                     nextUnitPaletteShadow: nextUnitPaletteShadowColor,
@@ -273,6 +284,15 @@ struct ModuleLessonView: View {
     private var lessonContentTopPadding: CGFloat {
         let reviewBand: CGFloat = isRedrillPhase ? 32 : 0
         return reviewBand + 52 + LessonActionTrayLayout.verticalNudge
+    }
+
+    /// Match-pairs keeps a compact content inset so the tray can expand upward
+    /// for feedback without reflowing the board and shifting the CTA lane down.
+    private var lessonContentBottomInset: CGFloat {
+        if case .matchPairs = session.current {
+            return LessonActionTrayLayout.compactReservedHeight
+        }
+        return LessonActionTrayLayout.contentInsetAboveTray(for: navigationButton)
     }
 
     private var lessonDisplayProgress: Double {
@@ -608,7 +628,12 @@ struct ModuleLessonView: View {
     }
 
     private func matchPairsContent(item: MatchPairsItem) -> some View {
-        MatchPairsStepLayout(prompt: item.prompt, pairCount: item.wordIds.count) {
+        MatchPairsStepLayout(
+            prompt: item.prompt,
+            promptEyebrow: signRefresherEyebrowText,
+            pairCount: item.wordIds.count,
+            compactControlsPlacement: true
+        ) {
             moduleVideo(height: MatchPairLayout.videoHeight, wordId: selectedMatchVideoWordId)
         } controls: {
             MatchPairControlsRow(
@@ -685,11 +710,11 @@ struct ModuleLessonView: View {
             lesson: lesson,
             unit: unit,
             isRedrillPhase: isRedrillPhase,
-            store: store,
+            pathIntroducedAtLessonStart: pathIntroducedAtLessonStart,
             stepIndex: session.currentIndex,
             playSteps: session.questions
         ) else { return nil }
-        return "Sign refresher"
+        return "Refresher."
     }
 
     private func moduleQuestionPrompt(
@@ -739,7 +764,7 @@ struct ModuleLessonView: View {
             subtitle: subtitle,
             subtitleWeight: subtitleWeight,
             eyebrow: eyebrow,
-            eyebrowColor: paletteColor,
+            eyebrowStyle: eyebrow == nil ? .standard : .refresher,
             emphasisColor: paletteColor,
             subtitleForeground: subtitle != nil ? paletteColor : nil
         )
@@ -841,14 +866,36 @@ struct ModuleLessonView: View {
                 showAppStoreReview = true
             }
         } else {
-            dismissLesson()
+            continueToNextStoneOrDismiss()
         }
     }
 
     private func dismissAppStoreReview() {
         guard showAppStoreReview else { return }
         showAppStoreReview = false
-        dismissLesson()
+        continueToNextStoneOrDismiss()
+    }
+
+    private var nextStoneLesson: ASLLesson? {
+        guard lesson.sortOrder <= 2 else { return nil }
+        return (store.lessonsByUnitId[unit.id] ?? [])
+            .sorted { $0.sortOrder < $1.sortOrder }
+            .first { $0.sortOrder == lesson.sortOrder + 1 }
+    }
+
+    private var stoneCelebrationContinueTitle: String {
+        if let nextStone = nextStoneLesson {
+            return ASLModuleCompleteCopy.nextStoneCTA(nextStone: nextStone, unit: unit)
+        }
+        return ASLModuleCompleteCopy.continueCTA
+    }
+
+    private func continueToNextStoneOrDismiss() {
+        guard lesson.sortOrder <= 2, let nextStone = nextStoneLesson else {
+            dismissLesson()
+            return
+        }
+        handoffToNextUnitLesson(nextStone, in: unit)
     }
 
     private var shouldShowFirstUnitOneStoneReview: Bool {
@@ -888,6 +935,8 @@ struct ModuleLessonView: View {
         firstPassGradedCount = 0
         firstPassCompleted = 0
         pendingReviewStepCount = 0
+        stoneSessionCorrectCount = 0
+        stoneSessionBestStreak = 0
         startStep()
     }
 
@@ -904,6 +953,26 @@ struct ModuleLessonView: View {
 
     private func gradedQuestionTotal(for steps: [ModulePlayStep]) -> Int {
         Self.gradedQuestionTotal(for: steps)
+    }
+
+    private var stoneCelebrationCorrectCount: Int {
+        stoneSessionCorrectCount
+    }
+
+    private var stoneCelebrationGradedTotal: Int {
+        max(firstPassGradedCount, gradedQuestionTotal(for: session.questions))
+    }
+
+    private var stoneCelebrationBestStreak: Int {
+        max(stoneSessionBestStreak, session.bestStreak)
+    }
+
+    /// Records a graded correct answer for the active session phase and accumulates
+    /// stone-wide stats used on the completion celebration after redrill.
+    private func recordGradedCorrect() {
+        session.recordCorrect()
+        stoneSessionCorrectCount += 1
+        stoneSessionBestStreak = max(stoneSessionBestStreak, session.bestStreak)
     }
 
     private func startStep() {
@@ -1007,11 +1076,11 @@ struct ModuleLessonView: View {
             redrillResetWorkItem?.cancel()
 
             if isRedrillPhase {
-                session.recordCorrect()
+                recordGradedCorrect()
             } else {
                 let wasForceRetap = tileStates.contains(.wrong)
                 if !wasForceRetap {
-                    session.recordCorrect()
+                    recordGradedCorrect()
                     queueStreakMilestoneIfNeeded()
                 }
             }
@@ -1156,7 +1225,7 @@ struct ModuleLessonView: View {
     private func checkSignSequence(item: SignSequenceItem) {
         if signSequenceFilled == item.sequenceWordIds {
             lockTaps = true
-            session.recordCorrect()
+            recordGradedCorrect()
             if !isRedrillPhase {
                 queueStreakMilestoneIfNeeded()
             }
@@ -1312,7 +1381,7 @@ struct ModuleLessonView: View {
                 },
                 onRoundComplete: {
                     if !matchMissRecorded {
-                        session.recordCorrect()
+                        recordGradedCorrect()
                         if !isRedrillPhase {
                             queueStreakMilestoneIfNeeded()
                         }
@@ -1484,7 +1553,7 @@ struct ModuleLessonView: View {
         stoneCompletionAward = store.awardStoneCompletion(
             lesson: lesson,
             unit: unit,
-            sessionBestStreak: session.bestStreak,
+            sessionBestStreak: stoneCelebrationBestStreak,
             firstPassPerfect: firstPassPerfect,
             finishesUnit: finishesUnit
         )
@@ -1608,13 +1677,59 @@ struct ModuleLessonView: View {
     }
 
     private func continueAfterUnitCompletion() {
-        if let next = nextPlayableUnit {
-            store.queueAutoStartUnit(next.id)
-        }
         if unit.id == "p1-u10" {
             store.queueSpellYourNamePractice(intent: .personalName)
         }
-        dismissLesson()
+
+        guard let next = nextPlayableUnit else {
+            dismissLesson()
+            return
+        }
+
+        store.loadLessons(for: next)
+
+        guard let nextLesson = firstLesson(in: next) else {
+            store.queueAutoStartUnit(next.id)
+            dismissLesson()
+            return
+        }
+
+        handoffToNextUnitLesson(nextLesson, in: next)
+    }
+
+    private func handoffToNextUnitLesson(_ lesson: ASLLesson, in unit: ASLUnit) {
+        let request = LessonEntryRevealRequest(
+            fillColor: LessonPalette.color(for: unit),
+            origin: lessonPortalHandoffOrigin(),
+            lesson: lesson,
+            unit: unit
+        )
+
+        // Pop the completed lesson before opening the next one. Updating
+        // nextLessonRoute in place leaves a blank ModuleLessonView underneath
+        // the portal because the finished stone has no active step to render.
+        portalDismiss?()
+
+        DispatchQueue.main.async {
+            lessonEntryRevealCoordinator.begin(request: request, reduceMotion: reduceMotion)
+            if reduceMotion {
+                lessonEntryRevealCoordinator.sheetDidDismiss(reduceMotion: true)
+            }
+        }
+    }
+
+    private func firstLesson(in unit: ASLUnit) -> ASLLesson? {
+        (store.lessonsByUnitId[unit.id] ?? [])
+            .sorted { $0.sortOrder < $1.sortOrder }
+            .first
+    }
+
+    private func lessonPortalHandoffOrigin() -> CGPoint {
+        let bounds = UIScreen.main.bounds
+        let buttonCenterY = bounds.maxY
+            - LessonActionTrayLayout.effectiveBottomPadding
+            - (LessonActionTrayLayout.buttonHeight / 2)
+        return CGPoint(x: bounds.midX, y: buttonCenterY)
     }
 
     private var fillSlotChipForeground: Color {
@@ -2076,7 +2191,7 @@ extension ModuleLessonView {
                     prompt: framedPrompt(.matchPairs)
                 )))
             case .yourTurn:
-                guard lesson.sortOrder >= 3 else { return nil }
+                guard lesson.sortOrder <= 3 else { return nil }
                 guard let wordId = step.wordId ?? step.answerWordId ?? lesson.wordIds.first else { return nil }
                 return trackPassiveStep(.yourTurn(ModuleTeachItem(
                     wordId: wordId,
@@ -2577,46 +2692,61 @@ extension ModuleLessonView {
         return choicePool(for: wordId, in: lesson).filter { $0 != wordId }
     }
 
-    /// True when the step re-quizzes vocabulary from a unit the learner already finished.
+    /// True when the step re-quizzes vocabulary learned on a prior stone or unit.
     static func showsSignRefresherEyebrow(
         for step: ModulePlayStep,
         lesson: ASLLesson,
         unit: ASLUnit,
         isRedrillPhase: Bool,
-        store: ASLDataStore,
+        pathIntroducedAtLessonStart: Set<String>,
         stepIndex: Int,
         playSteps: [ModulePlayStep]
     ) -> Bool {
         guard !isRedrillPhase else { return false }
-        guard isQuizPromptStep(step) else { return false }
+        guard lesson.sortOrder != 3 else { return false }
+        guard showsRefresherEyebrow(for: step) else { return false }
+
         if unit.isPhaseReview {
             return true
         }
 
-        let targetWordId: String?
+        let reviewWordIds = refresherWordIds(for: step)
+        guard !reviewWordIds.isEmpty else { return false }
+
+        guard reviewWordIds.allSatisfy({ pathIntroducedAtLessonStart.contains($0) }) else {
+            return false
+        }
+
+        return !reviewWordIds.contains {
+            wasTaughtEarlierInLesson(
+                wordId: $0,
+                playSteps: playSteps,
+                beforeIndex: stepIndex
+            )
+        }
+    }
+
+    private static func showsRefresherEyebrow(for step: ModulePlayStep) -> Bool {
         switch step {
-        case .signSequence(let item):
-            targetWordId = item.phraseWordId
-        case .phraseSlot(let item):
-            targetWordId = item.phraseWordId
+        case .teach, .yourTurn, .aslTip:
+            return false
         default:
-            targetWordId = pickAnswerWordId(for: step)
+            return true
         }
-        guard let wordId = targetWordId else { return false }
+    }
 
-        if wasTaughtEarlierInLesson(
-            wordId: wordId,
-            playSteps: playSteps,
-            beforeIndex: stepIndex
-        ) {
-            return false
+    private static func refresherWordIds(for step: ModulePlayStep) -> [String] {
+        switch step {
+        case .matchPairs(let item):
+            return item.wordIds
+        case .signSequence(let item):
+            return [item.phraseWordId]
+        case .phraseSlot(let item):
+            return [item.phraseWordId]
+        default:
+            guard let wordId = pickAnswerWordId(for: step) else { return [] }
+            return [wordId]
         }
-
-        if unitWordIds(unitId: lesson.unitId, store: store).contains(wordId) {
-            return false
-        }
-
-        return isWordFromPriorUnit(wordId: wordId, currentUnit: unit, store: store)
     }
 
     private static func wasTaughtEarlierInLesson(
@@ -2629,27 +2759,6 @@ extension ModuleLessonView {
             if case .teach(let item) = playSteps[index],
                !item.isPracticeReplay,
                item.wordId == wordId {
-                return true
-            }
-        }
-        return false
-    }
-
-    private static func unitWordIds(unitId: String, store: ASLDataStore) -> Set<String> {
-        Set(PracticePathContext.wordIds(forUnitId: unitId, store: store))
-    }
-
-    private static func isWordFromPriorUnit(
-        wordId: String,
-        currentUnit: ASLUnit,
-        store: ASLDataStore
-    ) -> Bool {
-        let units = PracticePathContext.primaryUnits(from: store)
-        guard let currentIndex = units.firstIndex(where: { $0.id == currentUnit.id }) else {
-            return false
-        }
-        for priorUnit in units.prefix(currentIndex) {
-            if unitWordIds(unitId: priorUnit.id, store: store).contains(wordId) {
                 return true
             }
         }
@@ -2732,16 +2841,6 @@ extension ModuleLessonView {
         }
     }
 
-    private static func isQuizPromptStep(_ step: ModulePlayStep) -> Bool {
-        switch step {
-        case .teach, .yourTurn, .aslTip, .matchPairs:
-            return false
-        default:
-            return true
-        }
-    }
-
-    /// Word-pick steps where the learner selects the correct vocabulary item.
     private static func isWordPickStep(_ step: ModulePlayStep) -> Bool {
         switch step {
         case .watchChoose, .translationChoose,

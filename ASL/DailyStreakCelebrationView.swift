@@ -15,7 +15,6 @@ enum DailyStreakCelebrationMetrics {
     static let weekdayLabelSize: CGFloat = 14
     static let dayCircleSize: CGFloat = 38
     static let dayFlameIconSize: CGFloat = 16
-    static let dayCheckmarkSize: CGFloat = 14
     static let weekStripVerticalPadding: CGFloat = 20
     static let weekStripHorizontalPadding: CGFloat = 16
     static let weekStripCornerRadius: CGFloat = 18
@@ -48,7 +47,6 @@ struct DailyStreakCelebrationView: View {
     @State private var countUpTask: Task<Void, Never>?
 
     private let streakGold = Color(red: 0.96, green: 0.74, blue: 0.26)
-    private let activeDayPalette = PastelPalette.dictionaryMint
 
     var body: some View {
         ZStack {
@@ -178,7 +176,7 @@ struct DailyStreakCelebrationView: View {
 
     @ViewBuilder
     private func weekDayDot(for day: ASLDataStore.StreakDayState) -> some View {
-        if day.isToday {
+        if day.isActive {
             Circle()
                 .fill(
                     LinearGradient(
@@ -199,24 +197,8 @@ struct DailyStreakCelebrationView: View {
                         ))
                         .foregroundStyle(.white)
                 }
-                .scaleEffect(todayHighlightIn ? 1 : 0.5)
-                .opacity(todayHighlightIn ? 1 : 0)
-        } else if day.isActive {
-            Circle()
-                .fill(activeDayPalette.fill)
-                .frame(
-                    width: DailyStreakCelebrationMetrics.dayCircleSize,
-                    height: DailyStreakCelebrationMetrics.dayCircleSize
-                )
-                .overlay {
-                    Image(systemName: "checkmark")
-                        .font(.system(
-                            size: DailyStreakCelebrationMetrics.dayCheckmarkSize,
-                            weight: .semibold
-                        ))
-                        .foregroundStyle(activeDayPalette.iconTint)
-                }
-                .opacity(weekStripIn ? 1 : 0)
+                .scaleEffect(day.isToday ? (todayHighlightIn ? 1 : 0.5) : 1)
+                .opacity(day.isToday ? (todayHighlightIn ? 1 : 0) : (weekStripIn ? 1 : 0))
         } else {
             Circle()
                 .fill(Brand.divider.opacity(0.35))

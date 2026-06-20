@@ -39,6 +39,10 @@ enum LessonQuestionLayout {
     static let teachEyebrowFontSize: CGFloat = 17
     static let teachEyebrowWeight: Font.Weight = .medium
 
+    /// Prior-sign review label above quiz prompts.
+    static let refresherEyebrowFontSize: CGFloat = 15
+    static let refresherEyebrowWeight: Font.Weight = .regular
+
     /// Large taught word on teach beats.
     static let teachWordFontSize: CGFloat = 32
     static let teachWordWeight: Font.Weight = .semibold
@@ -299,6 +303,11 @@ extension View {
     }
 }
 
+enum LessonPromptEyebrowStyle {
+    case standard
+    case refresher
+}
+
 struct LessonPromptLabel: View {
     let text: String
     var fontSize: CGFloat = LessonQuestionLayout.promptFontSize
@@ -308,6 +317,7 @@ struct LessonPromptLabel: View {
     var subtitleFontSize: CGFloat = 24
     var subtitleWeight: Font.Weight = .semibold
     var eyebrow: String? = nil
+    var eyebrowStyle: LessonPromptEyebrowStyle = .standard
     var eyebrowColor: Color = Brand.secondaryLabel
     /// Color for the target vocabulary word embedded in the prompt (defaults to brand primary).
     var emphasisColor: Color = Brand.primary
@@ -318,9 +328,9 @@ struct LessonPromptLabel: View {
         VStack(spacing: eyebrow == nil ? 6 : 10) {
             if let eyebrow, !eyebrow.isEmpty {
                 Text(eyebrow)
-                    .font(LessonQuestionLayout.teachEyebrowFont)
-                    .tracking(1.1)
-                    .foregroundStyle(eyebrowColor)
+                    .font(refresherEyebrowFont)
+                    .tracking(refresherEyebrowTracking)
+                    .foregroundStyle(refresherEyebrowColor)
             }
 
             Group {
@@ -345,6 +355,31 @@ struct LessonPromptLabel: View {
         .fixedSize(horizontal: false, vertical: true)
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 8)
+    }
+
+    private var refresherEyebrowFont: Font {
+        switch eyebrowStyle {
+        case .standard:
+            return LessonQuestionLayout.teachEyebrowFont
+        case .refresher:
+            return .aslReading(
+                LessonQuestionLayout.refresherEyebrowFontSize,
+                weight: LessonQuestionLayout.refresherEyebrowWeight
+            )
+        }
+    }
+
+    private var refresherEyebrowTracking: CGFloat {
+        eyebrowStyle == .standard ? 1.1 : 0
+    }
+
+    private var refresherEyebrowColor: Color {
+        switch eyebrowStyle {
+        case .standard:
+            return eyebrowColor
+        case .refresher:
+            return Brand.secondaryLabel.opacity(0.88)
+        }
     }
 
     private func emphasizedPrompt(emphasized: String) -> Text {

@@ -122,9 +122,7 @@ private struct HomeFeedView: View {
                 lastAutoScrolledUnitId: $lastAutoScrolledUnitId,
                 pendingStartUnit: $pendingStartUnit,
                 lessonEntryRevealCoordinator: lessonEntryRevealCoordinator,
-                onUpdateActiveUnit: updateActiveUnit,
-                onOpenPendingStart: openPendingStartUnitIfReady,
-                onAutoStartUnit: startNextUnit
+                onUpdateActiveUnit: updateActiveUnit
             )
         }
         .onChange(of: nextLessonRoute?.id) { _, _ in syncHomeUnitMedalBlocking() }
@@ -191,30 +189,6 @@ private struct HomeFeedView: View {
 
     private func isReviewUnitAvailable(at index: Int) -> Bool {
         store.isReviewUnitAvailable(at: index, in: units)
-    }
-
-    private func startNextUnit(_ unit: ASLUnit) {
-        if openFirstLesson(in: unit) {
-            return
-        }
-        pendingStartUnit = unit
-        store.loadLessons(for: unit)
-    }
-
-    @discardableResult
-    private func openFirstLesson(in unit: ASLUnit) -> Bool {
-        guard let lesson = (store.lessonsByUnitId[unit.id] ?? []).sorted(by: { $0.sortOrder < $1.sortOrder }).first else {
-            return false
-        }
-        nextLessonRoute = NextLessonRoute(unit: unit, lesson: lesson)
-        return true
-    }
-
-    private func openPendingStartUnitIfReady() {
-        guard let unit = pendingStartUnit else { return }
-        if openFirstLesson(in: unit) {
-            pendingStartUnit = nil
-        }
     }
 
     private func updateActiveUnit() {
@@ -615,8 +589,6 @@ private struct HomeFeedScrollView: View {
     @Binding var pendingStartUnit: ASLUnit?
     var lessonEntryRevealCoordinator: LessonEntryRevealCoordinator
     let onUpdateActiveUnit: () -> Void
-    let onOpenPendingStart: () -> Void
-    let onAutoStartUnit: (ASLUnit) -> Void
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -662,7 +634,9 @@ private struct HomeFeedScrollView: View {
             .onChange(of: store.pendingAutoStartUnitId) { _, _ in
                 consumeAutoStartHandoffIfNeeded()
             }
-            .onChange(of: store.lessonsByUnitId) { _, _ in onOpenPendingStart() }
+            .onChange(of: store.lessonsByUnitId) { _, _ in
+                openPendingStartUnitWithPortalIfNeeded()
+            }
     }
 
     @ViewBuilder
@@ -693,11 +667,54 @@ private struct HomeFeedScrollView: View {
               let unitId = store.pendingAutoStartUnitId,
               let unit = units.first(where: { $0.id == unitId }) else { return }
         store.clearPendingAutoStartUnit()
-        pendingStartUnit = unit
-        onAutoStartUnit(unit)
+
+        guard let lesson = firstLesson(in: unit) else {
+            pendingStartUnit = unit
+            store.loadLessons(for: unit)
+            return
+        }
+
+        pendingStartUnit = nil
         withAnimation(.easeInOut(duration: 0.45)) {
             proxy.scrollTo(unit.id, anchor: .top)
         }
+        openLessonWithPortal(unit: unit, lesson: lesson)
+    }
+
+    private func openPendingStartUnitWithPortalIfNeeded() {
+        guard nextLessonRoute == nil, let unit = pendingStartUnit else { return }
+        guard let lesson = firstLesson(in: unit) else { return }
+        pendingStartUnit = nil
+        withAnimation(.easeInOut(duration: 0.45)) {
+            proxy.scrollTo(unit.id, anchor: .top)
+        }
+        openLessonWithPortal(unit: unit, lesson: lesson)
+    }
+
+    private func firstLesson(in unit: ASLUnit) -> ASLLesson? {
+        (store.lessonsByUnitId[unit.id] ?? [])
+            .sorted { $0.sortOrder < $1.sortOrder }
+            .first
+    }
+
+    private func openLessonWithPortal(unit: ASLUnit, lesson: ASLLesson) {
+        let unitIndex = units.firstIndex(where: { $0.id == unit.id }) ?? 0
+        let palette = UnitPalette.palette(for: unitIndex)
+        let bounds = UIScreen.main.bounds
+        let origin = CGPoint(
+            x: bounds.midX,
+            y: bounds.maxY
+                - LessonActionTrayLayout.effectiveBottomPadding
+                - (LessonActionTrayLayout.buttonHeight / 2)
+        )
+        requestLessonEntry(
+            LessonEntryRevealRequest(
+                fillColor: palette.color,
+                origin: origin,
+                lesson: lesson,
+                unit: unit
+            )
+        )
     }
 
     private var scrollView: some View {

@@ -201,11 +201,70 @@ ASL_TIPS_CATALOG: list[dict[str, str]] = [
         "text": "Pick signing or speaking — doing both at once is tough for others to follow.",
         "wordId": "signlanguage",
     },
+    # Pronouns — one canonical video; English alias glosses share the same sign.
+    {
+        "id": "pronoun-i-me",
+        "text": "I and me use the same sign — point to yourself. English uses two words; ASL uses one.",
+        "wordId": "i",
+    },
+    {
+        "id": "pronoun-we-us",
+        "text": "We and us share one sign — point toward your group in space.",
+        "wordId": "we",
+    },
+    {
+        "id": "pronoun-he-him",
+        "text": "He and him are the same sign — point to where you set up that person.",
+        "wordId": "he",
+    },
+    {
+        "id": "pronoun-she-her",
+        "text": "She and her share one sign — point back to her spot in space.",
+        "wordId": "she",
+    },
+    {
+        "id": "pronoun-they-them",
+        "text": "They and them use the same sign — point to that group in space.",
+        "wordId": "they",
+    },
+    {
+        "id": "pronoun-my-mine",
+        "text": "My and mine are the same possessive sign toward yourself.",
+        "wordId": "my",
+    },
+    {
+        "id": "pronoun-your-yours",
+        "text": "Your and yours share one possessive sign toward the other person.",
+        "wordId": "your",
+    },
+    {
+        "id": "pronoun-our-ours",
+        "text": "Our and ours use the same possessive sign toward your group.",
+        "wordId": "our",
+    },
 ]
 
 DUPLICATE_WORDID_ALLOWLIST: frozenset[str] = frozenset({"fingerspell"})
 
 ASL_TIPS_BY_ID: dict[str, dict[str, str]] = {tip["id"]: tip for tip in ASL_TIPS_CATALOG}
+
+PRONOUN_TIP_BY_CANONICAL_WORD: dict[str, str] = {
+    "i": "pronoun-i-me",
+    "we": "pronoun-we-us",
+    "he": "pronoun-he-him",
+    "she": "pronoun-she-her",
+    "they": "pronoun-they-them",
+    "my": "pronoun-my-mine",
+    "your": "pronoun-your-yours",
+    "our": "pronoun-our-ours",
+}
+
+
+def pronoun_tip_for_word(word_id: str) -> dict[str, str] | None:
+    tip_id = PRONOUN_TIP_BY_CANONICAL_WORD.get(word_id)
+    if not tip_id:
+        return None
+    return ASL_TIPS_BY_ID.get(tip_id)
 
 
 def tip_video_word_id(tip: dict[str, str]) -> str | None:

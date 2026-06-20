@@ -319,14 +319,8 @@ struct UnitCelebrationFooter: View {
                 )
             }
         }
-        .padding(16)
-        .background(
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .fill(Brand.chrome)
-                .elevation(.sheetModal)
-        )
-        .padding(.horizontal, 20)
-        .padding(.bottom, 8)
+        .padding(.horizontal, LessonActionTrayLayout.horizontalPadding)
+        .padding(.bottom, LessonActionTrayLayout.effectiveBottomPadding)
         .opacity(isVisible ? 1 : 0)
         .offset(y: isVisible ? 0 : 14)
     }
@@ -519,7 +513,6 @@ struct UnitCelebration: View {
                     isVisible: footerIn,
                     onContinue: onContinue
                 )
-                .padding(.bottom, 20)
             }
         }
         .onAppear { runTimeline() }
@@ -676,6 +669,7 @@ struct ModuleCompleteCelebration: View {
     let correctCount: Int
     let totalCount: Int
     let bestStreak: Int
+    let continueTitle: String
     let onContinue: () -> Void
 
     @State private var confettiIn = false
@@ -729,7 +723,7 @@ struct ModuleCompleteCelebration: View {
                 Spacer()
 
                 PressableRaisedUnitButton(
-                    title: ASLModuleCompleteCopy.continueCTA,
+                    title: continueTitle,
                     color: palette,
                     depthColor: paletteShadow,
                     action: onContinue
@@ -1337,7 +1331,6 @@ struct PhaseReviewCompleteCelebration: View {
                     isVisible: footerIn,
                     onContinue: onContinue
                 )
-                .padding(.bottom, 20)
             }
         }
         .onAppear { runTimeline() }

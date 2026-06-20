@@ -11,7 +11,8 @@ enum BundledSignMedia {
     private static let postersSubdirectory = "BundledMedia/Posters"
     private static let videosSubdirectory = "BundledMedia/Videos"
     static func posterURL(for wordId: String) -> URL? {
-        resolveBundleURL(wordId: wordId, ext: "jpg", subdirectories: [
+        let resolved = SignEquivalence.canonicalSignId(for: wordId)
+        return resolveBundleURL(wordId: resolved, ext: "jpg", subdirectories: [
             postersSubdirectory,
             "BundledMedia/Posters",
             "Posters",
@@ -20,7 +21,8 @@ enum BundledSignMedia {
 
     /// Raw read-only URL inside the app bundle (may not be AVPlayerLooper-safe).
     static func videoURL(for wordId: String) -> URL? {
-        resolveBundleURL(wordId: wordId, ext: "mp4", subdirectories: [
+        let resolved = SignEquivalence.canonicalSignId(for: wordId)
+        resolveBundleURL(wordId: resolved, ext: "mp4", subdirectories: [
             videosSubdirectory,
             "BundledMedia/Videos",
             "Videos",
@@ -29,8 +31,9 @@ enum BundledSignMedia {
 
     /// Writable cache path for AVPlayer (hot path: cache lookup only).
     static func playbackURL(for wordId: String) -> URL? {
-        BundledPlaybackCache.cachedPlaybackURL(for: wordId)
-            ?? BundledPlaybackCache.ensureCached(wordId: wordId)
+        let resolved = SignEquivalence.canonicalSignId(for: wordId)
+        return BundledPlaybackCache.cachedPlaybackURL(for: resolved)
+            ?? BundledPlaybackCache.ensureCached(wordId: resolved)
     }
 
     static func hasBundledVideo(for wordId: String) -> Bool {
@@ -38,7 +41,8 @@ enum BundledSignMedia {
     }
 
     static func isPlayable(wordId: String) -> Bool {
-        FilmedSignCatalog.isFilmed(wordId: wordId) && hasBundledVideo(for: wordId)
+        let resolved = SignEquivalence.canonicalSignId(for: wordId)
+        return FilmedSignCatalog.isFilmed(wordId: resolved) && hasBundledVideo(for: resolved)
     }
 
     static var hasBundledPosters: Bool {

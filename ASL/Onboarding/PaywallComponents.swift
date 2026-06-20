@@ -25,6 +25,8 @@ enum PaywallMetrics {
     static let trialButtonCornerRadius: CGFloat = 18
     static let trialButtonDepth: CGFloat = 5
     static let contentMaxWidth: CGFloat = 380
+    static let footerLinkFontSize: CGFloat = 12
+    static let footerLinkSpacing: CGFloat = 10
 }
 
 private enum PaywallAccent {
@@ -107,23 +109,42 @@ struct PaywallPlanCardModel: Equatable {
 }
 
 enum PaywallPlanCardContent {
-    static let yearly = PaywallPlanCardModel(
-        label: "Yearly · Best value",
-        priceAmount: OnboardingPaywallPricing.yearlyWeeklyBreakdown,
-        priceUnit: "/week",
-        detail: "\(OnboardingPaywallPricing.formattedYearlyPrice)/year · \(OnboardingPaywallPricing.savingsBadgeText)",
-        cornerBadge: "7 DAYS FREE",
-        usesAccentFill: true
-    )
+    static func yearly(from pricing: PaywallPricingSnapshot) -> PaywallPlanCardModel {
+        PaywallPlanCardModel(
+            label: "Yearly · Best value",
+            priceAmount: pricing.yearlyWeeklyBreakdown,
+            priceUnit: "/week",
+            detail: "\(pricing.yearlyDisplayPrice)/year · SAVE \(pricing.savingsPercent)%",
+            cornerBadge: trialBadge(for: pricing),
+            usesAccentFill: true
+        )
+    }
 
-    static let weekly = PaywallPlanCardModel(
-        label: "Weekly · Most flexible",
-        priceAmount: OnboardingPaywallPricing.formattedWeeklyPrice,
-        priceUnit: "/week",
-        detail: "Billed weekly · \(OnboardingPaywallPricing.trialDays)-day free trial",
-        cornerBadge: "NO COMMITMENT",
-        usesAccentFill: false
-    )
+    static func weekly(from pricing: PaywallPricingSnapshot) -> PaywallPlanCardModel {
+        PaywallPlanCardModel(
+            label: "Weekly · Most flexible",
+            priceAmount: pricing.weeklyDisplayPrice,
+            priceUnit: "/week",
+            detail: trialDetail(for: pricing, cadence: "Billed weekly"),
+            cornerBadge: "NO COMMITMENT",
+            usesAccentFill: false
+        )
+    }
+
+    private static func trialBadge(for pricing: PaywallPricingSnapshot) -> String? {
+        guard let trialDays = pricing.trialDays, trialDays > 0 else { return nil }
+        return "\(trialDays) DAYS FREE"
+    }
+
+    private static func trialDetail(for pricing: PaywallPricingSnapshot, cadence: String) -> String {
+        if let trialDays = pricing.trialDays, trialDays > 0 {
+            return "\(cadence) · \(trialDays)-day free trial"
+        }
+        return cadence
+    }
+
+    static let yearly = yearly(from: .fallback)
+    static let weekly = weekly(from: .fallback)
 }
 
 struct PaywallPlanCard: View {
@@ -270,13 +291,14 @@ struct PaywallBenefitsList: View {
 
 struct PaywallTrialButton: View {
     let title: String
+    var isLoading: Bool = false
     let action: () -> Void
 
     @GestureState private var isPressed = false
     @State private var releasePressed = false
 
     private var showsPressed: Bool {
-        isPressed || releasePressed
+        isLoading || isPressed || releasePressed
     }
 
     private var depthColor: Color {
@@ -306,9 +328,7 @@ struct PaywallTrialButton: View {
                         .strokeBorder(Color.white.opacity(0.18), lineWidth: 1)
                 }
                 .overlay {
-                    Text(title)
-                        .font(.asl(.button))
-                        .foregroundStyle(.white)
+                    labelContent
                 }
                 .offset(y: faceOffset)
         }
@@ -318,12 +338,33 @@ struct PaywallTrialButton: View {
             height: PaywallMetrics.trialButtonHeight + PaywallMetrics.trialButtonDepth,
             alignment: .top
         )
-        .scaleEffect(showsPressed ? 0.985 : 1)
+        .scaleEffect(showsPressed && !isLoading ? 0.985 : 1)
         .elevation(.raisedControl(tint: depthColor, isPressed: showsPressed))
-        .animation(pressAnimation, value: showsPressed)
+        .animation(isLoading ? nil : pressAnimation, value: showsPressed)
         .contentShape(Rectangle())
-        .gesture(pressGesture)
+        .gesture(isLoading ? nil : pressGesture)
         .accessibilityAddTraits(.isButton)
+        .accessibilityLabel(title)
+    }
+
+    @ViewBuilder
+    private var labelContent: some View {
+        if isLoading {
+            HStack(spacing: 10) {
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .tint(.white)
+                    .scaleEffect(0.9)
+
+                Text(title)
+                    .font(.asl(.button))
+                    .foregroundStyle(.white)
+            }
+        } else {
+            Text(title)
+                .font(.asl(.button))
+                .foregroundStyle(.white)
+        }
     }
 
     private var pressGesture: some Gesture {
@@ -352,21 +393,21 @@ struct PaywallTrialButton: View {
 
 struct PaywallTrustStack: View {
     let selectedPlan: OnboardingPaywallPlan
-    let onPrivacy: () -> Void
-    let onTerms: () -> Void
+    let pricing: PaywallPricingSnapshot
     let onRestore: () -> Void
 
     var body: some View {
         VStack(spacing: 8) {
-            Text(OnboardingCopy.paywallBillingMicrocopy(plan: selectedPlan))
+            Text(OnboardingCopy.paywallBillingMicrocopy(plan: selectedPlan, pricing: pricing))
                 .font(.asl(14, weight: .medium))
                 .foregroundStyle(Brand.secondaryLabel)
                 .multilineTextAlignment(.center)
                 .animation(.easeOut(duration: 0.12), value: selectedPlan)
 
-            HStack(spacing: 16) {
-                PaywallFooterLink(title: "Privacy", action: onPrivacy)
-                PaywallFooterLink(title: "Terms", action: onTerms)
+            HStack(spacing: PaywallMetrics.footerLinkSpacing) {
+                PaywallFooterLink(title: "Privacy", url: ASLLegalLinks.privacyPolicy)
+                PaywallFooterLink(title: "Terms", url: ASLLegalLinks.termsOfUse)
+                PaywallFooterLink(title: "EULA", url: ASLLegalLinks.appleEULA)
                 PaywallFooterLink(title: "Restore", action: onRestore)
             }
         }
@@ -376,14 +417,37 @@ struct PaywallTrustStack: View {
 }
 
 private struct PaywallFooterLink: View {
+    @Environment(\.openURL) private var openURL
+
     let title: String
-    let action: () -> Void
+    var url: URL?
+    var action: (() -> Void)?
+
+    init(title: String, url: URL) {
+        self.title = title
+        self.url = url
+        self.action = nil
+    }
+
+    init(title: String, action: @escaping () -> Void) {
+        self.title = title
+        self.url = nil
+        self.action = action
+    }
 
     var body: some View {
-        Button(action: action) {
+        Button {
+            Haptics.tap()
+            if let url {
+                openURL(url)
+            } else {
+                action?()
+            }
+        } label: {
             Text(title)
-                .font(.asl(14, weight: .regular))
-                .foregroundStyle(Brand.tertiaryLabel)
+                .font(.asl(PaywallMetrics.footerLinkFontSize, weight: .regular))
+                .foregroundStyle(url == nil ? Brand.tertiaryLabel : Brand.primary)
+                .underline(url != nil)
         }
         .buttonStyle(.plain)
     }

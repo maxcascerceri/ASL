@@ -127,6 +127,8 @@
 		P20200012FAAB78B001AE114 /* ASLUnitPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = P20100012FAAB78B001AE114 /* ASLUnitPalette.swift */; };
 		P20200022FAAB78B001AE114 /* SectionDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = P20100022FAAB78B001AE114 /* SectionDivider.swift */; };
 		P20200032FAAB78B001AE114 /* ASLSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = P20100032FAAB78B001AE114 /* ASLSettings.swift */; };
+		R20200052FAAB78B001AE114 /* ASLSubscriptionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = R20100052FAAB78B001AE114 /* ASLSubscriptionStore.swift */; };
+		F10000000000000000000004 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = F10000000000000000000014 /* RevenueCat */; };
 		P20200102FAAB78B001AE114 /* ProfileDayKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = P20100102FAAB78B001AE114 /* ProfileDayKey.swift */; };
 		P20200122FAAB78B001AE114 /* ProfileRaisedControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = P20100122FAAB78B001AE114 /* ProfileRaisedControls.swift */; };
 		P20200132FAAB78B001AE114 /* ProfileSettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = P20100132FAAB78B001AE114 /* ProfileSettingsSheet.swift */; };
@@ -290,6 +292,7 @@
 		P20100012FAAB78B001AE114 /* ASLUnitPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLUnitPalette.swift; sourceTree = "<group>"; };
 		P20100022FAAB78B001AE114 /* SectionDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionDivider.swift; sourceTree = "<group>"; };
 		P20100032FAAB78B001AE114 /* ASLSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLSettings.swift; sourceTree = "<group>"; };
+		R20100052FAAB78B001AE114 /* ASLSubscriptionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLSubscriptionStore.swift; sourceTree = "<group>"; };
 		P20100102FAAB78B001AE114 /* ProfileDayKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDayKey.swift; sourceTree = "<group>"; };
 		P20100122FAAB78B001AE114 /* ProfileRaisedControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRaisedControls.swift; sourceTree = "<group>"; };
 		P20100132FAAB78B001AE114 /* ProfileSettingsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsSheet.swift; sourceTree = "<group>"; };
@@ -334,8 +337,9 @@
 			files = (
 				F10000000000000000000001 /* FirebaseCore in Frameworks */,
 				F10000000000000000000002 /* FirebaseFirestore in Frameworks */,
-				F10000000000000000000003 /* FirebaseStorage in Frameworks */,
-			);
+		F10000000000000000000003 /* FirebaseStorage in Frameworks */,
+		F10000000000000000000004 /* RevenueCat in Frameworks */,
+	);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -392,6 +396,7 @@
 				P20100012FAAB78B001AE114 /* ASLUnitPalette.swift */,
 				P20100022FAAB78B001AE114 /* SectionDivider.swift */,
 				P20100032FAAB78B001AE114 /* ASLSettings.swift */,
+				R20100052FAAB78B001AE114 /* ASLSubscriptionStore.swift */,
 				N10000012FAAB78B001AE121 /* Onboarding */,
 				P10000012FAAB78B001AE114 /* Profile */,
 				D10000022FAAB78B001AE114 /* Tabs */,
@@ -595,6 +600,7 @@
 				F10000000000000000000011 /* FirebaseCore */,
 				F10000000000000000000012 /* FirebaseFirestore */,
 				F10000000000000000000013 /* FirebaseStorage */,
+				F10000000000000000000014 /* RevenueCat */,
 			);
 			productName = ASL;
 			productReference = 9C81A4D12FAAB78B001AE114 /* Ziggy ASL.app */;
@@ -626,6 +632,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				F10000000000000000000010 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				F10000000000000000000020 /* XCRemoteSwiftPackageReference "purchases-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9C81A4D22FAAB78B001AE114 /* Products */;
@@ -762,6 +769,7 @@
 				P20200012FAAB78B001AE114 /* ASLUnitPalette.swift in Sources */,
 				P20200022FAAB78B001AE114 /* SectionDivider.swift in Sources */,
 				P20200032FAAB78B001AE114 /* ASLSettings.swift in Sources */,
+				R20200052FAAB78B001AE114 /* ASLSubscriptionStore.swift in Sources */,
 				P20200102FAAB78B001AE114 /* ProfileDayKey.swift in Sources */,
 				P20200122FAAB78B001AE114 /* ProfileRaisedControls.swift in Sources */,
 				P20200132FAAB78B001AE114 /* ProfileSettingsSheet.swift in Sources */,
@@ -1061,6 +1069,14 @@
 				minimumVersion = 12.13.0;
 			};
 		};
+		F10000000000000000000020 /* XCRemoteSwiftPackageReference "purchases-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1078,6 +1094,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F10000000000000000000010 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		F10000000000000000000014 /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F10000000000000000000020 /* XCRemoteSwiftPackageReference "purchases-ios" */;
+			productName = RevenueCat;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

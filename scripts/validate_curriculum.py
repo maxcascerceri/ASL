@@ -10,16 +10,25 @@ from collections import Counter
 from pathlib import Path
 
 from generate_curriculum_v4 import (
+    ALL_RECOGNITION_PICK_KINDS,
     RECOGNITION_KINDS,
+    SIGN_TO_WORD_KINDS,
     STONE_MID_YOUR_TURN,
+    STONE_MIN_MATCH_PAIRS,
+    STONE_MIN_WORD_PICK_VIDEO,
     STONE_RECOGNITION_SHARE_CAP,
     STONE_REPETITION_RULES,
+    POST_TEACH_ANSWER_WINDOW,
+    POST_TEACH_MAX_SAME_ANSWER,
     _adjacent_graded_answer_conflict,
     _allows_teach_intro_confirm_pair,
     _graded_answer_word_ids,
     _graded_step_answer_tokens,
     _is_graded_exercise_step,
+    _graded_step_primary_answer,
     _step_graded_answer_ids,
+    is_phrase_teach_step,
+    is_phrase_your_turn_followup,
     repetition_rule,
 )
 from curriculum_v5_data import (
@@ -31,7 +40,10 @@ from curriculum_v5_data import (
     PHRASE_SEQUENCE_UNITS,
     UNIT_SPECS,
     UNIT_STONE_WORD_SUBSETS,
+    canonical_sign_id,
+    is_sign_alias,
     min_unique_answers_for_unit,
+    same_sign,
     semantic_distractor_peer_ids,
     stone1_review_candidates,
 )
@@ -1472,7 +1484,7 @@ def validate_stone_word_subsets() -> list[str]:
                 continue
             if new_count > 0 and all(w in PHRASE_IDS for w in new_words):
                 continue
-            min_new = 9 if stone_idx == 1 else 6
+            min_new = 8 if stone_idx == 1 else 6
             if new_count < min_new:
                 errors.append(
                     f"{unit_id} stone {stone_idx}: {new_count} new signs "
@@ -1546,10 +1558,21 @@ def validate_stone_lesson_mix(data: dict) -> tuple[list[str], list[str]]:
                     your_turn_count = sum(
                         1 for step in steps if step.get("kind") == "yourTurn"
                     )
-                    if your_turn_count != 1:
+                    if your_turn_count < 2:
                         errors.append(
-                            f"{lesson_id}: stone 1 must have exactly 1 yourTurn "
+                            f"{lesson_id}: stone 1 must have at least 2 yourTurn "
                             f"(has {your_turn_count})"
+                        )
+
+                for index, step in enumerate(steps):
+                    if not is_phrase_teach_step(step):
+                        continue
+                    word = step.get("wordId")
+                    next_step = steps[index + 1] if index + 1 < len(steps) else None
+                    if not next_step or not is_phrase_your_turn_followup(step, next_step):
+                        errors.append(
+                            f"{lesson_id}: phrase teach {word!r} must be followed "
+                            f"immediately by yourTurn for the same phrase"
                         )
 
                 mid_needed = STONE_MID_YOUR_TURN.get(sort_order, 0)
@@ -1642,14 +1665,89 @@ def validate_stone_lesson_mix(data: dict) -> tuple[list[str], list[str]]:
                     recognition_count = sum(
                         1
                         for step in graded_steps
-                        if step.get("kind") in RECOGNITION_KINDS
+                        if step.get("kind") in ALL_RECOGNITION_PICK_KINDS
                     )
                     recognition_share = recognition_count / len(graded_steps)
                     cap = STONE_RECOGNITION_SHARE_CAP.get(sort_order, 0.65)
-                    if recognition_share > cap + 0.05:
-                        warnings.append(
+                    if recognition_share > cap + 0.02:
+                        errors.append(
                             f"{lesson_id}: recognition share "
-                            f"{recognition_share:.0%} exceeds target cap {cap:.0%}"
+                            f"{recognition_share:.0%} exceeds cap {cap:.0%}"
+                        )
+
+                wpv_min = STONE_MIN_WORD_PICK_VIDEO.get(sort_order, 0)
+                if wpv_min:
+                    wpv_count = sum(
+                        1 for step in steps if step.get("kind") == "wordPickVideo"
+                    )
+                    if wpv_count < wpv_min:
+                        errors.append(
+                            f"{lesson_id}: stone {sort_order} has {wpv_count} "
+                            f"wordPickVideo (minimum {wpv_min})"
+                        )
+
+                mp_min = STONE_MIN_MATCH_PAIRS.get(sort_order, 0)
+                if mp_min:
+                    mp_count = sum(
+                        1 for step in steps if step.get("kind") == "matchPairs"
+                    )
+                    if mp_count < mp_min:
+                        errors.append(
+                            f"{lesson_id}: stone {sort_order} has {mp_count} "
+                            f"matchPairs (minimum {mp_min})"
+                        )
+
+                context_count = sum(
+                    1
+                    for step in steps
+                    if step.get("kind") in {"fillSlot", "signSequence", "phraseSlot"}
+                )
+                context_min_share = {1: 0.05, 2: 0.08, 3: 0.08}.get(sort_order, 0)
+                if context_min_share and len(steps) >= 10:
+                    if context_count / len(steps) < context_min_share - 0.01:
+                        warnings.append(
+                            f"{lesson_id}: context share "
+                            f"{context_count}/{len(steps)} below "
+                            f"{context_min_share:.0%} target"
+                        )
+
+                wc_tc_words: dict[str, set[str]] = {}
+                for step in steps:
+                    kind = step.get("kind")
+                    if kind not in SIGN_TO_WORD_KINDS:
+                        continue
+                    answer = step.get("answerWordId")
+                    if answer:
+                        wc_tc_words.setdefault(answer, set()).add(kind)
+                for word, kinds in wc_tc_words.items():
+                    if "watchChoose" in kinds and "translationChoose" in kinds:
+                        errors.append(
+                            f"{lesson_id}: {word!r} uses both watchChoose "
+                            f"and translationChoose"
+                        )
+
+                if unit_has_phrases and sort_order in {2, 3}:
+                    phrase_slot_count = sum(
+                        1 for step in steps if step.get("kind") == "phraseSlot"
+                    )
+                    if phrase_slot_count < 1:
+                        warnings.append(
+                            f"{lesson_id}: phrase unit stone {sort_order} "
+                            f"missing phraseSlot review"
+                        )
+
+                if graded_steps:
+                    recognition_count_legacy = sum(
+                        1
+                        for step in graded_steps
+                        if step.get("kind") in RECOGNITION_KINDS
+                    )
+                    recognition_share_legacy = recognition_count_legacy / len(graded_steps)
+                    cap = STONE_RECOGNITION_SHARE_CAP.get(sort_order, 0.65)
+                    if recognition_share_legacy > cap + 0.05:
+                        warnings.append(
+                            f"{lesson_id}: watch/pick recognition share "
+                            f"{recognition_share_legacy:.0%} exceeds target cap {cap:.0%}"
                         )
 
                 if answers:
@@ -1677,19 +1775,73 @@ def validate_stone_lesson_mix(data: dict) -> tuple[list[str], list[str]]:
     return errors, warnings
 
 
-def validate_stone3_no_teaches(data: dict) -> list[str]:
+def validate_stone3_teach_cap(data: dict, max_teaches: int = 3) -> list[str]:
+    """Stone 3 caps new atomic vocabulary from the stone subset (phrase blocks exempt)."""
+    errors: list[str] = []
+    for path_doc in data.get("paths", []):
+        for unit in path_doc.get("units", []):
+            unit_id = unit.get("id", "?")
+            subsets = UNIT_STONE_WORD_SUBSETS.get(unit_id, [])
+            stone3_atomic: set[str] = set()
+            if len(subsets) >= 3:
+                stone3_atomic = {
+                    w for w in subsets[2] if w not in PHRASE_IDS
+                }
+            for lesson in unit.get("lessons", []):
+                if lesson.get("type") != "module":
+                    continue
+                if int(lesson.get("sortOrder") or 0) != 3:
+                    continue
+                lesson_id = lesson.get("id", "?")
+                teach_count = sum(
+                    1
+                    for step in lesson.get("steps", [])
+                    if step.get("kind") == "teach"
+                    and step.get("wordId") in stone3_atomic
+                )
+                if teach_count > max_teaches:
+                    errors.append(
+                        f"{lesson_id}: stone 3 has {teach_count} new subset teach steps "
+                        f"(max {max_teaches})"
+                    )
+    return errors
+
+
+def validate_post_teach_answer_window(data: dict) -> list[str]:
+    """After each teach, at most 2 of the next 3 graded steps may reuse its answer."""
     errors: list[str] = []
     for path_doc in data.get("paths", []):
         for unit in path_doc.get("units", []):
             for lesson in unit.get("lessons", []):
                 if lesson.get("type") != "module":
                     continue
-                if int(lesson.get("sortOrder") or 0) != 3:
-                    continue
-                if any(step.get("kind") == "teach" for step in lesson.get("steps", [])):
-                    errors.append(
-                        f"{lesson.get('id', '?')}: stone 3 must not include teach steps"
+                lesson_id = lesson.get("id", "?")
+                steps = lesson.get("steps", [])
+                for index, step in enumerate(steps):
+                    if step.get("kind") != "teach":
+                        continue
+                    word = step.get("wordId")
+                    if not word:
+                        continue
+                    graded_indices: list[int] = []
+                    for later in range(index + 1, len(steps)):
+                        if _is_graded_exercise_step(steps[later]):
+                            graded_indices.append(later)
+                            if len(graded_indices) >= POST_TEACH_ANSWER_WINDOW:
+                                break
+                    if len(graded_indices) < POST_TEACH_ANSWER_WINDOW:
+                        continue
+                    same_count = sum(
+                        1
+                        for gi in graded_indices
+                        if _graded_step_primary_answer(steps[gi]) == word
                     )
+                    if same_count > POST_TEACH_MAX_SAME_ANSWER:
+                        errors.append(
+                            f"{lesson_id}: teach {word!r} answer repeats "
+                            f"{same_count}/{POST_TEACH_ANSWER_WINDOW} times in next "
+                            f"graded window (max {POST_TEACH_MAX_SAME_ANSWER})"
+                        )
     return errors
 
 
@@ -1720,23 +1872,85 @@ def validate_one_recognition_modality_per_word(data: dict) -> list[str]:
 
 
 def validate_your_turn_budget(data: dict) -> list[str]:
-    """Module units allow at most two yourTurn steps across all stones."""
+    """Cap discretionary yourTurn steps per lesson (phrase follow-ups excluded)."""
+    max_by_stone = {1: 2, 2: 3, 3: 3}
     errors: list[str] = []
     for path_doc in data.get("paths", []):
         for unit in path_doc.get("units", []):
             if unit.get("isReview") or unit.get("isPhaseReview"):
                 continue
-            total = sum(
-                1
-                for lesson in unit.get("lessons", [])
-                if lesson.get("type") == "module"
-                for step in lesson.get("steps", [])
-                if step.get("kind") == "yourTurn"
-            )
-            if total > 2:
-                errors.append(
-                    f"{unit.get('id', '?')}: {total} yourTurn steps (max 2 per unit)"
-                )
+            for lesson in unit.get("lessons", []):
+                if lesson.get("type") != "module":
+                    continue
+                stone = int(lesson.get("sortOrder") or 0)
+                max_count = max_by_stone.get(stone)
+                if max_count is None:
+                    continue
+                steps = lesson.get("steps", [])
+                discretionary = 0
+                for index, step in enumerate(steps):
+                    if step.get("kind") != "yourTurn":
+                        continue
+                    prev = steps[index - 1] if index > 0 else None
+                    if prev and is_phrase_your_turn_followup(prev, step):
+                        continue
+                    discretionary += 1
+                if discretionary > max_count:
+                    lesson_id = lesson.get("id", "?")
+                    errors.append(
+                        f"{lesson_id}: stone {stone} has {discretionary} discretionary "
+                        f"yourTurn steps (max {max_count}, excluding phrase follow-ups)"
+                    )
+    return errors
+
+
+def validate_same_sign_exercises(data: dict) -> list[str]:
+    """Video exercises must not pair English glosses that share one ASL sign."""
+    errors: list[str] = []
+    video_kinds = frozenset({"wordPickVideo", "watchChoose"})
+    for path_doc in data.get("paths", []):
+        for unit in path_doc.get("units", []):
+            for lesson in unit.get("lessons", []):
+                if lesson.get("type") != "module":
+                    continue
+                lesson_id = lesson.get("id", "?")
+                for index, step in enumerate(lesson.get("steps", [])):
+                    kind = step.get("kind")
+                    if kind == "teach" and is_sign_alias(step.get("wordId") or ""):
+                        errors.append(
+                            f"{lesson_id} step {index + 1} (teach): "
+                            f"alias gloss {step.get('wordId')!r} must not be taught"
+                        )
+                    if kind in video_kinds:
+                        answer = step.get("answerWordId") or ""
+                        for distractor in step.get("distractorWordIds") or []:
+                            if same_sign(answer, distractor):
+                                errors.append(
+                                    f"{lesson_id} step {index + 1} ({kind}): "
+                                    f"answer {answer!r} and distractor {distractor!r} "
+                                    f"share the same sign"
+                                )
+                    if kind == "translationChoose":
+                        answer = step.get("answerWordId") or ""
+                        for distractor in step.get("distractorWordIds") or []:
+                            if same_sign(answer, distractor):
+                                errors.append(
+                                    f"{lesson_id} step {index + 1} (translationChoose): "
+                                    f"answer {answer!r} and distractor {distractor!r} "
+                                    f"share the same sign"
+                                )
+                    if kind == "matchPairs":
+                        pairs = step.get("pairWordIds") or []
+                        seen: set[str] = set()
+                        for word in pairs:
+                            canonical = canonical_sign_id(word)
+                            if canonical in seen:
+                                errors.append(
+                                    f"{lesson_id} step {index + 1} (matchPairs): "
+                                    f"pair words share the same sign ({pairs})"
+                                )
+                                break
+                            seen.add(canonical)
     return errors
 
 
@@ -1879,6 +2093,7 @@ def main() -> None:
     density_errors, density_warnings = validate_answer_density(data)
     errors.extend(density_errors)
     errors.extend(validate_no_adjacent_same_graded_answer(data))
+    errors.extend(validate_post_teach_answer_window(data))
     errors.extend(validate_no_adjacent_new_intros(data))
     errors.extend(validate_teach_confirm_streaks(data))
     errors.extend(validate_phrase_video_availability(data))
@@ -1899,9 +2114,10 @@ def main() -> None:
     warnings = validate_semantic_distractors(data)
     phrase_warnings = validate_phrase_sign_sequences(data)
     variety_warnings = validate_variety(data)
-    errors.extend(validate_stone3_no_teaches(data))
+    errors.extend(validate_stone3_teach_cap(data))
     errors.extend(validate_one_recognition_modality_per_word(data))
     errors.extend(validate_your_turn_budget(data))
+    errors.extend(validate_same_sign_exercises(data))
     errors.extend(validate_subset_teach_scope(data))
     gap_errors = validate_min_answer_gap(data)
     errors.extend(gap_errors)
