@@ -1,0 +1,1539 @@
+{
+  "generatedAt": "2026-06-04T10:19:10.565970+00:00",
+  "datasetRoot": "/Users/maxcascerceri/Desktop/elijahASL",
+  "filmmaker": "Elijah",
+  "assignmentCsv": "/Users/maxcascerceri/Desktop/ASL/scripts/filming-assignments/Elijah.csv",
+  "videoCount": 153,
+  "videos": [
+    {
+      "wordId": "5dollars",
+      "text": "5 Dollars",
+      "videoId": "video_001",
+      "sourcePath": "5 Dollars.mov",
+      "storagePath": "asl-videos/5dollars/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1274787,
+      "sourceFilename": "5 Dollars.mov"
+    },
+    {
+      "wordId": "afternoon",
+      "text": "Afternoon",
+      "videoId": "video_001",
+      "sourcePath": "Afternoon.mov",
+      "storagePath": "asl-videos/afternoon/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1739551,
+      "sourceFilename": "Afternoon.mov"
+    },
+    {
+      "wordId": "allofsudden",
+      "text": "All Of A Sudden",
+      "videoId": "video_001",
+      "sourcePath": "All Of A Sudden.mov",
+      "storagePath": "asl-videos/allofsudden/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2439645,
+      "sourceFilename": "All Of A Sudden.mov"
+    },
+    {
+      "wordId": "almost",
+      "text": "Almost",
+      "videoId": "video_001",
+      "sourcePath": "Almost.mov",
+      "storagePath": "asl-videos/almost/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2361713,
+      "sourceFilename": "Almost.mov"
+    },
+    {
+      "wordId": "arm",
+      "text": "Arm",
+      "videoId": "video_001",
+      "sourcePath": "Arm.mov",
+      "storagePath": "asl-videos/arm/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1687661,
+      "sourceFilename": "Arm.mov"
+    },
+    {
+      "wordId": "arrive",
+      "text": "Arrive",
+      "videoId": "video_001",
+      "sourcePath": "Arrive.mov",
+      "storagePath": "asl-videos/arrive/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1445099,
+      "sourceFilename": "Arrive.mov"
+    },
+    {
+      "wordId": "bacon",
+      "text": "Bacon",
+      "videoId": "video_001",
+      "sourcePath": "Bacon.mov",
+      "storagePath": "asl-videos/bacon/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2420287,
+      "sourceFilename": "Bacon.mov"
+    },
+    {
+      "wordId": "basement",
+      "text": "Basement",
+      "videoId": "video_001",
+      "sourcePath": "Basement.mov",
+      "storagePath": "asl-videos/basement/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1945644,
+      "sourceFilename": "Basement.mov"
+    },
+    {
+      "wordId": "bathroom",
+      "text": "Bathroom",
+      "videoId": "video_001",
+      "sourcePath": "Bathroom.mov",
+      "storagePath": "asl-videos/bathroom/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 302681,
+      "sourceFilename": "Bathroom.mov"
+    },
+    {
+      "wordId": "bed",
+      "text": "Bed",
+      "videoId": "video_001",
+      "sourcePath": "Bed.mov",
+      "storagePath": "asl-videos/bed/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1130614,
+      "sourceFilename": "Bed.mov"
+    },
+    {
+      "wordId": "belt",
+      "text": "Belt",
+      "videoId": "video_001",
+      "sourcePath": "Belt.mov",
+      "storagePath": "asl-videos/belt/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1218259,
+      "sourceFilename": "Belt.mov"
+    },
+    {
+      "wordId": "bored",
+      "text": "Bored",
+      "videoId": "video_001",
+      "sourcePath": "Bored.mov",
+      "storagePath": "asl-videos/bored/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1313491,
+      "sourceFilename": "Bored.mov"
+    },
+    {
+      "wordId": "bread",
+      "text": "Bread",
+      "videoId": "video_001",
+      "sourcePath": "Bread.mov",
+      "storagePath": "asl-videos/bread/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1536937,
+      "sourceFilename": "Bread.mov"
+    },
+    {
+      "wordId": "bright",
+      "text": "Bright",
+      "videoId": "video_001",
+      "sourcePath": "Bright.mov",
+      "storagePath": "asl-videos/bright/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1943136,
+      "sourceFilename": "Bright.mov"
+    },
+    {
+      "wordId": "brother",
+      "text": "Brother",
+      "videoId": "video_001",
+      "sourcePath": "Brother.mov",
+      "storagePath": "asl-videos/brother/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2330350,
+      "sourceFilename": "Brother.mov"
+    },
+    {
+      "wordId": "brown",
+      "text": "Brown",
+      "videoId": "video_001",
+      "sourcePath": "Brown.mov",
+      "storagePath": "asl-videos/brown/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2400151,
+      "sourceFilename": "Brown.mov"
+    },
+    {
+      "wordId": "c",
+      "text": "C",
+      "videoId": "video_001",
+      "sourcePath": "C.mov",
+      "storagePath": "asl-videos/c/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 875815,
+      "sourceFilename": "C.mov"
+    },
+    {
+      "wordId": "camera",
+      "text": "Camera",
+      "videoId": "video_001",
+      "sourcePath": "Camera.mov",
+      "storagePath": "asl-videos/camera/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1126991,
+      "sourceFilename": "Camera.mov"
+    },
+    {
+      "wordId": "can",
+      "text": "Can",
+      "videoId": "video_001",
+      "sourcePath": "Can.mov",
+      "storagePath": "asl-videos/can/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1154309,
+      "sourceFilename": "Can.mov"
+    },
+    {
+      "wordId": "canyourepeatthat",
+      "text": "Can You Repeat That?",
+      "videoId": "video_001",
+      "sourcePath": "Can You Repeat That? (Variation 1).mov",
+      "storagePath": "asl-videos/canyourepeatthat/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2754858,
+      "sourceFilename": "Can You Repeat That? (Variation 1).mov"
+    },
+    {
+      "wordId": "caption",
+      "text": "Caption",
+      "videoId": "video_001",
+      "sourcePath": "Caption.mov",
+      "storagePath": "asl-videos/caption/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1569803,
+      "sourceFilename": "Caption.mov"
+    },
+    {
+      "wordId": "christmas",
+      "text": "Christmas",
+      "videoId": "video_001",
+      "sourcePath": "Christmas.mov",
+      "storagePath": "asl-videos/christmas/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1069406,
+      "sourceFilename": "Christmas.mov"
+    },
+    {
+      "wordId": "comb",
+      "text": "Comb",
+      "videoId": "video_001",
+      "sourcePath": "Comb.mov",
+      "storagePath": "asl-videos/comb/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2095451,
+      "sourceFilename": "Comb.mov"
+    },
+    {
+      "wordId": "come",
+      "text": "Come",
+      "videoId": "video_001",
+      "sourcePath": "Come (Variation 1).mov",
+      "storagePath": "asl-videos/come/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1549491,
+      "sourceFilename": "Come (Variation 1).mov"
+    },
+    {
+      "wordId": "computer",
+      "text": "Computer",
+      "videoId": "video_001",
+      "sourcePath": "Computer.mov",
+      "storagePath": "asl-videos/computer/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1564857,
+      "sourceFilename": "Computer.mov"
+    },
+    {
+      "wordId": "confident",
+      "text": "Confident",
+      "videoId": "video_001",
+      "sourcePath": "Confident.mov",
+      "storagePath": "asl-videos/confident/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1302742,
+      "sourceFilename": "Confident.mov"
+    },
+    {
+      "wordId": "congratulations",
+      "text": "Congratulations",
+      "videoId": "video_001",
+      "sourcePath": "Congratulations.mov",
+      "storagePath": "asl-videos/congratulations/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 5182507,
+      "sourceFilename": "Congratulations.mov"
+    },
+    {
+      "wordId": "cook",
+      "text": "Cook",
+      "videoId": "video_001",
+      "sourcePath": "Cook.mov",
+      "storagePath": "asl-videos/cook/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1722727,
+      "sourceFilename": "Cook.mov"
+    },
+    {
+      "wordId": "corn",
+      "text": "Corn",
+      "videoId": "video_001",
+      "sourcePath": "Corn.mov",
+      "storagePath": "asl-videos/corn/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1106855,
+      "sourceFilename": "Corn.mov"
+    },
+    {
+      "wordId": "curious",
+      "text": "Curious",
+      "videoId": "video_001",
+      "sourcePath": "Curious.mov",
+      "storagePath": "asl-videos/curious/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 980408,
+      "sourceFilename": "Curious.mov"
+    },
+    {
+      "wordId": "delicious",
+      "text": "Delicious",
+      "videoId": "video_001",
+      "sourcePath": "Delicious.mov",
+      "storagePath": "asl-videos/delicious/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1349566,
+      "sourceFilename": "Delicious.mov"
+    },
+    {
+      "wordId": "different",
+      "text": "Different",
+      "videoId": "video_001",
+      "sourcePath": "Different.mov",
+      "storagePath": "asl-videos/different/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1205835,
+      "sourceFilename": "Different.mov"
+    },
+    {
+      "wordId": "draw",
+      "text": "Draw",
+      "videoId": "video_001",
+      "sourcePath": "Draw.mov",
+      "storagePath": "asl-videos/draw/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1375300,
+      "sourceFilename": "Draw.mov"
+    },
+    {
+      "wordId": "dress",
+      "text": "Dress",
+      "videoId": "video_001",
+      "sourcePath": "Dress.mov",
+      "storagePath": "asl-videos/dress/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1114921,
+      "sourceFilename": "Dress.mov"
+    },
+    {
+      "wordId": "eagle",
+      "text": "Eagle",
+      "videoId": "video_001",
+      "sourcePath": "Eagle.mov",
+      "storagePath": "asl-videos/eagle/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1265672,
+      "sourceFilename": "Eagle.mov"
+    },
+    {
+      "wordId": "early",
+      "text": "Early",
+      "videoId": "video_001",
+      "sourcePath": "Early.mov",
+      "storagePath": "asl-videos/early/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1048627,
+      "sourceFilename": "Early.mov"
+    },
+    {
+      "wordId": "eat",
+      "text": "Eat",
+      "videoId": "video_001",
+      "sourcePath": "Eat.mov",
+      "storagePath": "asl-videos/eat/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 4210747,
+      "sourceFilename": "Eat.mov"
+    },
+    {
+      "wordId": "egg",
+      "text": "Egg",
+      "videoId": "video_001",
+      "sourcePath": "Egg.mov",
+      "storagePath": "asl-videos/egg/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 3336292,
+      "sourceFilename": "Egg.mov"
+    },
+    {
+      "wordId": "elephant",
+      "text": "Elephant",
+      "videoId": "video_001",
+      "sourcePath": "Elephant.mov",
+      "storagePath": "asl-videos/elephant/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1072692,
+      "sourceFilename": "Elephant.mov"
+    },
+    {
+      "wordId": "eleven",
+      "text": "Eleven",
+      "videoId": "video_001",
+      "sourcePath": "Eleven.mov",
+      "storagePath": "asl-videos/eleven/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1189864,
+      "sourceFilename": "Eleven.mov"
+    },
+    {
+      "wordId": "engineer",
+      "text": "Engineer",
+      "videoId": "video_001",
+      "sourcePath": "Engineer.mov",
+      "storagePath": "asl-videos/engineer/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2067869,
+      "sourceFilename": "Engineer.mov"
+    },
+    {
+      "wordId": "face",
+      "text": "Face",
+      "videoId": "video_001",
+      "sourcePath": "Face.mov",
+      "storagePath": "asl-videos/face/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1695766,
+      "sourceFilename": "Face.mov"
+    },
+    {
+      "wordId": "far",
+      "text": "Far",
+      "videoId": "video_001",
+      "sourcePath": "Far (Variation 1).mov",
+      "storagePath": "asl-videos/far/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2270493,
+      "sourceFilename": "Far (Variation 1).mov"
+    },
+    {
+      "wordId": "find",
+      "text": "Find",
+      "videoId": "video_001",
+      "sourcePath": "Find (Variation 1).mov",
+      "storagePath": "asl-videos/find/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1302852,
+      "sourceFilename": "Find (Variation 1).mov"
+    },
+    {
+      "wordId": "football",
+      "text": "Football",
+      "videoId": "video_001",
+      "sourcePath": "Football.mov",
+      "storagePath": "asl-videos/football/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1172658,
+      "sourceFilename": "Football.mov"
+    },
+    {
+      "wordId": "friday",
+      "text": "Friday",
+      "videoId": "video_001",
+      "sourcePath": "Friday.mov",
+      "storagePath": "asl-videos/friday/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 3851329,
+      "sourceFilename": "Friday.mov"
+    },
+    {
+      "wordId": "frustrate",
+      "text": "Frustrate",
+      "videoId": "video_001",
+      "sourcePath": "Frustrate.mov",
+      "storagePath": "asl-videos/frustrate/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1962320,
+      "sourceFilename": "Frustrate.mov"
+    },
+    {
+      "wordId": "funny",
+      "text": "Funny",
+      "videoId": "video_001",
+      "sourcePath": "Funny.mov",
+      "storagePath": "asl-videos/funny/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2876014,
+      "sourceFilename": "Funny.mov"
+    },
+    {
+      "wordId": "g",
+      "text": "G",
+      "videoId": "video_001",
+      "sourcePath": "G.mov",
+      "storagePath": "asl-videos/g/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 881298,
+      "sourceFilename": "G.mov"
+    },
+    {
+      "wordId": "get",
+      "text": "Get",
+      "videoId": "video_001",
+      "sourcePath": "Get.mov",
+      "storagePath": "asl-videos/get/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1369961,
+      "sourceFilename": "Get.mov"
+    },
+    {
+      "wordId": "girl",
+      "text": "Girl",
+      "videoId": "video_001",
+      "sourcePath": "Girl.mov",
+      "storagePath": "asl-videos/girl/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1214992,
+      "sourceFilename": "Girl.mov"
+    },
+    {
+      "wordId": "gold",
+      "text": "Gold",
+      "videoId": "video_001",
+      "sourcePath": "Gold.mov",
+      "storagePath": "asl-videos/gold/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 6973363,
+      "sourceFilename": "Gold.mov"
+    },
+    {
+      "wordId": "good",
+      "text": "Good",
+      "videoId": "video_001",
+      "sourcePath": "Good.mov",
+      "storagePath": "asl-videos/good/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2553462,
+      "sourceFilename": "Good.mov"
+    },
+    {
+      "wordId": "goodnight",
+      "text": "Good Night",
+      "videoId": "video_001",
+      "sourcePath": "Good Night.mov",
+      "storagePath": "asl-videos/goodnight/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 3029126,
+      "sourceFilename": "Good Night.mov"
+    },
+    {
+      "wordId": "grandfather",
+      "text": "Grandfather",
+      "videoId": "video_001",
+      "sourcePath": "Grandfather.mov",
+      "storagePath": "asl-videos/grandfather/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 661547,
+      "sourceFilename": "Grandfather.mov"
+    },
+    {
+      "wordId": "guitar",
+      "text": "Guitar",
+      "videoId": "video_001",
+      "sourcePath": "Guitar.mov",
+      "storagePath": "asl-videos/guitar/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1711863,
+      "sourceFilename": "Guitar.mov"
+    },
+    {
+      "wordId": "hat",
+      "text": "Hat",
+      "videoId": "video_001",
+      "sourcePath": "Hat.mov",
+      "storagePath": "asl-videos/hat/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1650248,
+      "sourceFilename": "Hat.mov"
+    },
+    {
+      "wordId": "hate",
+      "text": "Hate",
+      "videoId": "video_001",
+      "sourcePath": "Hate.mov",
+      "storagePath": "asl-videos/hate/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1700291,
+      "sourceFilename": "Hate.mov"
+    },
+    {
+      "wordId": "havegoodday",
+      "text": "Have A Good Day",
+      "videoId": "video_001",
+      "sourcePath": "Have a Good Day.mov",
+      "storagePath": "asl-videos/havegoodday/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 5713826,
+      "sourceFilename": "Have a Good Day.mov"
+    },
+    {
+      "wordId": "hear",
+      "text": "Hear",
+      "videoId": "video_001",
+      "sourcePath": "Hear (Variation 1).mov",
+      "storagePath": "asl-videos/hear/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1440976,
+      "sourceFilename": "Hear (Variation 1).mov"
+    },
+    {
+      "wordId": "hearing",
+      "text": "Hearing",
+      "videoId": "video_001",
+      "sourcePath": "Hearing.mov",
+      "storagePath": "asl-videos/hearing/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1758855,
+      "sourceFilename": "Hearing.mov"
+    },
+    {
+      "wordId": "help",
+      "text": "Help",
+      "videoId": "video_001",
+      "sourcePath": "Help.mov",
+      "storagePath": "asl-videos/help/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2025296,
+      "sourceFilename": "Help.mov"
+    },
+    {
+      "wordId": "horse",
+      "text": "Horse",
+      "videoId": "video_001",
+      "sourcePath": "Horse.mov",
+      "storagePath": "asl-videos/horse/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1880995,
+      "sourceFilename": "Horse.mov"
+    },
+    {
+      "wordId": "hot",
+      "text": "Hot",
+      "videoId": "video_001",
+      "sourcePath": "Hot.mov",
+      "storagePath": "asl-videos/hot/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1525488,
+      "sourceFilename": "Hot.mov"
+    },
+    {
+      "wordId": "howmany",
+      "text": "How Many?",
+      "videoId": "video_001",
+      "sourcePath": "How Many?.mov",
+      "storagePath": "asl-videos/howmany/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1656176,
+      "sourceFilename": "How Many?.mov"
+    },
+    {
+      "wordId": "howyousignthat",
+      "text": "How Do You Sign That",
+      "videoId": "video_001",
+      "sourcePath": "How Do You Sign That? (Variation 1).mov",
+      "storagePath": "asl-videos/howyousignthat/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 3421199,
+      "sourceFilename": "How Do You Sign That? (Variation 1).mov"
+    },
+    {
+      "wordId": "hurt",
+      "text": "Hurt",
+      "videoId": "video_001",
+      "sourcePath": "Hurt (Variation 1).mov",
+      "storagePath": "asl-videos/hurt/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 3385906,
+      "sourceFilename": "Hurt (Variation 1).mov"
+    },
+    {
+      "wordId": "ilike",
+      "text": "I Like",
+      "videoId": "video_001",
+      "sourcePath": "I Like.mov",
+      "storagePath": "asl-videos/ilike/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1340153,
+      "sourceFilename": "I Like.mov"
+    },
+    {
+      "wordId": "imfine",
+      "text": "I'm Fine",
+      "videoId": "video_001",
+      "sourcePath": "I'm Fine.mov",
+      "storagePath": "asl-videos/imfine/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 41310800,
+      "sourceFilename": "I'm Fine.mov"
+    },
+    {
+      "wordId": "imlost",
+      "text": "I'm Lost",
+      "videoId": "video_001",
+      "sourcePath": "I'm Lost.mov",
+      "storagePath": "asl-videos/imlost/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1286353,
+      "sourceFilename": "I'm Lost.mov"
+    },
+    {
+      "wordId": "imnervous",
+      "text": "I'm Nervous",
+      "videoId": "video_001",
+      "sourcePath": "I'm Nervous.mov",
+      "storagePath": "asl-videos/imnervous/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2273702,
+      "sourceFilename": "I'm Nervous.mov"
+    },
+    {
+      "wordId": "imsad",
+      "text": "I'm Sad",
+      "videoId": "video_001",
+      "sourcePath": "I'm Sad.mov",
+      "storagePath": "asl-videos/imsad/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1943529,
+      "sourceFilename": "I'm Sad.mov"
+    },
+    {
+      "wordId": "internet",
+      "text": "Internet",
+      "videoId": "video_001",
+      "sourcePath": "Internet.mov",
+      "storagePath": "asl-videos/internet/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1229466,
+      "sourceFilename": "Internet.mov"
+    },
+    {
+      "wordId": "japan",
+      "text": "Japan",
+      "videoId": "video_001",
+      "sourcePath": "Japan.mov",
+      "storagePath": "asl-videos/japan/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1005749,
+      "sourceFilename": "Japan.mov"
+    },
+    {
+      "wordId": "k",
+      "text": "K",
+      "videoId": "video_001",
+      "sourcePath": "K.mov",
+      "storagePath": "asl-videos/k/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 923021,
+      "sourceFilename": "K.mov"
+    },
+    {
+      "wordId": "lamp",
+      "text": "Lamp",
+      "videoId": "video_001",
+      "sourcePath": "Lamp.mov",
+      "storagePath": "asl-videos/lamp/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2747442,
+      "sourceFilename": "Lamp.mov"
+    },
+    {
+      "wordId": "language",
+      "text": "Language",
+      "videoId": "video_001",
+      "sourcePath": "Language.mov",
+      "storagePath": "asl-videos/language/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1395703,
+      "sourceFilename": "Language.mov"
+    },
+    {
+      "wordId": "less",
+      "text": "Less",
+      "videoId": "video_001",
+      "sourcePath": "Less.mov",
+      "storagePath": "asl-videos/less/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2766870,
+      "sourceFilename": "Less.mov"
+    },
+    {
+      "wordId": "library",
+      "text": "Library",
+      "videoId": "video_001",
+      "sourcePath": "Library.mov",
+      "storagePath": "asl-videos/library/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1972052,
+      "sourceFilename": "Library.mov"
+    },
+    {
+      "wordId": "little",
+      "text": "Little",
+      "videoId": "video_001",
+      "sourcePath": "Little (Bit) Variation 1.mov",
+      "storagePath": "asl-videos/little/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1353057,
+      "sourceFilename": "Little (Bit) Variation 1.mov"
+    },
+    {
+      "wordId": "lunch",
+      "text": "Lunch",
+      "videoId": "video_001",
+      "sourcePath": "Lunch (Variation 1).mov",
+      "storagePath": "asl-videos/lunch/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1651661,
+      "sourceFilename": "Lunch (Variation 1).mov"
+    },
+    {
+      "wordId": "math",
+      "text": "Math",
+      "videoId": "video_001",
+      "sourcePath": "Math.mov",
+      "storagePath": "asl-videos/math/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2090512,
+      "sourceFilename": "Math.mov"
+    },
+    {
+      "wordId": "me",
+      "text": "Me",
+      "videoId": "video_001",
+      "sourcePath": "Me.mov",
+      "storagePath": "asl-videos/me/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1935276,
+      "sourceFilename": "Me.mov"
+    },
+    {
+      "wordId": "mexico",
+      "text": "Mexico",
+      "videoId": "video_001",
+      "sourcePath": "Mexico.mov",
+      "storagePath": "asl-videos/mexico/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1402135,
+      "sourceFilename": "Mexico.mov"
+    },
+    {
+      "wordId": "minute",
+      "text": "Minute",
+      "videoId": "video_001",
+      "sourcePath": "Minute (Variation 1).mov",
+      "storagePath": "asl-videos/minute/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 3157259,
+      "sourceFilename": "Minute (Variation 1).mov"
+    },
+    {
+      "wordId": "monday",
+      "text": "Monday",
+      "videoId": "video_001",
+      "sourcePath": "Monday.mov",
+      "storagePath": "asl-videos/monday/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 877237,
+      "sourceFilename": "Monday.mov"
+    },
+    {
+      "wordId": "motorcycle",
+      "text": "Motorcycle",
+      "videoId": "video_001",
+      "sourcePath": "Motorcycle.mov",
+      "storagePath": "asl-videos/motorcycle/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1310389,
+      "sourceFilename": "Motorcycle.mov"
+    },
+    {
+      "wordId": "mouth",
+      "text": "Mouth",
+      "videoId": "video_001",
+      "sourcePath": "Mouth.mov",
+      "storagePath": "asl-videos/mouth/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1294117,
+      "sourceFilename": "Mouth.mov"
+    },
+    {
+      "wordId": "much",
+      "text": "Much",
+      "videoId": "video_001",
+      "sourcePath": "Much.mov",
+      "storagePath": "asl-videos/much/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 3869537,
+      "sourceFilename": "Much.mov"
+    },
+    {
+      "wordId": "music",
+      "text": "Music",
+      "videoId": "video_001",
+      "sourcePath": "Music.mov",
+      "storagePath": "asl-videos/music/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1819687,
+      "sourceFilename": "Music.mov"
+    },
+    {
+      "wordId": "mynameis",
+      "text": "My Name Is",
+      "videoId": "video_001",
+      "sourcePath": "My name is.mov",
+      "storagePath": "asl-videos/mynameis/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2095082,
+      "sourceFilename": "My name is.mov"
+    },
+    {
+      "wordId": "namesign",
+      "text": "Name Sign",
+      "videoId": "video_001",
+      "sourcePath": "Name Sign.mov",
+      "storagePath": "asl-videos/namesign/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2429745,
+      "sourceFilename": "Name Sign.mov"
+    },
+    {
+      "wordId": "neck",
+      "text": "Neck",
+      "videoId": "video_001",
+      "sourcePath": "Neck.mov",
+      "storagePath": "asl-videos/neck/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 3209002,
+      "sourceFilename": "Neck.mov"
+    },
+    {
+      "wordId": "necklace",
+      "text": "Necklace",
+      "videoId": "video_001",
+      "sourcePath": "Necklace.mov",
+      "storagePath": "asl-videos/necklace/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1147338,
+      "sourceFilename": "Necklace.mov"
+    },
+    {
+      "wordId": "nervous",
+      "text": "Nervous",
+      "videoId": "video_001",
+      "sourcePath": "Nervous (Variation 1).mov",
+      "storagePath": "asl-videos/nervous/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2095664,
+      "sourceFilename": "Nervous (Variation 1).mov"
+    },
+    {
+      "wordId": "nicetomeetyou",
+      "text": "Nice To Meet You",
+      "videoId": "video_001",
+      "sourcePath": "Nice To Meet You.mov",
+      "storagePath": "asl-videos/nicetomeetyou/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 3222660,
+      "sourceFilename": "Nice To Meet You.mov"
+    },
+    {
+      "wordId": "niece",
+      "text": "Niece",
+      "videoId": "video_001",
+      "sourcePath": "Niece.mov",
+      "storagePath": "asl-videos/niece/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 3113476,
+      "sourceFilename": "Niece.mov"
+    },
+    {
+      "wordId": "notyet",
+      "text": "Not Yet",
+      "videoId": "video_001",
+      "sourcePath": "Not Yet.mov",
+      "storagePath": "asl-videos/notyet/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 3206201,
+      "sourceFilename": "Not Yet.mov"
+    },
+    {
+      "wordId": "nurse",
+      "text": "Nurse",
+      "videoId": "video_001",
+      "sourcePath": "Nurse.mov",
+      "storagePath": "asl-videos/nurse/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2098864,
+      "sourceFilename": "Nurse.mov"
+    },
+    {
+      "wordId": "ocean",
+      "text": "Ocean",
+      "videoId": "video_001",
+      "sourcePath": "Ocean.mov",
+      "storagePath": "asl-videos/ocean/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1858436,
+      "sourceFilename": "Ocean.mov"
+    },
+    {
+      "wordId": "onemoretime",
+      "text": "One More Time",
+      "videoId": "video_001",
+      "sourcePath": "One More Time (Variation 1).mov",
+      "storagePath": "asl-videos/onemoretime/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2821082,
+      "sourceFilename": "One More Time (Variation 1).mov"
+    },
+    {
+      "wordId": "or",
+      "text": "Or",
+      "videoId": "video_001",
+      "sourcePath": "Or (Fs).mov",
+      "storagePath": "asl-videos/or/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2465342,
+      "sourceFilename": "Or (Fs).mov"
+    },
+    {
+      "wordId": "orangefruit",
+      "text": "Orange Fruit",
+      "videoId": "video_001",
+      "sourcePath": "Orange Fruit.mov",
+      "storagePath": "asl-videos/orangefruit/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1098052,
+      "sourceFilename": "Orange Fruit.mov"
+    },
+    {
+      "wordId": "p",
+      "text": "P",
+      "videoId": "video_001",
+      "sourcePath": "P.mov",
+      "storagePath": "asl-videos/p/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 3056669,
+      "sourceFilename": "P.mov"
+    },
+    {
+      "wordId": "parents",
+      "text": "Parents",
+      "videoId": "video_001",
+      "sourcePath": "Parents.mov",
+      "storagePath": "asl-videos/parents/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1746984,
+      "sourceFilename": "Parents.mov"
+    },
+    {
+      "wordId": "pay",
+      "text": "Pay",
+      "videoId": "video_001",
+      "sourcePath": "Pay (Variation 1).mov",
+      "storagePath": "asl-videos/pay/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1339687,
+      "sourceFilename": "Pay (Variation 1).mov"
+    },
+    {
+      "wordId": "percent",
+      "text": "Percent",
+      "videoId": "video_001",
+      "sourcePath": "Percent.mov",
+      "storagePath": "asl-videos/percent/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2376253,
+      "sourceFilename": "Percent.mov"
+    },
+    {
+      "wordId": "pineapple",
+      "text": "Pineapple",
+      "videoId": "video_001",
+      "sourcePath": "Pineapple (Variation 1).mov",
+      "storagePath": "asl-videos/pineapple/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1510137,
+      "sourceFilename": "Pineapple (Variation 1).mov"
+    },
+    {
+      "wordId": "please",
+      "text": "Please",
+      "videoId": "video_001",
+      "sourcePath": "Please.mov",
+      "storagePath": "asl-videos/please/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1560750,
+      "sourceFilename": "Please.mov"
+    },
+    {
+      "wordId": "police",
+      "text": "Police",
+      "videoId": "video_001",
+      "sourcePath": "Police (Variation 1).mov",
+      "storagePath": "asl-videos/police/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1925816,
+      "sourceFilename": "Police (Variation 1).mov"
+    },
+    {
+      "wordId": "practice",
+      "text": "Practice",
+      "videoId": "video_001",
+      "sourcePath": "Practice.mov",
+      "storagePath": "asl-videos/practice/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2309277,
+      "sourceFilename": "Practice.mov"
+    },
+    {
+      "wordId": "rabbit",
+      "text": "Rabbit",
+      "videoId": "video_001",
+      "sourcePath": "Rabbit (Variation 1).mov",
+      "storagePath": "asl-videos/rabbit/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1369499,
+      "sourceFilename": "Rabbit (Variation 1).mov"
+    },
+    {
+      "wordId": "right",
+      "text": "Right",
+      "videoId": "video_001",
+      "sourcePath": "Right.mov",
+      "storagePath": "asl-videos/right/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 838302,
+      "sourceFilename": "Right.mov"
+    },
+    {
+      "wordId": "rightcorrect",
+      "text": "Right / Correct",
+      "videoId": "video_001",
+      "sourcePath": "Right - Correct.mov",
+      "storagePath": "asl-videos/rightcorrect/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1508134,
+      "sourceFilename": "Right - Correct.mov"
+    },
+    {
+      "wordId": "sad",
+      "text": "Sad",
+      "videoId": "video_001",
+      "sourcePath": "Sad.mov",
+      "storagePath": "asl-videos/sad/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2078607,
+      "sourceFilename": "Sad.mov"
+    },
+    {
+      "wordId": "seven",
+      "text": "Seven",
+      "videoId": "video_001",
+      "sourcePath": "Seven.mov",
+      "storagePath": "asl-videos/seven/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1195763,
+      "sourceFilename": "Seven.mov"
+    },
+    {
+      "wordId": "shop",
+      "text": "Shop",
+      "videoId": "video_001",
+      "sourcePath": "Shop.mov",
+      "storagePath": "asl-videos/shop/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1072828,
+      "sourceFilename": "Shop.mov"
+    },
+    {
+      "wordId": "sink",
+      "text": "Sink",
+      "videoId": "video_001",
+      "sourcePath": "Sink.mov",
+      "storagePath": "asl-videos/sink/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1558401,
+      "sourceFilename": "Sink.mov"
+    },
+    {
+      "wordId": "sneeze",
+      "text": "Sneeze",
+      "videoId": "video_001",
+      "sourcePath": "Sneeze.mov",
+      "storagePath": "asl-videos/sneeze/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1306255,
+      "sourceFilename": "Sneeze.mov"
+    },
+    {
+      "wordId": "spring",
+      "text": "Spring",
+      "videoId": "video_001",
+      "sourcePath": "Spring.mov",
+      "storagePath": "asl-videos/spring/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1291817,
+      "sourceFilename": "Spring.mov"
+    },
+    {
+      "wordId": "sure",
+      "text": "Sure",
+      "videoId": "video_001",
+      "sourcePath": "Sure.mov",
+      "storagePath": "asl-videos/sure/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1965427,
+      "sourceFilename": "Sure.mov"
+    },
+    {
+      "wordId": "sweater",
+      "text": "Sweater",
+      "videoId": "video_001",
+      "sourcePath": "Sweater.mov",
+      "storagePath": "asl-videos/sweater/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1175074,
+      "sourceFilename": "Sweater.mov"
+    },
+    {
+      "wordId": "t",
+      "text": "T",
+      "videoId": "video_001",
+      "sourcePath": "T.mov",
+      "storagePath": "asl-videos/t/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2345586,
+      "sourceFilename": "T.mov"
+    },
+    {
+      "wordId": "teacher",
+      "text": "Teacher",
+      "videoId": "video_001",
+      "sourcePath": "Teacher.mov",
+      "storagePath": "asl-videos/teacher/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 3111714,
+      "sourceFilename": "Teacher.mov"
+    },
+    {
+      "wordId": "them",
+      "text": "Them",
+      "videoId": "video_001",
+      "sourcePath": "Them.mov",
+      "storagePath": "asl-videos/them/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2733802,
+      "sourceFilename": "Them.mov"
+    },
+    {
+      "wordId": "they",
+      "text": "They",
+      "videoId": "video_001",
+      "sourcePath": "They.mov",
+      "storagePath": "asl-videos/they/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2463695,
+      "sourceFilename": "They.mov"
+    },
+    {
+      "wordId": "think",
+      "text": "Think",
+      "videoId": "video_001",
+      "sourcePath": "Think.mov",
+      "storagePath": "asl-videos/think/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1954414,
+      "sourceFilename": "Think.mov"
+    },
+    {
+      "wordId": "thirsty",
+      "text": "Thirsty",
+      "videoId": "video_001",
+      "sourcePath": "Thirsty.mov",
+      "storagePath": "asl-videos/thirsty/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1431235,
+      "sourceFilename": "Thirsty.mov"
+    },
+    {
+      "wordId": "three",
+      "text": "Three",
+      "videoId": "video_001",
+      "sourcePath": "Three.mov",
+      "storagePath": "asl-videos/three/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 951387,
+      "sourceFilename": "Three.mov"
+    },
+    {
+      "wordId": "tomorrow",
+      "text": "Tomorrow",
+      "videoId": "video_001",
+      "sourcePath": "Tomorrow.mov",
+      "storagePath": "asl-videos/tomorrow/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1049311,
+      "sourceFilename": "Tomorrow.mov"
+    },
+    {
+      "wordId": "traffic",
+      "text": "Traffic",
+      "videoId": "video_001",
+      "sourcePath": "Traffic (Variation 1).mov",
+      "storagePath": "asl-videos/traffic/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1715710,
+      "sourceFilename": "Traffic (Variation 1).mov"
+    },
+    {
+      "wordId": "train",
+      "text": "Train",
+      "videoId": "video_001",
+      "sourcePath": "Train.mov",
+      "storagePath": "asl-videos/train/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1259094,
+      "sourceFilename": "Train.mov"
+    },
+    {
+      "wordId": "translate",
+      "text": "Translate",
+      "videoId": "video_001",
+      "sourcePath": "Translate.mov",
+      "storagePath": "asl-videos/translate/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 770824,
+      "sourceFilename": "Translate.mov"
+    },
+    {
+      "wordId": "tree",
+      "text": "Tree",
+      "videoId": "video_001",
+      "sourcePath": "Tree.mov",
+      "storagePath": "asl-videos/tree/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1443903,
+      "sourceFilename": "Tree.mov"
+    },
+    {
+      "wordId": "turn",
+      "text": "Turn",
+      "videoId": "video_001",
+      "sourcePath": "Turn (Around).mov",
+      "storagePath": "asl-videos/turn/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1482926,
+      "sourceFilename": "Turn (Around).mov"
+    },
+    {
+      "wordId": "upload",
+      "text": "Upload",
+      "videoId": "video_001",
+      "sourcePath": "Upload.mov",
+      "storagePath": "asl-videos/upload/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1346442,
+      "sourceFilename": "Upload.mov"
+    },
+    {
+      "wordId": "volleyball",
+      "text": "Volleyball",
+      "videoId": "video_001",
+      "sourcePath": "Volleyball.mov",
+      "storagePath": "asl-videos/volleyball/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1431780,
+      "sourceFilename": "Volleyball.mov"
+    },
+    {
+      "wordId": "wallet",
+      "text": "Wallet",
+      "videoId": "video_001",
+      "sourcePath": "Wallet.mov",
+      "storagePath": "asl-videos/wallet/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1581122,
+      "sourceFilename": "Wallet.mov"
+    },
+    {
+      "wordId": "want",
+      "text": "Want",
+      "videoId": "video_001",
+      "sourcePath": "Want.mov",
+      "storagePath": "asl-videos/want/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1582081,
+      "sourceFilename": "Want.mov"
+    },
+    {
+      "wordId": "water",
+      "text": "Water",
+      "videoId": "video_001",
+      "sourcePath": "Water.mov",
+      "storagePath": "asl-videos/water/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1246368,
+      "sourceFilename": "Water.mov"
+    },
+    {
+      "wordId": "week",
+      "text": "Week",
+      "videoId": "video_001",
+      "sourcePath": "Week.mov",
+      "storagePath": "asl-videos/week/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 953483,
+      "sourceFilename": "Week.mov"
+    },
+    {
+      "wordId": "whatisyourname",
+      "text": "What's Your Name",
+      "videoId": "video_001",
+      "sourcePath": "What's Your Name.mov",
+      "storagePath": "asl-videos/whatisyourname/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 4343233,
+      "sourceFilename": "What's Your Name.mov"
+    },
+    {
+      "wordId": "when",
+      "text": "When",
+      "videoId": "video_001",
+      "sourcePath": "When.mov",
+      "storagePath": "asl-videos/when/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1636633,
+      "sourceFilename": "When.mov"
+    },
+    {
+      "wordId": "whereareyoufrom",
+      "text": "Where Are You From?",
+      "videoId": "video_001",
+      "sourcePath": "Where Are You From?.mov",
+      "storagePath": "asl-videos/whereareyoufrom/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 3677708,
+      "sourceFilename": "Where Are You From?.mov"
+    },
+    {
+      "wordId": "wind",
+      "text": "Wind",
+      "videoId": "video_001",
+      "sourcePath": "Wind.mov",
+      "storagePath": "asl-videos/wind/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2736765,
+      "sourceFilename": "Wind.mov"
+    },
+    {
+      "wordId": "without",
+      "text": "Without",
+      "videoId": "video_001",
+      "sourcePath": "Without.mov",
+      "storagePath": "asl-videos/without/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1308190,
+      "sourceFilename": "Without.mov"
+    },
+    {
+      "wordId": "work",
+      "text": "Work",
+      "videoId": "video_001",
+      "sourcePath": "Work.mov",
+      "storagePath": "asl-videos/work/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1484750,
+      "sourceFilename": "Work.mov"
+    },
+    {
+      "wordId": "write",
+      "text": "Write",
+      "videoId": "video_001",
+      "sourcePath": "Write.mov",
+      "storagePath": "asl-videos/write/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1396994,
+      "sourceFilename": "Write.mov"
+    },
+    {
+      "wordId": "x",
+      "text": "X",
+      "videoId": "video_001",
+      "sourcePath": "X.mov",
+      "storagePath": "asl-videos/x/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 750084,
+      "sourceFilename": "X.mov"
+    },
+    {
+      "wordId": "yellow",
+      "text": "Yellow",
+      "videoId": "video_001",
+      "sourcePath": "Yellow.mov",
+      "storagePath": "asl-videos/yellow/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 2913230,
+      "sourceFilename": "Yellow.mov"
+    },
+    {
+      "wordId": "your",
+      "text": "Your",
+      "videoId": "video_001",
+      "sourcePath": "Your.mov",
+      "storagePath": "asl-videos/your/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1434881,
+      "sourceFilename": "Your.mov"
+    },
+    {
+      "wordId": "yourewelcome",
+      "text": "You're Welcome",
+      "videoId": "video_001",
+      "sourcePath": "You're Welcome.mov",
+      "storagePath": "asl-videos/yourewelcome/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1652559,
+      "sourceFilename": "You're Welcome.mov"
+    },
+    {
+      "wordId": "yourself",
+      "text": "Yourself",
+      "videoId": "video_001",
+      "sourcePath": "Yourself.mov",
+      "storagePath": "asl-videos/yourself/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 1341331,
+      "sourceFilename": "Yourself.mov"
+    }
+  ]
+}

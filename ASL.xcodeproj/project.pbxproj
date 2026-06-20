@@ -6,23 +6,335 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXFileReference section */
-		9C81A4D12FAAB78B001AE114 /* ASL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ASL.app; sourceTree = BUILT_PRODUCTS_DIR; };
-/* End PBXFileReference section */
+/* Begin PBXBuildFile section */
+		B20200012FAAB78B001AE114 /* ASLBrand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20100012FAAB78B001AE114 /* ASLBrand.swift */; };
+		B30200012FAAB78B001AE120 /* BundledMedia in Resources */ = {isa = PBXBuildFile; fileRef = B30100012FAAB78B001AE120 /* BundledMedia */; };
+		C20200012FAAB78B001AE116 /* ASLModuleCompleteCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20100012FAAB78B001AE116 /* ASLModuleCompleteCopy.swift */; };
+		C20200022FAAB78B001AE116 /* ASLUnitCompleteCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20100022FAAB78B001AE116 /* ASLUnitCompleteCopy.swift */; };
+		D10200012FAAB78B001AE114 /* ASLApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10100012FAAB78B001AE114 /* ASLApp.swift */; };
+		D10200022FAAB78B001AE114 /* ASLDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10100022FAAB78B001AE114 /* ASLDataStore.swift */; };
+		D10200032FAAB78B001AE114 /* ASLModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10100032FAAB78B001AE114 /* ASLModels.swift */; };
+		D10200042FAAB78B001AE114 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10100042FAAB78B001AE114 /* ContentView.swift */; };
+		D10200052FAAB78B001AE114 /* HomeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10100052FAAB78B001AE114 /* HomeTabView.swift */; };
+		D10200062FAAB78B001AE114 /* PracticeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10100062FAAB78B001AE114 /* PracticeTabView.swift */; };
+		D10200072FAAB78B001AE114 /* ProfileTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10100072FAAB78B001AE114 /* ProfileTabView.swift */; };
+		D10200082FAAB78B001AE114 /* SignsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10100082FAAB78B001AE114 /* SignsTabView.swift */; };
+		D10200092FAAB78B001AE114 /* TabPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10100092FAAB78B001AE114 /* TabPlaceholderView.swift */; };
+		D102000A2FAAB78B001AE114 /* LessonRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D101000C2FAAB78B001AE114 /* LessonRouter.swift */; };
+		D102000B2FAAB78B001AE114 /* ChoiceTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D101000D2FAAB78B001AE114 /* ChoiceTile.swift */; };
+		D102000C2FAAB78B001AE114 /* LessonShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D101000E2FAAB78B001AE114 /* LessonShell.swift */; };
+		D102000D2FAAB78B001AE114 /* LessonVideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D101000F2FAAB78B001AE114 /* LessonVideoPlayer.swift */; };
+		D102000E2FAAB78B001AE114 /* LessonPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10100102FAAB78B001AE114 /* LessonPalette.swift */; };
+		D102000F2FAAB78B001AE114 /* CelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10100112FAAB78B001AE114 /* CelebrationView.swift */; };
+		D10200102FAAB78B001AE114 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10100122FAAB78B001AE114 /* Haptics.swift */; };
+		D10200112FAAB78B001AE114 /* LessonSounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10100132FAAB78B001AE114 /* LessonSounds.swift */; };
+		D10200122FAAB78B001AE114 /* WrongAnswerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10100142FAAB78B001AE114 /* WrongAnswerCoordinator.swift */; };
+		D10200132FAAB78B001AE114 /* SessionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10100152FAAB78B001AE114 /* SessionState.swift */; };
+		D10200192FAAB78B001AE114 /* ModuleLessonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D101001B2FAAB78B001AE114 /* ModuleLessonView.swift */; };
+		D102001A2FAAB78B001AE115 /* MatchPairsShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = D101001C2FAAB78B001AE115 /* MatchPairsShared.swift */; };
+		D102001B2FAAB78B001AE115 /* ModulePickCountdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = D101001D2FAAB78B001AE115 /* ModulePickCountdown.swift */; };
+		D10200262FAAB78B001AE114 /* LessonVideoChoices.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10100262FAAB78B001AE114 /* LessonVideoChoices.swift */; };
+		D10200272FAAB78B001AE114 /* SignYourTurnPracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10100272FAAB78B001AE114 /* SignYourTurnPracticeView.swift */; };
+		D1020F012FAAB78B001AE114 /* SignVideoCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1010F012FAAB78B001AE114 /* SignVideoCard.swift */; };
+		D1020F022FAAB78B001AE114 /* ASLTipStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1010F022FAAB78B001AE114 /* ASLTipStepView.swift */; };
+		D1020F032FAAB78B001AE114 /* YourTurnStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1010F032FAAB78B001AE114 /* YourTurnStepView.swift */; };
+		D10300012FAAB78B001AE114 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D101000A2FAAB78B001AE114 /* GoogleService-Info.plist */; };
+		D10300022FAAB78B001AE114 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D101000B2FAAB78B001AE114 /* Assets.xcassets */; };
+		E20200012FAAB78B001AE114 /* ASLStarEconomy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20100012FAAB78B001AE114 /* ASLStarEconomy.swift */; };
+		E30200012FAAB78B001AE114 /* ASLElevation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30100012FAAB78B001AE114 /* ASLElevation.swift */; };
+		F10000000000000000000001 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = F10000000000000000000011 /* FirebaseCore */; };
+		F10000000000000000000002 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F10000000000000000000012 /* FirebaseFirestore */; };
+		F10000000000000000000003 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F10000000000000000000013 /* FirebaseStorage */; };
+		F20200012FAAB78B001AE114 /* ASLLessonPromptFraming.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20100012FAAB78B001AE114 /* ASLLessonPromptFraming.swift */; };
+		F30200012FAAB78B001AE121 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = F30100012FAAB78B001AE121 /* Fonts */; };
+		G20200012FAAB78B001AE114 /* ASLStoneDisplayTitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = G20100012FAAB78B001AE114 /* ASLStoneDisplayTitles.swift */; };
+		H20200012FAAB78B001AE114 /* ASLSemanticDistractors.swift in Sources */ = {isa = PBXBuildFile; fileRef = H20100012FAAB78B001AE114 /* ASLSemanticDistractors.swift */; };
+		I30200012FAAB78B001AE114 /* ASLIconography.swift in Sources */ = {isa = PBXBuildFile; fileRef = I30100012FAAB78B001AE114 /* ASLIconography.swift */; };
+		L20200012FAAB78B001AE114 /* ASLMatchPairFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = L20100012FAAB78B001AE114 /* ASLMatchPairFeedback.swift */; };
+		M20200012FAAB78B001AE114 /* ASLUnitMascot.swift in Sources */ = {isa = PBXBuildFile; fileRef = M20100012FAAB78B001AE114 /* ASLUnitMascot.swift */; };
+		M30200012FAAB78B001AE118 /* SignMediaPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = M30100012FAAB78B001AE118 /* SignMediaPaths.swift */; };
+		M30200022FAAB78B001AE118 /* LessonMediaPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = M30100022FAAB78B001AE118 /* LessonMediaPlanner.swift */; };
+		M30200032FAAB78B001AE118 /* SeededRandomNumberGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = M30100032FAAB78B001AE118 /* SeededRandomNumberGenerator.swift */; };
+		M30200052FAAB78B001AE118 /* PosterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = M30100052FAAB78B001AE118 /* PosterImageView.swift */; };
+		M30200062FAAB78B001AE118 /* PosterImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = M30100062FAAB78B001AE118 /* PosterImageLoader.swift */; };
+		M30200072FAAB78B001AE118 /* DictionaryMediaURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = M30100072FAAB78B001AE118 /* DictionaryMediaURL.swift */; };
+		M30200082FAAB78B001AE118 /* DictionaryMediaMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = M30100082FAAB78B001AE118 /* DictionaryMediaMetrics.swift */; };
+		M30200092FAAB78B001AE118 /* BundledSignMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = M30100092FAAB78B001AE118 /* BundledSignMedia.swift */; };
+		M302000B2FAAB78B001AE118 /* MediaBootstrapMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = M301000B2FAAB78B001AE118 /* MediaBootstrapMetrics.swift */; };
+		M30200102FAAB78B001AE118 /* BundledPlaybackCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = M30100102FAAB78B001AE118 /* BundledPlaybackCache.swift */; };
+		M30200112FAAB78B001AE118 /* DictionaryVideoWarmPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = M30100112FAAB78B001AE118 /* DictionaryVideoWarmPool.swift */; };
+		N20200012FAAB78B001AE121 /* ASLOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = N20100012FAAB78B001AE121 /* ASLOnboarding.swift */; };
+		N20200022FAAB78B001AE121 /* ASLPremiumAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = N20100022FAAB78B001AE121 /* ASLPremiumAccess.swift */; };
+		N20200032FAAB78B001AE121 /* OnboardingCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = N20100032FAAB78B001AE121 /* OnboardingCopy.swift */; };
+		N20200042FAAB78B001AE121 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = N20100042FAAB78B001AE121 /* RootView.swift */; };
+		N20200052FAAB78B001AE121 /* OnboardingPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = N20100052FAAB78B001AE121 /* OnboardingPrimaryButton.swift */; };
+		N20200062FAAB78B001AE121 /* OnboardingSelectionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = N20100062FAAB78B001AE121 /* OnboardingSelectionCard.swift */; };
+		N20200072FAAB78B001AE121 /* OnboardingScaffold.swift in Sources */ = {isa = PBXBuildFile; fileRef = N20100072FAAB78B001AE121 /* OnboardingScaffold.swift */; };
+		N20200082FAAB78B001AE121 /* OnboardingSplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = N20100082FAAB78B001AE121 /* OnboardingSplashView.swift */; };
+		N20200092FAAB78B001AE121 /* OnboardingWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = N20100092FAAB78B001AE121 /* OnboardingWelcomeView.swift */; };
+		N202000A2FAAB78B001AE121 /* OnboardingMotivationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = N201000A2FAAB78B001AE121 /* OnboardingMotivationView.swift */; };
+		N202000D2FAAB78B001AE121 /* OnboardingDailyGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = N201000D2FAAB78B001AE121 /* OnboardingDailyGoalView.swift */; };
+		N20200122FAAB78B001AE121 /* OnboardingPaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = N20100122FAAB78B001AE121 /* OnboardingPaywallView.swift */; };
+		N20200132FAAB78B001AE121 /* OnboardingFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = N20100132FAAB78B001AE121 /* OnboardingFlowView.swift */; };
+		N202001C2FAAB78B001AE121 /* OnboardingLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = N201001C2FAAB78B001AE121 /* OnboardingLoadingView.swift */; };
+		N202001D2FAAB78B001AE121 /* OnboardingMiniModuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = N201001D2FAAB78B001AE121 /* OnboardingMiniModuleView.swift */; };
+		N202001E2FAAB78B001AE121 /* OnboardingLessonCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = N201001E2FAAB78B001AE121 /* OnboardingLessonCompleteView.swift */; };
+		N202001F2FAAB78B001AE121 /* OnboardingDayStreakView.swift in Sources */ = {isa = PBXBuildFile; fileRef = N201001F2FAAB78B001AE121 /* OnboardingDayStreakView.swift */; };
+		N20200212FAAB78B001AE121 /* OnboardingVisionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = N20100212FAAB78B001AE121 /* OnboardingVisionView.swift */; };
+		N20200222FAAB78B001AE121 /* MascotSpeechBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = N20100222FAAB78B001AE121 /* MascotSpeechBubble.swift */; };
+		N20200232FAAB78B001AE121 /* OnboardingMascotHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = N20100232FAAB78B001AE121 /* OnboardingMascotHeader.swift */; };
+		N20200242FAAB78B001AE121 /* AppStoreReviewPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = N20100242FAAB78B001AE121 /* AppStoreReviewPrompt.swift */; };
+		N20200252FAAB78B001AE121 /* OnboardingAppStoreReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = N20100252FAAB78B001AE121 /* OnboardingAppStoreReviewView.swift */; };
+		N20200262FAAB78B001AE121 /* OnboardingFlowProgressHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = N20100262FAAB78B001AE121 /* OnboardingFlowProgressHeader.swift */; };
+		N20200272FAAB78B001AE121 /* PaywallComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = N20100272FAAB78B001AE121 /* PaywallComponents.swift */; };
+		N20200282FAAB78B001AE121 /* OnboardingZiggyIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = N20100282FAAB78B001AE121 /* OnboardingZiggyIntroView.swift */; };
+		N202002A2FAAB78B001AE121 /* OnboardingFirstSignCelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = N201002A2FAAB78B001AE121 /* OnboardingFirstSignCelebrationView.swift */; };
+		N202002B2FAAB78B001AE121 /* OnboardingScienceFactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = N201002B2FAAB78B001AE121 /* OnboardingScienceFactView.swift */; };
+		N20200292FAAB78B001AE121 /* OnboardingStreakGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = N20100292FAAB78B001AE121 /* OnboardingStreakGoalView.swift */; };
+		O20200012FAAB78B001AE114 /* ASLStoneMistakeMemory.swift in Sources */ = {isa = PBXBuildFile; fileRef = O20100012FAAB78B001AE114 /* ASLStoneMistakeMemory.swift */; };
+		P10200012FAAB78B001AE117 /* PracticeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = P10100012FAAB78B001AE117 /* PracticeTheme.swift */; };
+		P10200022FAAB78B001AE117 /* PracticeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = P10100022FAAB78B001AE117 /* PracticeOption.swift */; };
+		P10200032FAAB78B001AE117 /* PracticeOptionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = P10100032FAAB78B001AE117 /* PracticeOptionCard.swift */; };
+		P10200042FAAB78B001AE117 /* PracticeWordPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = P10100042FAAB78B001AE117 /* PracticeWordPool.swift */; };
+		P10200062FAAB78B001AE117 /* PracticeQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P101000F2FAAB78B001AE117 /* PracticeQuizView.swift */; };
+		P10200072FAAB78B001AE117 /* PracticeSessionCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P10100072FAAB78B001AE117 /* PracticeSessionCompleteView.swift */; };
+		P10200082FAAB78B001AE117 /* PracticeFlashcardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P10100102FAAB78B001AE117 /* PracticeFlashcardsView.swift */; };
+		P10200092FAAB78B001AE117 /* PracticePathContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = P10100112FAAB78B001AE117 /* PracticePathContext.swift */; };
+		P102000B2FAAB78B001AE117 /* PracticeDailyTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = P101000B2FAAB78B001AE117 /* PracticeDailyTasks.swift */; };
+		P102000C2FAAB78B001AE117 /* PracticeDailyTaskEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = P101000C2FAAB78B001AE117 /* PracticeDailyTaskEngine.swift */; };
+		P102000D2FAAB78B001AE117 /* PracticeDailyTaskCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = P101000D2FAAB78B001AE117 /* PracticeDailyTaskCard.swift */; };
+		P102000E2FAAB78B001AE117 /* PracticeDailyPracticeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = P101000E2FAAB78B001AE117 /* PracticeDailyPracticeSection.swift */; };
+		P102000F2FAAB78B001AE117 /* PracticeDailyTaskSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = P10100122FAAB78B001AE117 /* PracticeDailyTaskSelector.swift */; };
+		P10200102FAAB78B001AE117 /* PracticeDailyDeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = P10100132FAAB78B001AE117 /* PracticeDailyDeepLink.swift */; };
+		P10200112FAAB78B001AE117 /* PracticeDailyNavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = P10100142FAAB78B001AE117 /* PracticeDailyNavigationCoordinator.swift */; };
+		P10200152FAAB78B001AE117 /* PracticeDailyPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = P10100152FAAB78B001AE117 /* PracticeDailyPeriod.swift */; };
+		P10200202FAAB78B001AE117 /* PracticeQuizCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = P10100202FAAB78B001AE117 /* PracticeQuizCatalog.swift */; };
+		P10200222FAAB78B001AE117 /* WatchPickSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = P10100222FAAB78B001AE117 /* WatchPickSupport.swift */; };
+		P10200252FAAB78B001AE117 /* PracticeVocabularyMatchingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P10100252FAAB78B001AE117 /* PracticeVocabularyMatchingView.swift */; };
+		P10200302FAAB78B001AE117 /* PracticeSpellYourNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P10100302FAAB78B001AE117 /* PracticeSpellYourNameView.swift */; };
+		P10200312FAAB78B001AE117 /* FingerspellLetterMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = P10100312FAAB78B001AE117 /* FingerspellLetterMapper.swift */; };
+		P10200322FAAB78B001AE117 /* CurriculumAwareSpellingResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = P10100322FAAB78B001AE117 /* CurriculumAwareSpellingResolver.swift */; };
+		P10200332FAAB78B001AE117 /* FingerspellNameStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = P10100332FAAB78B001AE117 /* FingerspellNameStore.swift */; };
+		P10200342FAAB78B001AE117 /* FingerspellNameSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = P10100342FAAB78B001AE117 /* FingerspellNameSession.swift */; };
+		P10200352FAAB78B001AE117 /* SpellingEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P10100352FAAB78B001AE117 /* SpellingEntryView.swift */; };
+		P10200362FAAB78B001AE117 /* SpellingCurriculumInterceptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P10100362FAAB78B001AE117 /* SpellingCurriculumInterceptView.swift */; };
+		P10200372FAAB78B001AE117 /* FingerspellLetterChipStrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = P10100372FAAB78B001AE117 /* FingerspellLetterChipStrip.swift */; };
+		P10200382FAAB78B001AE117 /* FingerspellLearnLetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P10100382FAAB78B001AE117 /* FingerspellLearnLetterView.swift */; };
+		P10200392FAAB78B001AE117 /* FingerspellFlowPlaybackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P10100392FAAB78B001AE117 /* FingerspellFlowPlaybackView.swift */; };
+		P102003B2FAAB78B001AE117 /* FingerspellConversationBridgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P101003B2FAAB78B001AE117 /* FingerspellConversationBridgeView.swift */; };
+		P102003C2FAAB78B001AE117 /* FingerspellYourTurnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P101003C2FAAB78B001AE117 /* FingerspellYourTurnView.swift */; };
+		D10200302FAAB78B001AE114 /* FingerspellSequenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10100302FAAB78B001AE114 /* FingerspellSequenceController.swift */; };
+		P20200012FAAB78B001AE114 /* ASLUnitPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = P20100012FAAB78B001AE114 /* ASLUnitPalette.swift */; };
+		P20200022FAAB78B001AE114 /* SectionDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = P20100022FAAB78B001AE114 /* SectionDivider.swift */; };
+		P20200032FAAB78B001AE114 /* ASLSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = P20100032FAAB78B001AE114 /* ASLSettings.swift */; };
+		P20200102FAAB78B001AE114 /* ProfileDayKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = P20100102FAAB78B001AE114 /* ProfileDayKey.swift */; };
+		P20200122FAAB78B001AE114 /* ProfileRaisedControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = P20100122FAAB78B001AE114 /* ProfileRaisedControls.swift */; };
+		P20200132FAAB78B001AE114 /* ProfileSettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = P20100132FAAB78B001AE114 /* ProfileSettingsSheet.swift */; };
+		P20200142FAAB78B001AE114 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P20100142FAAB78B001AE114 /* ProfileHeaderView.swift */; };
+		P20200152FAAB78B001AE114 /* ProfileStatCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = P20100152FAAB78B001AE114 /* ProfileStatCard.swift */; };
+		P20200162FAAB78B001AE114 /* ProfileStatsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = P20100162FAAB78B001AE114 /* ProfileStatsRow.swift */; };
+		P20200172FAAB78B001AE114 /* ProfileStreakHeroCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = P20100172FAAB78B001AE114 /* ProfileStreakHeroCard.swift */; };
+		P20200182FAAB78B001AE114 /* ProfileMedalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = P20100182FAAB78B001AE114 /* ProfileMedalCell.swift */; };
+		P20200192FAAB78B001AE114 /* ProfileMedalDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = P20100192FAAB78B001AE114 /* ProfileMedalDetailSheet.swift */; };
+		P202001A2FAAB78B001AE114 /* ProfileMedalsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = P201001A2FAAB78B001AE114 /* ProfileMedalsSection.swift */; };
+		P202001D2FAAB78B001AE114 /* ProfileStarsInfoSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = P201001D2FAAB78B001AE114 /* ProfileStarsInfoSheet.swift */; };
+		P202001F2FAAB78B001AE114 /* ProfileRaisedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = P201001F2FAAB78B001AE114 /* ProfileRaisedCard.swift */; };
+		P20200202FAAB78B001AE114 /* ProfileMedalsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = P20100202FAAB78B001AE114 /* ProfileMedalsScreen.swift */; };
+		P20200212FAAB78B001AE114 /* ASLMedalCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = P20100212FAAB78B001AE114 /* ASLMedalCatalog.swift */; };
+		P20200222FAAB78B001AE114 /* MedalEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = P20100222FAAB78B001AE114 /* MedalEngine.swift */; };
+		P20200232FAAB78B001AE114 /* MedalUnlockCelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P20100232FAAB78B001AE114 /* MedalUnlockCelebrationView.swift */; };
+		D20200052FAAB78B001AE114 /* DailyStreakCelebrationCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20100052FAAB78B001AE114 /* DailyStreakCelebrationCopy.swift */; };
+		D20200062FAAB78B001AE114 /* DailyStreakCelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20100062FAAB78B001AE114 /* DailyStreakCelebrationView.swift */; };
+		D20200072FAAB78B001AE114 /* DailyStreakCelebrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20100072FAAB78B001AE114 /* DailyStreakCelebrationPresenter.swift */; };
+		P20200242FAAB78B001AE114 /* MedalCelebrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = P20100242FAAB78B001AE114 /* MedalCelebrationPresenter.swift */; };
+		P50200022FAAB78B001AE116 /* PremiumCardStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = P50100022FAAB78B001AE116 /* PremiumCardStyle.swift */; };
+		Q20200012FAAB78B001AE114 /* ASLPhaseReviewCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = Q20100012FAAB78B001AE114 /* ASLPhaseReviewCopy.swift */; };
+		R20200012FAAB78B001AE114 /* ASLRedrillCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = R20100012FAAB78B001AE114 /* ASLRedrillCopy.swift */; };
+		S10200012FAAB78B001AE116 /* TabCurvedContentPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = S10100012FAAB78B001AE116 /* TabCurvedContentPanel.swift */; };
+		S10200022FAAB78B001AE116 /* RaisedCardPress.swift in Sources */ = {isa = PBXBuildFile; fileRef = S10100022FAAB78B001AE116 /* RaisedCardPress.swift */; };
+		S10200032FAAB78B001AE116 /* FavoriteSignsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = S10100032FAAB78B001AE116 /* FavoriteSignsStore.swift */; };
+		S10200042FAAB78B001AE116 /* SignCategoryCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = S10100042FAAB78B001AE116 /* SignCategoryCatalog.swift */; };
+		S10200052FAAB78B001AE116 /* SignFilmPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = S10100052FAAB78B001AE116 /* SignFilmPlaceholder.swift */; };
+		S10200062FAAB78B001AE116 /* FilmedSignCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = S10100062FAAB78B001AE116 /* FilmedSignCatalog.swift */; };
+		S10200072FAAB78B001AE116 /* StoneMediaManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = S10100072FAAB78B001AE116 /* StoneMediaManifest.swift */; };
+		S10200082FAAB78B001AE116 /* StoneConfirmDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = S10100082FAAB78B001AE116 /* StoneConfirmDialog.swift */; };
+		S10200092FAAB78B001AE116 /* LessonEntryReveal.swift in Sources */ = {isa = PBXBuildFile; fileRef = S10100092FAAB78B001AE116 /* LessonEntryReveal.swift */; };
+		S20200012FAAB78B001AE115 /* ASLStreakCelebrationCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = S20100012FAAB78B001AE115 /* ASLStreakCelebrationCopy.swift */; };
+		T20200012FAAB78B001AE114 /* ASLTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = T20100012FAAB78B001AE114 /* ASLTypography.swift */; };
+		V20200012FAAB78B001AE119 /* greetings-mascot.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = V20100012FAAB78B001AE119 /* greetings-mascot.mp4 */; };
+		V20200022FAAB78B001AE119 /* UnitMascotVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = V20100022FAAB78B001AE119 /* UnitMascotVideoView.swift */; };
+		V20200032FAAB78B001AE119 /* redrill-mascot.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = V20100032FAAB78B001AE119 /* redrill-mascot.mp4 */; };
+		W20200012FAAB78B001AE114 /* HomeWorldDecor.swift in Sources */ = {isa = PBXBuildFile; fileRef = W20100012FAAB78B001AE114 /* HomeWorldDecor.swift */; };
+/* End PBXBuildFile section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		9C81A4D32FAAB78B001AE114 /* ASL */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ASL;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
+/* Begin PBXFileReference section */
+		9C81A4D12FAAB78B001AE114 /* Ziggy ASL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ziggy ASL.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B20100012FAAB78B001AE114 /* ASLBrand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLBrand.swift; sourceTree = "<group>"; };
+		B30100012FAAB78B001AE120 /* BundledMedia */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BundledMedia; sourceTree = "<group>"; };
+		C20100012FAAB78B001AE116 /* ASLModuleCompleteCopy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLModuleCompleteCopy.swift; sourceTree = "<group>"; };
+		C20100022FAAB78B001AE116 /* ASLUnitCompleteCopy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLUnitCompleteCopy.swift; sourceTree = "<group>"; };
+		D10100012FAAB78B001AE114 /* ASLApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLApp.swift; sourceTree = "<group>"; };
+		D10100022FAAB78B001AE114 /* ASLDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLDataStore.swift; sourceTree = "<group>"; };
+		D20100052FAAB78B001AE114 /* DailyStreakCelebrationCopy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStreakCelebrationCopy.swift; sourceTree = "<group>"; };
+		D20100062FAAB78B001AE114 /* DailyStreakCelebrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStreakCelebrationView.swift; sourceTree = "<group>"; };
+		D20100072FAAB78B001AE114 /* DailyStreakCelebrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStreakCelebrationPresenter.swift; sourceTree = "<group>"; };
+		D10100032FAAB78B001AE114 /* ASLModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLModels.swift; sourceTree = "<group>"; };
+		D10100042FAAB78B001AE114 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		D10100052FAAB78B001AE114 /* HomeTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabView.swift; sourceTree = "<group>"; };
+		D10100062FAAB78B001AE114 /* PracticeTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeTabView.swift; sourceTree = "<group>"; };
+		D10100072FAAB78B001AE114 /* ProfileTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTabView.swift; sourceTree = "<group>"; };
+		D10100082FAAB78B001AE114 /* SignsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignsTabView.swift; sourceTree = "<group>"; };
+		D10100092FAAB78B001AE114 /* TabPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabPlaceholderView.swift; sourceTree = "<group>"; };
+		D101000A2FAAB78B001AE114 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D101000B2FAAB78B001AE114 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D101000C2FAAB78B001AE114 /* LessonRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonRouter.swift; sourceTree = "<group>"; };
+		D101000D2FAAB78B001AE114 /* ChoiceTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceTile.swift; sourceTree = "<group>"; };
+		D101000E2FAAB78B001AE114 /* LessonShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonShell.swift; sourceTree = "<group>"; };
+		D101000F2FAAB78B001AE114 /* LessonVideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonVideoPlayer.swift; sourceTree = "<group>"; };
+		D10100102FAAB78B001AE114 /* LessonPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonPalette.swift; sourceTree = "<group>"; };
+		D10100112FAAB78B001AE114 /* CelebrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelebrationView.swift; sourceTree = "<group>"; };
+		D10100122FAAB78B001AE114 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
+		D10100132FAAB78B001AE114 /* LessonSounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonSounds.swift; sourceTree = "<group>"; };
+		D10100142FAAB78B001AE114 /* WrongAnswerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrongAnswerCoordinator.swift; sourceTree = "<group>"; };
+		D10100152FAAB78B001AE114 /* SessionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionState.swift; sourceTree = "<group>"; };
+		D101001B2FAAB78B001AE114 /* ModuleLessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleLessonView.swift; sourceTree = "<group>"; };
+		D101001C2FAAB78B001AE115 /* MatchPairsShared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchPairsShared.swift; sourceTree = "<group>"; };
+		D101001D2FAAB78B001AE115 /* ModulePickCountdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulePickCountdown.swift; sourceTree = "<group>"; };
+		D10100262FAAB78B001AE114 /* LessonVideoChoices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonVideoChoices.swift; sourceTree = "<group>"; };
+		D10100272FAAB78B001AE114 /* SignYourTurnPracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignYourTurnPracticeView.swift; sourceTree = "<group>"; };
+		D1010F012FAAB78B001AE114 /* SignVideoCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignVideoCard.swift; sourceTree = "<group>"; };
+		D1010F022FAAB78B001AE114 /* ASLTipStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLTipStepView.swift; sourceTree = "<group>"; };
+		D1010F032FAAB78B001AE114 /* YourTurnStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourTurnStepView.swift; sourceTree = "<group>"; };
+		E20100012FAAB78B001AE114 /* ASLStarEconomy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLStarEconomy.swift; sourceTree = "<group>"; };
+		E30100012FAAB78B001AE114 /* ASLElevation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLElevation.swift; sourceTree = "<group>"; };
+		F20100012FAAB78B001AE114 /* ASLLessonPromptFraming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLLessonPromptFraming.swift; sourceTree = "<group>"; };
+		F30100012FAAB78B001AE121 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
+		G20100012FAAB78B001AE114 /* ASLStoneDisplayTitles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLStoneDisplayTitles.swift; sourceTree = "<group>"; };
+		H20100012FAAB78B001AE114 /* ASLSemanticDistractors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLSemanticDistractors.swift; sourceTree = "<group>"; };
+		I30100012FAAB78B001AE114 /* ASLIconography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLIconography.swift; sourceTree = "<group>"; };
+		L20100012FAAB78B001AE114 /* ASLMatchPairFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLMatchPairFeedback.swift; sourceTree = "<group>"; };
+		M20100012FAAB78B001AE114 /* ASLUnitMascot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLUnitMascot.swift; sourceTree = "<group>"; };
+		M30100012FAAB78B001AE118 /* SignMediaPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignMediaPaths.swift; sourceTree = "<group>"; };
+		M30100022FAAB78B001AE118 /* LessonMediaPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonMediaPlanner.swift; sourceTree = "<group>"; };
+		M30100032FAAB78B001AE118 /* SeededRandomNumberGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeededRandomNumberGenerator.swift; sourceTree = "<group>"; };
+		M30100052FAAB78B001AE118 /* PosterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterImageView.swift; sourceTree = "<group>"; };
+		M30100062FAAB78B001AE118 /* PosterImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterImageLoader.swift; sourceTree = "<group>"; };
+		M30100072FAAB78B001AE118 /* DictionaryMediaURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryMediaURL.swift; sourceTree = "<group>"; };
+		M30100082FAAB78B001AE118 /* DictionaryMediaMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryMediaMetrics.swift; sourceTree = "<group>"; };
+		M30100092FAAB78B001AE118 /* BundledSignMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundledSignMedia.swift; sourceTree = "<group>"; };
+		M301000B2FAAB78B001AE118 /* MediaBootstrapMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaBootstrapMetrics.swift; sourceTree = "<group>"; };
+		M30100102FAAB78B001AE118 /* BundledPlaybackCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundledPlaybackCache.swift; sourceTree = "<group>"; };
+		M30100112FAAB78B001AE118 /* DictionaryVideoWarmPool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryVideoWarmPool.swift; sourceTree = "<group>"; };
+		N20100012FAAB78B001AE121 /* ASLOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLOnboarding.swift; sourceTree = "<group>"; };
+		N20100022FAAB78B001AE121 /* ASLPremiumAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLPremiumAccess.swift; sourceTree = "<group>"; };
+		N20100032FAAB78B001AE121 /* OnboardingCopy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCopy.swift; sourceTree = "<group>"; };
+		N20100042FAAB78B001AE121 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		N20100052FAAB78B001AE121 /* OnboardingPrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPrimaryButton.swift; sourceTree = "<group>"; };
+		N20100062FAAB78B001AE121 /* OnboardingSelectionCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSelectionCard.swift; sourceTree = "<group>"; };
+		N20100072FAAB78B001AE121 /* OnboardingScaffold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingScaffold.swift; sourceTree = "<group>"; };
+		N20100082FAAB78B001AE121 /* OnboardingSplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSplashView.swift; sourceTree = "<group>"; };
+		N20100092FAAB78B001AE121 /* OnboardingWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeView.swift; sourceTree = "<group>"; };
+		N201000A2FAAB78B001AE121 /* OnboardingMotivationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingMotivationView.swift; sourceTree = "<group>"; };
+		N201000D2FAAB78B001AE121 /* OnboardingDailyGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDailyGoalView.swift; sourceTree = "<group>"; };
+		N20100122FAAB78B001AE121 /* OnboardingPaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPaywallView.swift; sourceTree = "<group>"; };
+		N20100132FAAB78B001AE121 /* OnboardingFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowView.swift; sourceTree = "<group>"; };
+		N201001C2FAAB78B001AE121 /* OnboardingLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLoadingView.swift; sourceTree = "<group>"; };
+		N201001D2FAAB78B001AE121 /* OnboardingMiniModuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingMiniModuleView.swift; sourceTree = "<group>"; };
+		N201001E2FAAB78B001AE121 /* OnboardingLessonCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLessonCompleteView.swift; sourceTree = "<group>"; };
+		N201001F2FAAB78B001AE121 /* OnboardingDayStreakView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDayStreakView.swift; sourceTree = "<group>"; };
+		N20100212FAAB78B001AE121 /* OnboardingVisionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingVisionView.swift; sourceTree = "<group>"; };
+		N20100222FAAB78B001AE121 /* MascotSpeechBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MascotSpeechBubble.swift; sourceTree = "<group>"; };
+		N20100232FAAB78B001AE121 /* OnboardingMascotHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingMascotHeader.swift; sourceTree = "<group>"; };
+		N20100242FAAB78B001AE121 /* AppStoreReviewPrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreReviewPrompt.swift; sourceTree = "<group>"; };
+		N20100252FAAB78B001AE121 /* OnboardingAppStoreReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAppStoreReviewView.swift; sourceTree = "<group>"; };
+		N20100262FAAB78B001AE121 /* OnboardingFlowProgressHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowProgressHeader.swift; sourceTree = "<group>"; };
+		N20100272FAAB78B001AE121 /* PaywallComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallComponents.swift; sourceTree = "<group>"; };
+		N20100282FAAB78B001AE121 /* OnboardingZiggyIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingZiggyIntroView.swift; sourceTree = "<group>"; };
+		N201002A2FAAB78B001AE121 /* OnboardingFirstSignCelebrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFirstSignCelebrationView.swift; sourceTree = "<group>"; };
+		N201002B2FAAB78B001AE121 /* OnboardingScienceFactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingScienceFactView.swift; sourceTree = "<group>"; };
+		N20100292FAAB78B001AE121 /* OnboardingStreakGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingStreakGoalView.swift; sourceTree = "<group>"; };
+		O20100012FAAB78B001AE114 /* ASLStoneMistakeMemory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLStoneMistakeMemory.swift; sourceTree = "<group>"; };
+		P10100012FAAB78B001AE117 /* PracticeTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeTheme.swift; sourceTree = "<group>"; };
+		P10100022FAAB78B001AE117 /* PracticeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeOption.swift; sourceTree = "<group>"; };
+		P10100032FAAB78B001AE117 /* PracticeOptionCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeOptionCard.swift; sourceTree = "<group>"; };
+		P10100042FAAB78B001AE117 /* PracticeWordPool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeWordPool.swift; sourceTree = "<group>"; };
+		P10100072FAAB78B001AE117 /* PracticeSessionCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeSessionCompleteView.swift; sourceTree = "<group>"; };
+		P10100252FAAB78B001AE117 /* PracticeVocabularyMatchingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeVocabularyMatchingView.swift; sourceTree = "<group>"; };
+		P10100302FAAB78B001AE117 /* PracticeSpellYourNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeSpellYourNameView.swift; sourceTree = "<group>"; };
+		P10100312FAAB78B001AE117 /* FingerspellLetterMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FingerspellLetterMapper.swift; sourceTree = "<group>"; };
+		P10100322FAAB78B001AE117 /* CurriculumAwareSpellingResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurriculumAwareSpellingResolver.swift; sourceTree = "<group>"; };
+		P10100332FAAB78B001AE117 /* FingerspellNameStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FingerspellNameStore.swift; sourceTree = "<group>"; };
+		P10100342FAAB78B001AE117 /* FingerspellNameSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FingerspellNameSession.swift; sourceTree = "<group>"; };
+		P10100352FAAB78B001AE117 /* SpellingEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellingEntryView.swift; sourceTree = "<group>"; };
+		P10100362FAAB78B001AE117 /* SpellingCurriculumInterceptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellingCurriculumInterceptView.swift; sourceTree = "<group>"; };
+		P10100372FAAB78B001AE117 /* FingerspellLetterChipStrip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FingerspellLetterChipStrip.swift; sourceTree = "<group>"; };
+		P10100382FAAB78B001AE117 /* FingerspellLearnLetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FingerspellLearnLetterView.swift; sourceTree = "<group>"; };
+		P10100392FAAB78B001AE117 /* FingerspellFlowPlaybackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FingerspellFlowPlaybackView.swift; sourceTree = "<group>"; };
+		P101003B2FAAB78B001AE117 /* FingerspellConversationBridgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FingerspellConversationBridgeView.swift; sourceTree = "<group>"; };
+		P101003C2FAAB78B001AE117 /* FingerspellYourTurnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FingerspellYourTurnView.swift; sourceTree = "<group>"; };
+		D10100302FAAB78B001AE114 /* FingerspellSequenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FingerspellSequenceController.swift; sourceTree = "<group>"; };
+		P101000B2FAAB78B001AE117 /* PracticeDailyTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeDailyTasks.swift; sourceTree = "<group>"; };
+		P101000C2FAAB78B001AE117 /* PracticeDailyTaskEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeDailyTaskEngine.swift; sourceTree = "<group>"; };
+		P101000D2FAAB78B001AE117 /* PracticeDailyTaskCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeDailyTaskCard.swift; sourceTree = "<group>"; };
+		P101000E2FAAB78B001AE117 /* PracticeDailyPracticeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeDailyPracticeSection.swift; sourceTree = "<group>"; };
+		P101000F2FAAB78B001AE117 /* PracticeQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeQuizView.swift; sourceTree = "<group>"; };
+		P10100102FAAB78B001AE117 /* PracticeFlashcardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeFlashcardsView.swift; sourceTree = "<group>"; };
+		P10100112FAAB78B001AE117 /* PracticePathContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticePathContext.swift; sourceTree = "<group>"; };
+		P10100122FAAB78B001AE117 /* PracticeDailyTaskSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeDailyTaskSelector.swift; sourceTree = "<group>"; };
+		P10100132FAAB78B001AE117 /* PracticeDailyDeepLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeDailyDeepLink.swift; sourceTree = "<group>"; };
+		P10100142FAAB78B001AE117 /* PracticeDailyNavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeDailyNavigationCoordinator.swift; sourceTree = "<group>"; };
+		P10100152FAAB78B001AE117 /* PracticeDailyPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeDailyPeriod.swift; sourceTree = "<group>"; };
+		P10100202FAAB78B001AE117 /* PracticeQuizCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeQuizCatalog.swift; sourceTree = "<group>"; };
+		P10100222FAAB78B001AE117 /* WatchPickSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchPickSupport.swift; sourceTree = "<group>"; };
+		P10100252FAAB78B001AE117 /* PracticeVocabularyMatchingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeVocabularyMatchingView.swift; sourceTree = "<group>"; };
+		P20100012FAAB78B001AE114 /* ASLUnitPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLUnitPalette.swift; sourceTree = "<group>"; };
+		P20100022FAAB78B001AE114 /* SectionDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionDivider.swift; sourceTree = "<group>"; };
+		P20100032FAAB78B001AE114 /* ASLSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLSettings.swift; sourceTree = "<group>"; };
+		P20100102FAAB78B001AE114 /* ProfileDayKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDayKey.swift; sourceTree = "<group>"; };
+		P20100122FAAB78B001AE114 /* ProfileRaisedControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRaisedControls.swift; sourceTree = "<group>"; };
+		P20100132FAAB78B001AE114 /* ProfileSettingsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsSheet.swift; sourceTree = "<group>"; };
+		P20100142FAAB78B001AE114 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		P20100152FAAB78B001AE114 /* ProfileStatCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStatCard.swift; sourceTree = "<group>"; };
+		P20100162FAAB78B001AE114 /* ProfileStatsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStatsRow.swift; sourceTree = "<group>"; };
+		P20100172FAAB78B001AE114 /* ProfileStreakHeroCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStreakHeroCard.swift; sourceTree = "<group>"; };
+		P20100182FAAB78B001AE114 /* ProfileMedalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMedalCell.swift; sourceTree = "<group>"; };
+		P20100192FAAB78B001AE114 /* ProfileMedalDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMedalDetailSheet.swift; sourceTree = "<group>"; };
+		P201001A2FAAB78B001AE114 /* ProfileMedalsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMedalsSection.swift; sourceTree = "<group>"; };
+		P201001D2FAAB78B001AE114 /* ProfileStarsInfoSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStarsInfoSheet.swift; sourceTree = "<group>"; };
+		P201001F2FAAB78B001AE114 /* ProfileRaisedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRaisedCard.swift; sourceTree = "<group>"; };
+		P20100202FAAB78B001AE114 /* ProfileMedalsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMedalsScreen.swift; sourceTree = "<group>"; };
+		P20100212FAAB78B001AE114 /* ASLMedalCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLMedalCatalog.swift; sourceTree = "<group>"; };
+		P20100222FAAB78B001AE114 /* MedalEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedalEngine.swift; sourceTree = "<group>"; };
+		P20100232FAAB78B001AE114 /* MedalUnlockCelebrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedalUnlockCelebrationView.swift; sourceTree = "<group>"; };
+		P20100242FAAB78B001AE114 /* MedalCelebrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedalCelebrationPresenter.swift; sourceTree = "<group>"; };
+		P50100022FAAB78B001AE116 /* PremiumCardStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumCardStyle.swift; sourceTree = "<group>"; };
+		Q20100012FAAB78B001AE114 /* ASLPhaseReviewCopy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLPhaseReviewCopy.swift; sourceTree = "<group>"; };
+		R20100012FAAB78B001AE114 /* ASLRedrillCopy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLRedrillCopy.swift; sourceTree = "<group>"; };
+		S10100012FAAB78B001AE116 /* TabCurvedContentPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabCurvedContentPanel.swift; sourceTree = "<group>"; };
+		S10100022FAAB78B001AE116 /* RaisedCardPress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaisedCardPress.swift; sourceTree = "<group>"; };
+		S10100032FAAB78B001AE116 /* FavoriteSignsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSignsStore.swift; sourceTree = "<group>"; };
+		S10100042FAAB78B001AE116 /* SignCategoryCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignCategoryCatalog.swift; sourceTree = "<group>"; };
+		S10100052FAAB78B001AE116 /* SignFilmPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignFilmPlaceholder.swift; sourceTree = "<group>"; };
+		S10100062FAAB78B001AE116 /* FilmedSignCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmedSignCatalog.swift; sourceTree = "<group>"; };
+		S10100072FAAB78B001AE116 /* StoneMediaManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoneMediaManifest.swift; sourceTree = "<group>"; };
+		S10100082FAAB78B001AE116 /* StoneConfirmDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoneConfirmDialog.swift; sourceTree = "<group>"; };
+		S10100092FAAB78B001AE116 /* LessonEntryReveal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonEntryReveal.swift; sourceTree = "<group>"; };
+		S20100012FAAB78B001AE115 /* ASLStreakCelebrationCopy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLStreakCelebrationCopy.swift; sourceTree = "<group>"; };
+		T20100012FAAB78B001AE114 /* ASLTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASLTypography.swift; sourceTree = "<group>"; };
+		V20100012FAAB78B001AE119 /* greetings-mascot.mp4 */ = {isa = PBXFileReference; lastKnownFileType = "public.mpeg-4"; path = "greetings-mascot.mp4"; sourceTree = "<group>"; };
+		V20100022FAAB78B001AE119 /* UnitMascotVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitMascotVideoView.swift; sourceTree = "<group>"; };
+		V20100032FAAB78B001AE119 /* redrill-mascot.mp4 */ = {isa = PBXFileReference; lastKnownFileType = "public.mpeg-4"; path = "redrill-mascot.mp4"; sourceTree = "<group>"; };
+		W20100012FAAB78B001AE114 /* HomeWorldDecor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeWorldDecor.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		9C81A4CE2FAAB78B001AE114 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F10000000000000000000001 /* FirebaseCore in Frameworks */,
+				F10000000000000000000002 /* FirebaseFirestore in Frameworks */,
+				F10000000000000000000003 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -32,7 +344,7 @@
 		9C81A4C82FAAB78B001AE114 = {
 			isa = PBXGroup;
 			children = (
-				9C81A4D32FAAB78B001AE114 /* ASL */,
+				D10000012FAAB78B001AE114 /* ASL */,
 				9C81A4D22FAAB78B001AE114 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -40,9 +352,227 @@
 		9C81A4D22FAAB78B001AE114 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9C81A4D12FAAB78B001AE114 /* ASL.app */,
+				9C81A4D12FAAB78B001AE114 /* Ziggy ASL.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		D10000012FAAB78B001AE114 /* ASL */ = {
+			isa = PBXGroup;
+			children = (
+				D10100012FAAB78B001AE114 /* ASLApp.swift */,
+				D10100042FAAB78B001AE114 /* ContentView.swift */,
+				D10100022FAAB78B001AE114 /* ASLDataStore.swift */,
+				D20100052FAAB78B001AE114 /* DailyStreakCelebrationCopy.swift */,
+				D20100062FAAB78B001AE114 /* DailyStreakCelebrationView.swift */,
+				D20100072FAAB78B001AE114 /* DailyStreakCelebrationPresenter.swift */,
+				D10100032FAAB78B001AE114 /* ASLModels.swift */,
+				F20100012FAAB78B001AE114 /* ASLLessonPromptFraming.swift */,
+				H20100012FAAB78B001AE114 /* ASLSemanticDistractors.swift */,
+				R20100012FAAB78B001AE114 /* ASLRedrillCopy.swift */,
+				C20100012FAAB78B001AE116 /* ASLModuleCompleteCopy.swift */,
+				C20100022FAAB78B001AE116 /* ASLUnitCompleteCopy.swift */,
+				S20100012FAAB78B001AE115 /* ASLStreakCelebrationCopy.swift */,
+				L20100012FAAB78B001AE114 /* ASLMatchPairFeedback.swift */,
+				O20100012FAAB78B001AE114 /* ASLStoneMistakeMemory.swift */,
+				Q20100012FAAB78B001AE114 /* ASLPhaseReviewCopy.swift */,
+				G20100012FAAB78B001AE114 /* ASLStoneDisplayTitles.swift */,
+				E20100012FAAB78B001AE114 /* ASLStarEconomy.swift */,
+				B20100012FAAB78B001AE114 /* ASLBrand.swift */,
+				E30100012FAAB78B001AE114 /* ASLElevation.swift */,
+				T20100012FAAB78B001AE114 /* ASLTypography.swift */,
+				I30100012FAAB78B001AE114 /* ASLIconography.swift */,
+				W20100012FAAB78B001AE114 /* HomeWorldDecor.swift */,
+				M20100012FAAB78B001AE114 /* ASLUnitMascot.swift */,
+				V20100012FAAB78B001AE119 /* greetings-mascot.mp4 */,
+				V20100022FAAB78B001AE119 /* UnitMascotVideoView.swift */,
+				V20100032FAAB78B001AE119 /* redrill-mascot.mp4 */,
+				B30100012FAAB78B001AE120 /* BundledMedia */,
+				F30100012FAAB78B001AE121 /* Fonts */,
+				P20100012FAAB78B001AE114 /* ASLUnitPalette.swift */,
+				P20100022FAAB78B001AE114 /* SectionDivider.swift */,
+				P20100032FAAB78B001AE114 /* ASLSettings.swift */,
+				N10000012FAAB78B001AE121 /* Onboarding */,
+				P10000012FAAB78B001AE114 /* Profile */,
+				D10000022FAAB78B001AE114 /* Tabs */,
+				P10000012FAAB78B001AE117 /* Practice */,
+				M10000012FAAB78B001AE118 /* Media */,
+				S10000012FAAB78B001AE116 /* Shared */,
+				D10000032FAAB78B001AE114 /* Lessons */,
+				D101000A2FAAB78B001AE114 /* GoogleService-Info.plist */,
+				D101000B2FAAB78B001AE114 /* Assets.xcassets */,
+			);
+			path = ASL;
+			sourceTree = "<group>";
+		};
+		D10000022FAAB78B001AE114 /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				D10100092FAAB78B001AE114 /* TabPlaceholderView.swift */,
+				D10100052FAAB78B001AE114 /* HomeTabView.swift */,
+				D10100062FAAB78B001AE114 /* PracticeTabView.swift */,
+				D10100082FAAB78B001AE114 /* SignsTabView.swift */,
+				D10100272FAAB78B001AE114 /* SignYourTurnPracticeView.swift */,
+				D10100072FAAB78B001AE114 /* ProfileTabView.swift */,
+				D101000C2FAAB78B001AE114 /* LessonRouter.swift */,
+			);
+			path = Tabs;
+			sourceTree = "<group>";
+		};
+		D10000032FAAB78B001AE114 /* Lessons */ = {
+			isa = PBXGroup;
+			children = (
+				D101000E2FAAB78B001AE114 /* LessonShell.swift */,
+				D101000F2FAAB78B001AE114 /* LessonVideoPlayer.swift */,
+				D1010F012FAAB78B001AE114 /* SignVideoCard.swift */,
+				D1010F022FAAB78B001AE114 /* ASLTipStepView.swift */,
+				D1010F032FAAB78B001AE114 /* YourTurnStepView.swift */,
+				D101000D2FAAB78B001AE114 /* ChoiceTile.swift */,
+				D10100102FAAB78B001AE114 /* LessonPalette.swift */,
+				D10100112FAAB78B001AE114 /* CelebrationView.swift */,
+				D10100122FAAB78B001AE114 /* Haptics.swift */,
+				D10100132FAAB78B001AE114 /* LessonSounds.swift */,
+				D10100142FAAB78B001AE114 /* WrongAnswerCoordinator.swift */,
+				D10100152FAAB78B001AE114 /* SessionState.swift */,
+				D101001B2FAAB78B001AE114 /* ModuleLessonView.swift */,
+				D10100262FAAB78B001AE114 /* LessonVideoChoices.swift */,
+				D101001C2FAAB78B001AE115 /* MatchPairsShared.swift */,
+				D101001D2FAAB78B001AE115 /* ModulePickCountdown.swift */,
+				D10100302FAAB78B001AE114 /* FingerspellSequenceController.swift */,
+			);
+			path = Lessons;
+			sourceTree = "<group>";
+		};
+		M10000012FAAB78B001AE118 /* Media */ = {
+			isa = PBXGroup;
+			children = (
+				M30100012FAAB78B001AE118 /* SignMediaPaths.swift */,
+				M30100052FAAB78B001AE118 /* PosterImageView.swift */,
+				M30100062FAAB78B001AE118 /* PosterImageLoader.swift */,
+				M30100072FAAB78B001AE118 /* DictionaryMediaURL.swift */,
+				M30100082FAAB78B001AE118 /* DictionaryMediaMetrics.swift */,
+				M30100022FAAB78B001AE118 /* LessonMediaPlanner.swift */,
+				M30100032FAAB78B001AE118 /* SeededRandomNumberGenerator.swift */,
+				M30100092FAAB78B001AE118 /* BundledSignMedia.swift */,
+				M30100102FAAB78B001AE118 /* BundledPlaybackCache.swift */,
+				M30100112FAAB78B001AE118 /* DictionaryVideoWarmPool.swift */,
+				M301000B2FAAB78B001AE118 /* MediaBootstrapMetrics.swift */,
+			);
+			path = Media;
+			sourceTree = "<group>";
+		};
+		N10000012FAAB78B001AE121 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				N20100012FAAB78B001AE121 /* ASLOnboarding.swift */,
+				N20100022FAAB78B001AE121 /* ASLPremiumAccess.swift */,
+				N20100032FAAB78B001AE121 /* OnboardingCopy.swift */,
+				N20100042FAAB78B001AE121 /* RootView.swift */,
+				N20100052FAAB78B001AE121 /* OnboardingPrimaryButton.swift */,
+				N20100062FAAB78B001AE121 /* OnboardingSelectionCard.swift */,
+				N20100072FAAB78B001AE121 /* OnboardingScaffold.swift */,
+				N20100082FAAB78B001AE121 /* OnboardingSplashView.swift */,
+				N20100092FAAB78B001AE121 /* OnboardingWelcomeView.swift */,
+				N20100282FAAB78B001AE121 /* OnboardingZiggyIntroView.swift */,
+				N201002A2FAAB78B001AE121 /* OnboardingFirstSignCelebrationView.swift */,
+				N201002B2FAAB78B001AE121 /* OnboardingScienceFactView.swift */,
+				N201000A2FAAB78B001AE121 /* OnboardingMotivationView.swift */,
+				N201000D2FAAB78B001AE121 /* OnboardingDailyGoalView.swift */,
+				N201001C2FAAB78B001AE121 /* OnboardingLoadingView.swift */,
+				N201001D2FAAB78B001AE121 /* OnboardingMiniModuleView.swift */,
+				N201001E2FAAB78B001AE121 /* OnboardingLessonCompleteView.swift */,
+				N20100242FAAB78B001AE121 /* AppStoreReviewPrompt.swift */,
+				N20100252FAAB78B001AE121 /* OnboardingAppStoreReviewView.swift */,
+				N201001F2FAAB78B001AE121 /* OnboardingDayStreakView.swift */,
+				N20100292FAAB78B001AE121 /* OnboardingStreakGoalView.swift */,
+				N20100212FAAB78B001AE121 /* OnboardingVisionView.swift */,
+				N20100222FAAB78B001AE121 /* MascotSpeechBubble.swift */,
+				N20100232FAAB78B001AE121 /* OnboardingMascotHeader.swift */,
+				N20100272FAAB78B001AE121 /* PaywallComponents.swift */,
+				N20100122FAAB78B001AE121 /* OnboardingPaywallView.swift */,
+				N20100132FAAB78B001AE121 /* OnboardingFlowView.swift */,
+				N20100262FAAB78B001AE121 /* OnboardingFlowProgressHeader.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		P10000012FAAB78B001AE114 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				P20100102FAAB78B001AE114 /* ProfileDayKey.swift */,
+				P20100122FAAB78B001AE114 /* ProfileRaisedControls.swift */,
+				P20100132FAAB78B001AE114 /* ProfileSettingsSheet.swift */,
+				P20100142FAAB78B001AE114 /* ProfileHeaderView.swift */,
+				P20100152FAAB78B001AE114 /* ProfileStatCard.swift */,
+				P20100162FAAB78B001AE114 /* ProfileStatsRow.swift */,
+				P20100172FAAB78B001AE114 /* ProfileStreakHeroCard.swift */,
+				P20100182FAAB78B001AE114 /* ProfileMedalCell.swift */,
+				P20100192FAAB78B001AE114 /* ProfileMedalDetailSheet.swift */,
+				P201001A2FAAB78B001AE114 /* ProfileMedalsSection.swift */,
+				P20100202FAAB78B001AE114 /* ProfileMedalsScreen.swift */,
+				P20100212FAAB78B001AE114 /* ASLMedalCatalog.swift */,
+				P20100222FAAB78B001AE114 /* MedalEngine.swift */,
+				P20100232FAAB78B001AE114 /* MedalUnlockCelebrationView.swift */,
+				P20100242FAAB78B001AE114 /* MedalCelebrationPresenter.swift */,
+				P201001D2FAAB78B001AE114 /* ProfileStarsInfoSheet.swift */,
+				P201001F2FAAB78B001AE114 /* ProfileRaisedCard.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		P10000012FAAB78B001AE117 /* Practice */ = {
+			isa = PBXGroup;
+			children = (
+				P10100012FAAB78B001AE117 /* PracticeTheme.swift */,
+				P10100022FAAB78B001AE117 /* PracticeOption.swift */,
+				P10100032FAAB78B001AE117 /* PracticeOptionCard.swift */,
+				P10100042FAAB78B001AE117 /* PracticeWordPool.swift */,
+				P101000F2FAAB78B001AE117 /* PracticeQuizView.swift */,
+				P10100222FAAB78B001AE117 /* WatchPickSupport.swift */,
+				P10100252FAAB78B001AE117 /* PracticeVocabularyMatchingView.swift */,
+				P10100202FAAB78B001AE117 /* PracticeQuizCatalog.swift */,
+				P10100102FAAB78B001AE117 /* PracticeFlashcardsView.swift */,
+				P10100072FAAB78B001AE117 /* PracticeSessionCompleteView.swift */,
+				P10100112FAAB78B001AE117 /* PracticePathContext.swift */,
+				P10100122FAAB78B001AE117 /* PracticeDailyTaskSelector.swift */,
+				P10100152FAAB78B001AE117 /* PracticeDailyPeriod.swift */,
+				P10100132FAAB78B001AE117 /* PracticeDailyDeepLink.swift */,
+				P10100142FAAB78B001AE117 /* PracticeDailyNavigationCoordinator.swift */,
+				P10100302FAAB78B001AE117 /* PracticeSpellYourNameView.swift */,
+				P10100312FAAB78B001AE117 /* FingerspellLetterMapper.swift */,
+				P10100322FAAB78B001AE117 /* CurriculumAwareSpellingResolver.swift */,
+				P10100332FAAB78B001AE117 /* FingerspellNameStore.swift */,
+				P10100342FAAB78B001AE117 /* FingerspellNameSession.swift */,
+				P10100352FAAB78B001AE117 /* SpellingEntryView.swift */,
+				P10100362FAAB78B001AE117 /* SpellingCurriculumInterceptView.swift */,
+				P10100372FAAB78B001AE117 /* FingerspellLetterChipStrip.swift */,
+				P10100382FAAB78B001AE117 /* FingerspellLearnLetterView.swift */,
+				P10100392FAAB78B001AE117 /* FingerspellFlowPlaybackView.swift */,
+				P101003B2FAAB78B001AE117 /* FingerspellConversationBridgeView.swift */,
+				P101003C2FAAB78B001AE117 /* FingerspellYourTurnView.swift */,
+				P101000B2FAAB78B001AE117 /* PracticeDailyTasks.swift */,
+				P101000C2FAAB78B001AE117 /* PracticeDailyTaskEngine.swift */,
+				P101000D2FAAB78B001AE117 /* PracticeDailyTaskCard.swift */,
+				P101000E2FAAB78B001AE117 /* PracticeDailyPracticeSection.swift */,
+			);
+			path = Practice;
+			sourceTree = "<group>";
+		};
+		S10000012FAAB78B001AE116 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				S10100012FAAB78B001AE116 /* TabCurvedContentPanel.swift */,
+				P50100022FAAB78B001AE116 /* PremiumCardStyle.swift */,
+				S10100082FAAB78B001AE116 /* StoneConfirmDialog.swift */,
+				S10100092FAAB78B001AE116 /* LessonEntryReveal.swift */,
+				S10100022FAAB78B001AE116 /* RaisedCardPress.swift */,
+				S10100032FAAB78B001AE116 /* FavoriteSignsStore.swift */,
+				S10100042FAAB78B001AE116 /* SignCategoryCatalog.swift */,
+				S10100052FAAB78B001AE116 /* SignFilmPlaceholder.swift */,
+				S10100062FAAB78B001AE116 /* FilmedSignCatalog.swift */,
+				S10100072FAAB78B001AE116 /* StoneMediaManifest.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -60,14 +590,14 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				9C81A4D32FAAB78B001AE114 /* ASL */,
-			);
 			name = ASL;
 			packageProductDependencies = (
+				F10000000000000000000011 /* FirebaseCore */,
+				F10000000000000000000012 /* FirebaseFirestore */,
+				F10000000000000000000013 /* FirebaseStorage */,
 			);
 			productName = ASL;
-			productReference = 9C81A4D12FAAB78B001AE114 /* ASL.app */;
+			productReference = 9C81A4D12FAAB78B001AE114 /* Ziggy ASL.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -94,6 +624,9 @@
 			);
 			mainGroup = 9C81A4C82FAAB78B001AE114;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				F10000000000000000000010 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9C81A4D22FAAB78B001AE114 /* Products */;
 			projectDirPath = "";
@@ -109,6 +642,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D10300012FAAB78B001AE114 /* GoogleService-Info.plist in Resources */,
+				D10300022FAAB78B001AE114 /* Assets.xcassets in Resources */,
+				V20200032FAAB78B001AE119 /* redrill-mascot.mp4 in Resources */,
+				V20200012FAAB78B001AE119 /* greetings-mascot.mp4 in Resources */,
+				B30200012FAAB78B001AE120 /* BundledMedia in Resources */,
+				F30200012FAAB78B001AE121 /* Fonts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +658,155 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D10200012FAAB78B001AE114 /* ASLApp.swift in Sources */,
+				D10200022FAAB78B001AE114 /* ASLDataStore.swift in Sources */,
+				D20200052FAAB78B001AE114 /* DailyStreakCelebrationCopy.swift in Sources */,
+				D20200062FAAB78B001AE114 /* DailyStreakCelebrationView.swift in Sources */,
+				D20200072FAAB78B001AE114 /* DailyStreakCelebrationPresenter.swift in Sources */,
+				D10200032FAAB78B001AE114 /* ASLModels.swift in Sources */,
+				F20200012FAAB78B001AE114 /* ASLLessonPromptFraming.swift in Sources */,
+				H20200012FAAB78B001AE114 /* ASLSemanticDistractors.swift in Sources */,
+				R20200012FAAB78B001AE114 /* ASLRedrillCopy.swift in Sources */,
+				C20200012FAAB78B001AE116 /* ASLModuleCompleteCopy.swift in Sources */,
+				C20200022FAAB78B001AE116 /* ASLUnitCompleteCopy.swift in Sources */,
+				S20200012FAAB78B001AE115 /* ASLStreakCelebrationCopy.swift in Sources */,
+				L20200012FAAB78B001AE114 /* ASLMatchPairFeedback.swift in Sources */,
+				O20200012FAAB78B001AE114 /* ASLStoneMistakeMemory.swift in Sources */,
+				Q20200012FAAB78B001AE114 /* ASLPhaseReviewCopy.swift in Sources */,
+				G20200012FAAB78B001AE114 /* ASLStoneDisplayTitles.swift in Sources */,
+				E20200012FAAB78B001AE114 /* ASLStarEconomy.swift in Sources */,
+				B20200012FAAB78B001AE114 /* ASLBrand.swift in Sources */,
+				E30200012FAAB78B001AE114 /* ASLElevation.swift in Sources */,
+				T20200012FAAB78B001AE114 /* ASLTypography.swift in Sources */,
+				I30200012FAAB78B001AE114 /* ASLIconography.swift in Sources */,
+				W20200012FAAB78B001AE114 /* HomeWorldDecor.swift in Sources */,
+				M20200012FAAB78B001AE114 /* ASLUnitMascot.swift in Sources */,
+				V20200022FAAB78B001AE119 /* UnitMascotVideoView.swift in Sources */,
+				D10200042FAAB78B001AE114 /* ContentView.swift in Sources */,
+				D10200092FAAB78B001AE114 /* TabPlaceholderView.swift in Sources */,
+				D10200052FAAB78B001AE114 /* HomeTabView.swift in Sources */,
+				D10200062FAAB78B001AE114 /* PracticeTabView.swift in Sources */,
+				D10200082FAAB78B001AE114 /* SignsTabView.swift in Sources */,
+				D10200272FAAB78B001AE114 /* SignYourTurnPracticeView.swift in Sources */,
+				D10200072FAAB78B001AE114 /* ProfileTabView.swift in Sources */,
+				D102000A2FAAB78B001AE114 /* LessonRouter.swift in Sources */,
+				D102000B2FAAB78B001AE114 /* ChoiceTile.swift in Sources */,
+				D102000C2FAAB78B001AE114 /* LessonShell.swift in Sources */,
+				D102000D2FAAB78B001AE114 /* LessonVideoPlayer.swift in Sources */,
+				D102000E2FAAB78B001AE114 /* LessonPalette.swift in Sources */,
+				D102000F2FAAB78B001AE114 /* CelebrationView.swift in Sources */,
+				D10200102FAAB78B001AE114 /* Haptics.swift in Sources */,
+				D10200112FAAB78B001AE114 /* LessonSounds.swift in Sources */,
+				D10200122FAAB78B001AE114 /* WrongAnswerCoordinator.swift in Sources */,
+				D10200132FAAB78B001AE114 /* SessionState.swift in Sources */,
+				D10200192FAAB78B001AE114 /* ModuleLessonView.swift in Sources */,
+				D10200262FAAB78B001AE114 /* LessonVideoChoices.swift in Sources */,
+				D102001A2FAAB78B001AE115 /* MatchPairsShared.swift in Sources */,
+				D1020F012FAAB78B001AE114 /* SignVideoCard.swift in Sources */,
+				D1020F022FAAB78B001AE114 /* ASLTipStepView.swift in Sources */,
+				D1020F032FAAB78B001AE114 /* YourTurnStepView.swift in Sources */,
+				D10200302FAAB78B001AE114 /* FingerspellSequenceController.swift in Sources */,
+				S10200012FAAB78B001AE116 /* TabCurvedContentPanel.swift in Sources */,
+				P50200022FAAB78B001AE116 /* PremiumCardStyle.swift in Sources */,
+				S10200082FAAB78B001AE116 /* StoneConfirmDialog.swift in Sources */,
+				S10200092FAAB78B001AE116 /* LessonEntryReveal.swift in Sources */,
+				S10200052FAAB78B001AE116 /* SignFilmPlaceholder.swift in Sources */,
+				S10200022FAAB78B001AE116 /* RaisedCardPress.swift in Sources */,
+				P10200012FAAB78B001AE117 /* PracticeTheme.swift in Sources */,
+				P10200022FAAB78B001AE117 /* PracticeOption.swift in Sources */,
+				P10200032FAAB78B001AE117 /* PracticeOptionCard.swift in Sources */,
+				P10200042FAAB78B001AE117 /* PracticeWordPool.swift in Sources */,
+				P10200062FAAB78B001AE117 /* PracticeQuizView.swift in Sources */,
+				P10200222FAAB78B001AE117 /* WatchPickSupport.swift in Sources */,
+				P10200252FAAB78B001AE117 /* PracticeVocabularyMatchingView.swift in Sources */,
+				P10200302FAAB78B001AE117 /* PracticeSpellYourNameView.swift in Sources */,
+				P10200312FAAB78B001AE117 /* FingerspellLetterMapper.swift in Sources */,
+				P10200322FAAB78B001AE117 /* CurriculumAwareSpellingResolver.swift in Sources */,
+				P10200332FAAB78B001AE117 /* FingerspellNameStore.swift in Sources */,
+				P10200342FAAB78B001AE117 /* FingerspellNameSession.swift in Sources */,
+				P10200352FAAB78B001AE117 /* SpellingEntryView.swift in Sources */,
+				P10200362FAAB78B001AE117 /* SpellingCurriculumInterceptView.swift in Sources */,
+				P10200372FAAB78B001AE117 /* FingerspellLetterChipStrip.swift in Sources */,
+				P10200382FAAB78B001AE117 /* FingerspellLearnLetterView.swift in Sources */,
+				P10200392FAAB78B001AE117 /* FingerspellFlowPlaybackView.swift in Sources */,
+				P102003B2FAAB78B001AE117 /* FingerspellConversationBridgeView.swift in Sources */,
+				P102003C2FAAB78B001AE117 /* FingerspellYourTurnView.swift in Sources */,
+				P10200202FAAB78B001AE117 /* PracticeQuizCatalog.swift in Sources */,
+				M30200012FAAB78B001AE118 /* SignMediaPaths.swift in Sources */,
+				M30200052FAAB78B001AE118 /* PosterImageView.swift in Sources */,
+				M30200062FAAB78B001AE118 /* PosterImageLoader.swift in Sources */,
+				M30200072FAAB78B001AE118 /* DictionaryMediaURL.swift in Sources */,
+				M30200082FAAB78B001AE118 /* DictionaryMediaMetrics.swift in Sources */,
+				M30200092FAAB78B001AE118 /* BundledSignMedia.swift in Sources */,
+				M30200102FAAB78B001AE118 /* BundledPlaybackCache.swift in Sources */,
+				M30200112FAAB78B001AE118 /* DictionaryVideoWarmPool.swift in Sources */,
+				M302000B2FAAB78B001AE118 /* MediaBootstrapMetrics.swift in Sources */,
+				S10200062FAAB78B001AE116 /* FilmedSignCatalog.swift in Sources */,
+				S10200072FAAB78B001AE116 /* StoneMediaManifest.swift in Sources */,
+				M30200022FAAB78B001AE118 /* LessonMediaPlanner.swift in Sources */,
+				M30200032FAAB78B001AE118 /* SeededRandomNumberGenerator.swift in Sources */,
+				P10200072FAAB78B001AE117 /* PracticeSessionCompleteView.swift in Sources */,
+				P10200082FAAB78B001AE117 /* PracticeFlashcardsView.swift in Sources */,
+				P10200092FAAB78B001AE117 /* PracticePathContext.swift in Sources */,
+				P102000F2FAAB78B001AE117 /* PracticeDailyTaskSelector.swift in Sources */,
+				P10200152FAAB78B001AE117 /* PracticeDailyPeriod.swift in Sources */,
+				P10200102FAAB78B001AE117 /* PracticeDailyDeepLink.swift in Sources */,
+				P10200112FAAB78B001AE117 /* PracticeDailyNavigationCoordinator.swift in Sources */,
+				S10200032FAAB78B001AE116 /* FavoriteSignsStore.swift in Sources */,
+				S10200042FAAB78B001AE116 /* SignCategoryCatalog.swift in Sources */,
+				D102001B2FAAB78B001AE115 /* ModulePickCountdown.swift in Sources */,
+				P102000B2FAAB78B001AE117 /* PracticeDailyTasks.swift in Sources */,
+				P102000C2FAAB78B001AE117 /* PracticeDailyTaskEngine.swift in Sources */,
+				P102000D2FAAB78B001AE117 /* PracticeDailyTaskCard.swift in Sources */,
+				P102000E2FAAB78B001AE117 /* PracticeDailyPracticeSection.swift in Sources */,
+				P20200012FAAB78B001AE114 /* ASLUnitPalette.swift in Sources */,
+				P20200022FAAB78B001AE114 /* SectionDivider.swift in Sources */,
+				P20200032FAAB78B001AE114 /* ASLSettings.swift in Sources */,
+				P20200102FAAB78B001AE114 /* ProfileDayKey.swift in Sources */,
+				P20200122FAAB78B001AE114 /* ProfileRaisedControls.swift in Sources */,
+				P20200132FAAB78B001AE114 /* ProfileSettingsSheet.swift in Sources */,
+				P20200142FAAB78B001AE114 /* ProfileHeaderView.swift in Sources */,
+				P20200152FAAB78B001AE114 /* ProfileStatCard.swift in Sources */,
+				P20200162FAAB78B001AE114 /* ProfileStatsRow.swift in Sources */,
+				P20200172FAAB78B001AE114 /* ProfileStreakHeroCard.swift in Sources */,
+				P20200182FAAB78B001AE114 /* ProfileMedalCell.swift in Sources */,
+				P20200192FAAB78B001AE114 /* ProfileMedalDetailSheet.swift in Sources */,
+				P202001A2FAAB78B001AE114 /* ProfileMedalsSection.swift in Sources */,
+				P20200202FAAB78B001AE114 /* ProfileMedalsScreen.swift in Sources */,
+				P20200212FAAB78B001AE114 /* ASLMedalCatalog.swift in Sources */,
+				P20200222FAAB78B001AE114 /* MedalEngine.swift in Sources */,
+				P20200232FAAB78B001AE114 /* MedalUnlockCelebrationView.swift in Sources */,
+				P20200242FAAB78B001AE114 /* MedalCelebrationPresenter.swift in Sources */,
+				P202001D2FAAB78B001AE114 /* ProfileStarsInfoSheet.swift in Sources */,
+				P202001F2FAAB78B001AE114 /* ProfileRaisedCard.swift in Sources */,
+				N20200012FAAB78B001AE121 /* ASLOnboarding.swift in Sources */,
+				N20200022FAAB78B001AE121 /* ASLPremiumAccess.swift in Sources */,
+				N20200032FAAB78B001AE121 /* OnboardingCopy.swift in Sources */,
+				N20200042FAAB78B001AE121 /* RootView.swift in Sources */,
+				N20200052FAAB78B001AE121 /* OnboardingPrimaryButton.swift in Sources */,
+				N20200062FAAB78B001AE121 /* OnboardingSelectionCard.swift in Sources */,
+				N20200072FAAB78B001AE121 /* OnboardingScaffold.swift in Sources */,
+				N20200082FAAB78B001AE121 /* OnboardingSplashView.swift in Sources */,
+				N20200092FAAB78B001AE121 /* OnboardingWelcomeView.swift in Sources */,
+				N20200282FAAB78B001AE121 /* OnboardingZiggyIntroView.swift in Sources */,
+				N202002A2FAAB78B001AE121 /* OnboardingFirstSignCelebrationView.swift in Sources */,
+				N202002B2FAAB78B001AE121 /* OnboardingScienceFactView.swift in Sources */,
+				N202000A2FAAB78B001AE121 /* OnboardingMotivationView.swift in Sources */,
+				N202000D2FAAB78B001AE121 /* OnboardingDailyGoalView.swift in Sources */,
+				N202001C2FAAB78B001AE121 /* OnboardingLoadingView.swift in Sources */,
+				N202001D2FAAB78B001AE121 /* OnboardingMiniModuleView.swift in Sources */,
+				N202001E2FAAB78B001AE121 /* OnboardingLessonCompleteView.swift in Sources */,
+				N20200242FAAB78B001AE121 /* AppStoreReviewPrompt.swift in Sources */,
+				N20200252FAAB78B001AE121 /* OnboardingAppStoreReviewView.swift in Sources */,
+				N202001F2FAAB78B001AE121 /* OnboardingDayStreakView.swift in Sources */,
+				N20200292FAAB78B001AE121 /* OnboardingStreakGoalView.swift in Sources */,
+				N20200212FAAB78B001AE121 /* OnboardingVisionView.swift in Sources */,
+				N20200222FAAB78B001AE121 /* MascotSpeechBubble.swift in Sources */,
+				N20200232FAAB78B001AE121 /* OnboardingMascotHeader.swift in Sources */,
+				N20200272FAAB78B001AE121 /* PaywallComponents.swift in Sources */,
+				N20200122FAAB78B001AE121 /* OnboardingPaywallView.swift in Sources */,
+				N20200132FAAB78B001AE121 /* OnboardingFlowView.swift in Sources */,
+				N20200262FAAB78B001AE121 /* OnboardingFlowProgressHeader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,6 +942,11 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ASL/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Ziggy ASL";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_NSCameraUsageDescription = "ASL uses the camera so you can record yourself signing and compare with the example in lessons and practice.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "ASL records audio alongside your sign practice video. Audio is never required or shared.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -262,25 +955,26 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ASL.ASL;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = ZiggyASL.ZiggyASL;
+				PRODUCT_NAME = "Ziggy ASL";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				XROS_DEPLOYMENT_TARGET = 26.4;
 			};
 			name = Debug;
@@ -298,6 +992,11 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ASL/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Ziggy ASL";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_NSCameraUsageDescription = "ASL uses the camera so you can record yourself signing and compare with the example in lessons and practice.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "ASL records audio alongside your sign practice video. Audio is never required or shared.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -306,25 +1005,26 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ASL.ASL;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = ZiggyASL.ZiggyASL;
+				PRODUCT_NAME = "Ziggy ASL";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				XROS_DEPLOYMENT_TARGET = 26.4;
 			};
 			name = Release;
@@ -351,6 +1051,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F10000000000000000000010 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.13.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F10000000000000000000011 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F10000000000000000000010 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		F10000000000000000000012 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F10000000000000000000010 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		F10000000000000000000013 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F10000000000000000000010 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9C81A4C92FAAB78B001AE114 /* Project object */;
 }

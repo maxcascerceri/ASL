@@ -1,0 +1,652 @@
+category_id,category_title,mascot_name,word_id,word_display
+greetings,First Signs,greetings,hello,Hello
+greetings,First Signs,greetings,bye,Bye
+greetings,First Signs,greetings,please,Please
+greetings,First Signs,greetings,thankyou,Thank You
+greetings,First Signs,greetings,sorry,Sorry
+greetings,First Signs,greetings,welcome,Welcome
+greetings,First Signs,greetings,name,Name
+greetings,First Signs,greetings,congratulations,Congratulations
+greetings,First Signs,greetings,oops,Oops
+greetings,First Signs,greetings,nice,Nice
+greetings,First Signs,greetings,meet,Meet
+greetings,First Signs,greetings,introduce,Introduce
+greetings,First Signs,greetings,sign,Sign
+greetings,First Signs,greetings,mynameis,My Name Is
+greetings,First Signs,greetings,nicetomeetyou,Nice To Meet You
+greetings,First Signs,greetings,howareyou,How Are You
+greetings,First Signs,greetings,imfine,I'm Fine
+greetings,First Signs,greetings,signslow,Sign Slow
+greetings,First Signs,greetings,yourewelcome,You're Welcome
+greetings,First Signs,greetings,thankyouverymuch,Thank You Very Much
+responses,Everyday Replies,smalltalk,yes,Yes
+responses,Everyday Replies,smalltalk,no,No
+responses,Everyday Replies,smalltalk,sure,Sure
+responses,Everyday Replies,smalltalk,wow,Wow
+responses,Everyday Replies,smalltalk,really,Really
+responses,Everyday Replies,smalltalk,alright,Alright
+responses,Everyday Replies,smalltalk,ok,Ok
+responses,Everyday Replies,smalltalk,again,Again
+responses,Everyday Replies,smalltalk,wait,Wait
+responses,Everyday Replies,smalltalk,nevermind,Never Mind
+responses,Everyday Replies,smalltalk,maybe,Maybe
+responses,Everyday Replies,smalltalk,dontknow,Don't Know
+responses,Everyday Replies,smalltalk,notyet,Not Yet
+responses,Everyday Replies,smalltalk,signagain,Sign Again
+responses,Everyday Replies,smalltalk,excuseme,Excuse Me
+responses,Everyday Replies,smalltalk,seeyoulater,See You Later
+responses,Everyday Replies,smalltalk,samehere,Same Here
+responses,Everyday Replies,smalltalk,havegoodday,Have A Good Day
+responses,Everyday Replies,smalltalk,nicetoseeyou,Nice To See You
+responses,Everyday Replies,smalltalk,cool,Cool
+responses,Everyday Replies,smalltalk,awesome,Awesome
+responses,Everyday Replies,smalltalk,funny,Funny
+pronouns,Pronouns,,i,I
+pronouns,Pronouns,,me,Me
+pronouns,Pronouns,,you,You
+pronouns,Pronouns,,we,We
+pronouns,Pronouns,,us,Us
+pronouns,Pronouns,,our,Our
+pronouns,Pronouns,,my,My
+pronouns,Pronouns,,your,Your
+pronouns,Pronouns,,his,His
+pronouns,Pronouns,,mine,Mine
+pronouns,Pronouns,,he,He
+pronouns,Pronouns,,they,They
+pronouns,Pronouns,,she,She
+pronouns,Pronouns,,her,Her
+pronouns,Pronouns,,him,Him
+pronouns,Pronouns,,them,Them
+pronouns,Pronouns,,their,Their
+pronouns,Pronouns,,yours,Yours
+pronouns,Pronouns,,ours,Ours
+questions,Question Words,questions,what,What
+questions,Question Words,questions,where,Where
+questions,Question Words,questions,when,When
+questions,Question Words,questions,who,Who
+questions,Question Words,questions,why,Why
+questions,Question Words,questions,how,How
+questions,Question Words,questions,which,Which
+questions,Question Words,questions,whatisyourname,What's Your Name
+questions,Question Words,questions,whatsthat,What's That
+questions,Question Words,questions,whatdoesthatmean,What Does That Mean
+questions,Question Words,questions,howmany,How Many?
+questions,Question Words,questions,whereareyou,Where Are You?
+questions,Question Words,questions,whatisyournamesign,What's Your Name Sign?
+questions,Question Words,questions,whereareyoufrom,Where Are You From?
+questions,Question Words,questions,whatareyoudoing,What Are You Doing?
+questions,Question Words,questions,imfrom,I'm From ___
+people-words,People Words,people,person,Person
+people-words,People Words,people,people,People
+people-words,People Words,people,myself,Myself
+people-words,People Words,people,yourself,Yourself
+people-words,People Words,people,sign,Sign
+people-words,People Words,people,introduce,Introduce
+mood-basics,Check-ins,mood,good,Good
+mood-basics,Check-ins,mood,bad,Bad
+mood-basics,Check-ins,mood,fine,Fine
+mood-basics,Check-ins,mood,great,Great
+mood-basics,Check-ins,mood,happy,Happy
+mood-basics,Check-ins,mood,sad,Sad
+mood-basics,Check-ins,mood,tired,Tired
+mood-basics,Check-ins,mood,angry,Angry
+mood-basics,Check-ins,mood,scared,Scared
+mood-basics,Check-ins,mood,excited,Excited
+mood-basics,Check-ins,mood,worry,Worry
+mood-basics,Check-ins,mood,nervous,Nervous
+mood-basics,Check-ins,mood,imgood,I'm Good
+mood-basics,Check-ins,mood,goodmorning,Good Morning
+mood-basics,Check-ins,mood,goodnight,Good Night
+mood-basics,Check-ins,mood,imtired,I'm Tired
+mood-basics,Check-ins,mood,imhappy,I'm Happy
+mood-basics,Check-ins,mood,imsad,I'm Sad
+mood-basics,Check-ins,mood,imangry,I'm Angry
+mood-basics,Check-ins,mood,imscared,I'm Scared
+mood-basics,Check-ins,mood,imexcited,I'm Excited
+mood-basics,Check-ins,mood,imnervous,I'm Nervous
+deaf-world,Deaf World Basics,languages,deaf,Deaf
+deaf-world,Deaf World Basics,languages,hearing,Hearing
+deaf-world,Deaf World Basics,languages,hardofhearing,Hard Of Hearing
+deaf-world,Deaf World Basics,languages,asl,ASL
+deaf-world,Deaf World Basics,languages,signlanguage,Sign Language
+deaf-world,Deaf World Basics,languages,namesign,Name Sign
+deaf-world,Deaf World Basics,languages,deafculture,Deaf Culture
+deaf-world,Deaf World Basics,languages,fluent,Fluent
+deaf-world,Deaf World Basics,languages,learnasl,Learn ASL
+deaf-world,Deaf World Basics,languages,practice,Practice
+deaf-world,Deaf World Basics,languages,whatisyournamesign,What's Your Name Sign?
+deaf-world,Deaf World Basics,languages,imlearningasl,I'm Learning ASL
+deaf-world,Deaf World Basics,languages,isignalittle,I Sign A Little
+deaf-world,Deaf World Basics,languages,interpreter,Interpreter
+deaf-world,Deaf World Basics,languages,caption,Caption
+deaf-world,Deaf World Basics,languages,hearingaid,Hearing Aid
+deaf-world,Deaf World Basics,languages,lipread,Lipread
+deaf-world,Deaf World Basics,languages,gesture,Gesture
+deaf-world,Deaf World Basics,languages,translate,Translate
+alphabet,Alphabet,abcs1,a,A
+alphabet,Alphabet,abcs1,b,B
+alphabet,Alphabet,abcs1,c,C
+alphabet,Alphabet,abcs1,d,D
+alphabet,Alphabet,abcs1,e,E
+alphabet,Alphabet,abcs1,f,F
+alphabet,Alphabet,abcs1,g,G
+alphabet,Alphabet,abcs1,h,H
+alphabet,Alphabet,abcs1,letteri,Letter I
+alphabet,Alphabet,abcs1,j,J
+alphabet,Alphabet,abcs1,k,K
+alphabet,Alphabet,abcs1,l,L
+alphabet,Alphabet,abcs1,m,M
+alphabet,Alphabet,abcs1,n,N
+alphabet,Alphabet,abcs1,o,O
+alphabet,Alphabet,abcs1,p,P
+alphabet,Alphabet,abcs1,q,Q
+alphabet,Alphabet,abcs1,r,R
+alphabet,Alphabet,abcs1,s,S
+alphabet,Alphabet,abcs1,t,T
+alphabet,Alphabet,abcs1,u,U
+alphabet,Alphabet,abcs1,v,V
+alphabet,Alphabet,abcs1,w,W
+alphabet,Alphabet,abcs1,x,X
+alphabet,Alphabet,abcs1,y,Y
+alphabet,Alphabet,abcs1,z,Z
+fingerspelling,Fingerspelling,spelling,alphabet,Alphabet
+fingerspelling,Fingerspelling,spelling,fingerspell,Fingerspell
+fingerspelling,Fingerspelling,spelling,letter,Letter
+fingerspelling,Fingerspelling,spelling,language,Language
+fingerspelling,Fingerspelling,spelling,word,Word
+fingerspelling,Fingerspelling,spelling,name,Name
+numbers,Numbers,numbers,zero,Zero
+numbers,Numbers,numbers,one,One
+numbers,Numbers,numbers,two,Two
+numbers,Numbers,numbers,three,Three
+numbers,Numbers,numbers,four,Four
+numbers,Numbers,numbers,five,Five
+numbers,Numbers,numbers,six,Six
+numbers,Numbers,numbers,seven,Seven
+numbers,Numbers,numbers,eight,Eight
+numbers,Numbers,numbers,nine,Nine
+numbers,Numbers,numbers,ten,Ten
+numbers,Numbers,numbers,eleven,Eleven
+money,Money,money,money,Money
+money,Money,money,pay,Pay
+money,Money,money,cost,Cost
+money,Money,money,price,Price
+money,Money,money,1dollar,1 Dollar
+money,Money,money,5dollars,5 Dollars
+amounts-math,Amounts & Math,howmuch,half,Half
+amounts-math,Amounts & Math,howmuch,quarter,Quarter
+amounts-math,Amounts & Math,howmuch,percent,Percent
+amounts-math,Amounts & Math,howmuch,double,Double
+amounts-math,Amounts & Math,howmuch,triple,Triple
+amounts-math,Amounts & Math,howmuch,hundred,Hundred
+amounts-math,Amounts & Math,howmuch,many,Many
+amounts-math,Amounts & Math,howmuch,few,Few
+amounts-math,Amounts & Math,howmuch,enough,Enough
+amounts-math,Amounts & Math,howmuch,more,More
+amounts-math,Amounts & Math,howmuch,less,Less
+amounts-math,Amounts & Math,howmuch,very,Very
+amounts-math,Amounts & Math,howmuch,almost,Almost
+amounts-math,Amounts & Math,howmuch,really,Really
+sentence-helpers,Sentence Helpers,andbut,and,And
+sentence-helpers,Sentence Helpers,andbut,but,But
+sentence-helpers,Sentence Helpers,andbut,or,Or
+sentence-helpers,Sentence Helpers,andbut,so,So
+sentence-helpers,Sentence Helpers,andbut,with,With
+sentence-helpers,Sentence Helpers,andbut,without,Without
+sentence-helpers,Sentence Helpers,andbut,also,Also
+sentence-helpers,Sentence Helpers,andbut,because,Because
+sentence-helpers,Sentence Helpers,andbut,same,Same
+sentence-helpers,Sentence Helpers,andbut,different,Different
+sentence-helpers,Sentence Helpers,andbut,if,If
+family,Family,family,mother,Mother
+family,Family,family,father,Father
+family,Family,family,sister,Sister
+family,Family,family,brother,Brother
+family,Family,family,baby,Baby
+family,Family,family,child,Child
+family,Family,family,family,Family
+family,Family,family,parents,Parents
+family,Family,family,grandmother,Grandmother
+family,Family,family,grandfather,Grandfather
+family,Family,family,aunt,Aunt
+family,Family,family,uncle,Uncle
+family,Family,family,cousin,Cousin
+family,Family,family,niece,Niece
+family,Family,family,nephew,Nephew
+family,Family,family,twins,Twins
+people,People,people,man,Man
+people,People,people,woman,Woman
+people,People,people,boy,Boy
+people,People,people,girl,Girl
+people,People,people,adult,Adult
+people,People,people,teenager,Teenager
+movement,Movement,gettingaround,go,Go
+movement,Movement,gettingaround,come,Come
+movement,Movement,gettingaround,walk,Walk
+movement,Movement,gettingaround,run,Run
+movement,Movement,gettingaround,stop,Stop
+movement,Movement,gettingaround,turn,Turn
+movement,Movement,gettingaround,move,Move
+movement,Movement,gettingaround,lost,Lost
+movement,Movement,gettingaround,imlost,I'm Lost
+body-actions,Body Actions,doingthings,eat,Eat
+body-actions,Body Actions,doingthings,drink,Drink
+body-actions,Body Actions,doingthings,sleep,Sleep
+body-actions,Body Actions,doingthings,see,See
+body-actions,Body Actions,doingthings,hear,Hear
+body-actions,Body Actions,doingthings,feel,Feel
+body-actions,Body Actions,doingthings,breathe,Breathe
+body-actions,Body Actions,doingthings,smell,Smell
+communication,Communication,talking,tell,Tell
+communication,Communication,talking,ask,Ask
+communication,Communication,talking,talk,Talk
+communication,Communication,talking,think,Think
+communication,Communication,talking,know,Know
+communication,Communication,talking,understand,Understand
+communication,Communication,talking,believe,Believe
+communication,Communication,talking,need,Need
+communication,Communication,talking,help,Help
+communication,Communication,talking,idontunderstand,I Don't Understand
+communication,Communication,talking,ineedhelp,I Need Help
+communication,Communication,talking,canyouhelpme,Can You Help Me
+communication,Communication,talking,pleasehelpme,Please Help Me
+communication,Communication,talking,canyourepeatthat,Can You Repeat That?
+communication,Communication,talking,pleasesignslower,Please Sign Slower
+communication,Communication,talking,howyousignthat,How Do You Sign That
+communication,Communication,talking,isignalittle,I Sign A Little
+communication,Communication,talking,call911,Call 911
+doing-helping,Doing & Helping,doingthings,make,Make
+doing-helping,Doing & Helping,doingthings,get,Get
+doing-helping,Doing & Helping,doingthings,give,Give
+doing-helping,Doing & Helping,doingthings,take,Take
+doing-helping,Doing & Helping,doingthings,use,Use
+doing-helping,Doing & Helping,doingthings,find,Find
+doing-helping,Doing & Helping,doingthings,want,Want
+doing-helping,Doing & Helping,doingthings,help,Help
+doing-helping,Doing & Helping,doingthings,iwant,I Want
+doing-helping,Doing & Helping,doingthings,try,Try
+doing-helping,Doing & Helping,doingthings,doing,Doing
+doing-helping,Doing & Helping,doingthings,whatareyoudoing,What Are You Doing?
+colors,Colors,colors,red,Red
+colors,Colors,colors,blue,Blue
+colors,Colors,colors,green,Green
+colors,Colors,colors,yellow,Yellow
+colors,Colors,colors,orangecolor,Orange Color
+colors,Colors,colors,purple,Purple
+colors,Colors,colors,pink,Pink
+colors,Colors,colors,brown,Brown
+colors,Colors,colors,black,Black
+colors,Colors,colors,white,White
+colors,Colors,colors,gray,Gray
+colors,Colors,colors,gold,Gold
+colors,Colors,colors,silver,Silver
+colors,Colors,colors,bright,Bright
+descriptions,Descriptions,describingthings,dark,Dark
+descriptions,Descriptions,describingthings,light,Light
+descriptions,Descriptions,describingthings,bright,Bright
+descriptions,Descriptions,describingthings,big,Big
+descriptions,Descriptions,describingthings,small,Small
+descriptions,Descriptions,describingthings,tall,Tall
+descriptions,Descriptions,describingthings,fast,Fast
+descriptions,Descriptions,describingthings,slow,Slow
+descriptions,Descriptions,describingthings,hard,Hard
+home,Home,home,home,Home
+home,Home,home,house,House
+home,Home,home,kitchen,Kitchen
+home,Home,home,bathroom,Bathroom
+home,Home,home,bedroom,Bedroom
+home,Home,home,livingroom,Living Room
+home,Home,home,basement,Basement
+home,Home,home,backyard,Backyard
+home,Home,home,wherebathroom,Where Is The Bathroom
+home,Home,home,garage,Garage
+furniture,Furniture,furniture,table,Table
+furniture,Furniture,furniture,chair,Chair
+furniture,Furniture,furniture,bed,Bed
+furniture,Furniture,furniture,couch,Couch
+furniture,Furniture,furniture,door,Door
+furniture,Furniture,furniture,window,Window
+furniture,Furniture,furniture,lamp,Lamp
+furniture,Furniture,furniture,clock,Clock
+hygiene,Hygiene,routine,shower,Shower
+hygiene,Hygiene,routine,toilet,Toilet
+hygiene,Hygiene,routine,sink,Sink
+hygiene,Hygiene,routine,soap,Soap
+hygiene,Hygiene,routine,toothbrush,Toothbrush
+hygiene,Hygiene,routine,brush,Brush
+hygiene,Hygiene,routine,comb,Comb
+hygiene,Hygiene,routine,mirror,Mirror
+chores,Chores,chores,clean,Clean
+chores,Chores,chores,wash,Wash
+chores,Chores,chores,cook,Cook
+chores,Chores,chores,sweep,Sweep
+chores,Chores,chores,vacuum,Vacuum
+chores,Chores,chores,washdishes,Wash Dishes
+mealtime,Mealtime,mealtime,breakfast,Breakfast
+mealtime,Mealtime,mealtime,lunch,Lunch
+mealtime,Mealtime,mealtime,dinner,Dinner
+mealtime,Mealtime,mealtime,hungry,Hungry
+mealtime,Mealtime,mealtime,full,Full
+mealtime,Mealtime,mealtime,delicious,Delicious
+mealtime,Mealtime,mealtime,imhungry,I'm Hungry
+fruit,Fruit,fruits,apple,Apple
+fruit,Fruit,fruits,banana,Banana
+fruit,Fruit,fruits,grapes,Grapes
+fruit,Fruit,fruits,strawberry,Strawberry
+fruit,Fruit,fruits,cherry,Cherry
+fruit,Fruit,fruits,pineapple,Pineapple
+fruit,Fruit,fruits,lemon,Lemon
+fruit,Fruit,fruits,orangefruit,Orange Fruit
+vegetables,Vegetables,vegetables,tomato,Tomato
+vegetables,Vegetables,vegetables,carrot,Carrot
+vegetables,Vegetables,vegetables,corn,Corn
+vegetables,Vegetables,vegetables,onion,Onion
+vegetables,Vegetables,vegetables,potato,Potato
+vegetables,Vegetables,vegetables,lettuce,Lettuce
+protein-dairy,Protein & Dairy,meatdairy,meat,Meat
+protein-dairy,Protein & Dairy,meatdairy,fish,Fish
+protein-dairy,Protein & Dairy,meatdairy,egg,Egg
+protein-dairy,Protein & Dairy,meatdairy,cheese,Cheese
+protein-dairy,Protein & Dairy,meatdairy,milk,Milk
+protein-dairy,Protein & Dairy,meatdairy,butter,Butter
+protein-dairy,Protein & Dairy,meatdairy,bacon,Bacon
+protein-dairy,Protein & Dairy,meatdairy,chicken,Chicken
+snacks-drinks,Snacks & Drinks,snacks,bread,Bread
+snacks-drinks,Snacks & Drinks,snacks,pizza,Pizza
+snacks-drinks,Snacks & Drinks,snacks,cake,Cake
+snacks-drinks,Snacks & Drinks,snacks,chocolate,Chocolate
+snacks-drinks,Snacks & Drinks,snacks,water,Water
+snacks-drinks,Snacks & Drinks,snacks,coffee,Coffee
+snacks-drinks,Snacks & Drinks,snacks,tea,Tea
+snacks-drinks,Snacks & Drinks,snacks,juice,Juice
+weekdays,Weekdays,daysofweek,monday,Monday
+weekdays,Weekdays,daysofweek,tuesday,Tuesday
+weekdays,Weekdays,daysofweek,wednesday,Wednesday
+weekdays,Weekdays,daysofweek,thursday,Thursday
+weekdays,Weekdays,daysofweek,friday,Friday
+weekdays,Weekdays,daysofweek,saturday,Saturday
+weekdays,Weekdays,daysofweek,sunday,Sunday
+weekdays,Weekdays,daysofweek,weekend,Weekend
+time-of-day,Time of Day,when,morning,Morning
+time-of-day,Time of Day,when,afternoon,Afternoon
+time-of-day,Time of Day,when,night,Night
+time-of-day,Time of Day,when,today,Today
+time-of-day,Time of Day,when,yesterday,Yesterday
+time-of-day,Time of Day,when,tomorrow,Tomorrow
+time-of-day,Time of Day,when,now,Now
+time-of-day,Time of Day,when,noon,Noon
+time-of-day,Time of Day,when,later,Later
+time-of-day,Time of Day,when,early,Early
+time-units,Time Units,time,day,Day
+time-units,Time Units,time,week,Week
+time-units,Time Units,time,month,Month
+time-units,Time Units,time,year,Year
+time-units,Time Units,time,hour,Hour
+time-units,Time Units,time,minute,Minute
+time-units,Time Units,time,weekend,Weekend
+time-units,Time Units,time,holiday,Holiday
+head-face,Head & Face,headface,head,Head
+head-face,Head & Face,headface,face,Face
+head-face,Head & Face,headface,eyes,Eyes
+head-face,Head & Face,headface,ear,Ear
+head-face,Head & Face,headface,nose,Nose
+head-face,Head & Face,headface,mouth,Mouth
+head-face,Head & Face,headface,teeth,Teeth
+head-face,Head & Face,headface,tongue,Tongue
+body,Body,body,body,Body
+body,Body,body,arm,Arm
+body,Body,body,hands,Hands
+body,Body,body,finger,Finger
+body,Body,body,shoulder,Shoulder
+body,Body,body,neck,Neck
+body,Body,body,back,Back
+body,Body,body,stomach,Stomach
+symptoms,Symptoms,feelingsick,sick,Sick
+symptoms,Symptoms,feelingsick,hurt,Hurt
+symptoms,Symptoms,feelingsick,pain,Pain
+symptoms,Symptoms,feelingsick,headache,Headache
+symptoms,Symptoms,feelingsick,cough,Cough
+symptoms,Symptoms,feelingsick,sneeze,Sneeze
+symptoms,Symptoms,feelingsick,tired,Tired
+symptoms,Symptoms,feelingsick,dizzy,Dizzy
+health,Health,health,health,Health
+health,Health,health,exercise,Exercise
+health,Health,health,doctor,Doctor
+health,Health,health,nurse,Nurse
+health,Health,health,hospital,Hospital
+health,Health,health,medicine,Medicine
+personality,Personality,personality,confident,Confident
+personality,Personality,personality,humble,Humble
+personality,Personality,personality,lazy,Lazy
+personality,Personality,personality,stubborn,Stubborn
+personality,Personality,personality,curious,Curious
+personality,Personality,personality,serious,Serious
+personality,Personality,personality,remember,Remember
+personality,Personality,personality,forget,Forget
+big-feelings,Big Feelings,bigfeelings,bored,Bored
+big-feelings,Big Feelings,bigfeelings,lonely,Lonely
+big-feelings,Big Feelings,bigfeelings,jealous,Jealous
+big-feelings,Big Feelings,bigfeelings,embarrass,Embarrass
+big-feelings,Big Feelings,bigfeelings,frustrate,Frustrate
+big-feelings,Big Feelings,bigfeelings,surprise,Surprise
+relationships,Relationships,love,love,Love
+relationships,Relationships,love,like,Like
+relationships,Relationships,love,hate,Hate
+relationships,Relationships,love,friend,Friend
+relationships,Relationships,love,hug,Hug
+relationships,Relationships,love,kiss,Kiss
+relationships,Relationships,love,ilike,I Like
+clothing,Clothing,outfits,shirt,Shirt
+clothing,Clothing,outfits,pants,Pants
+clothing,Clothing,outfits,dress,Dress
+clothing,Clothing,outfits,shoes,Shoes
+clothing,Clothing,outfits,socks,Socks
+clothing,Clothing,outfits,jacket,Jacket
+clothing,Clothing,outfits,hat,Hat
+clothing,Clothing,outfits,clothes,Clothes
+clothing,Clothing,outfits,shorts,Shorts
+clothing,Clothing,outfits,skirt,Skirt
+clothing,Clothing,outfits,sweater,Sweater
+clothing,Clothing,outfits,boots,Boots
+clothing,Clothing,outfits,gloves,Gloves
+clothing,Clothing,outfits,scarf,Scarf
+clothing,Clothing,outfits,belt,Belt
+clothing,Clothing,outfits,suit,Suit
+accessories,Accessories,accessories,glasses,Glasses
+accessories,Accessories,accessories,earring,Earring
+accessories,Accessories,accessories,necklace,Necklace
+accessories,Accessories,accessories,bracelet,Bracelet
+accessories,Accessories,accessories,ring,Ring
+accessories,Accessories,accessories,backpack,Backpack
+accessories,Accessories,accessories,wallet,Wallet
+accessories,Accessories,accessories,watch,Watch
+transportation,Transportation,gettingaround,car,Car
+transportation,Transportation,gettingaround,bus,Bus
+transportation,Transportation,gettingaround,train,Train
+transportation,Transportation,gettingaround,airplane,Airplane
+transportation,Transportation,gettingaround,bike,Bike
+transportation,Transportation,gettingaround,truck,Truck
+transportation,Transportation,gettingaround,motorcycle,Motorcycle
+transportation,Transportation,gettingaround,boat,Boat
+directions,Directions,directions,here,Here
+directions,Directions,directions,there,There
+directions,Directions,directions,left,Left
+directions,Directions,directions,right,Right
+directions,Directions,directions,up,Up
+directions,Directions,directions,down,Down
+directions,Directions,directions,near,Near
+directions,Directions,directions,far,Far
+places,Places,aroundtown,shop,Shop
+places,Places,aroundtown,park,Park
+places,Places,aroundtown,restaurant,Restaurant
+places,Places,aroundtown,hotel,Hotel
+places,Places,aroundtown,library,Library
+places,Places,aroundtown,church,Church
+commute,Commute,commute,drive,Drive
+commute,Commute,commute,ride,Ride
+commute,Commute,commute,arrive,Arrive
+commute,Commute,commute,travel,Travel
+commute,Commute,commute,road,Road
+commute,Commute,commute,street,Street
+commute,Commute,commute,traffic,Traffic
+commute,Commute,commute,commute,Commute
+school,School,school,school,School
+school,School,school,class,Class
+school,School,school,student,Student
+school,School,school,teacher,Teacher
+school,School,school,learn,Learn
+school,School,school,study,Study
+school,School,school,read,Read
+school,School,school,write,Write
+school,School,school,math,Math
+school,School,school,science,Science
+school,School,school,history,History
+school,School,school,art,Art
+school,School,school,book,Book
+school,School,school,pen,Pen
+school,School,school,paper,Paper
+school,School,school,music,Music
+work,Work,work,work,Work
+work,Work,work,job,Job
+work,Work,work,boss,Boss
+work,Work,work,lawyer,Lawyer
+work,Work,work,engineer,Engineer
+work,Work,work,scientist,Scientist
+work,Work,work,meeting,Meeting
+work,Work,work,retire,Retire
+pets-farm,Pets & Farm,pets,dog,Dog
+pets-farm,Pets & Farm,pets,cat,Cat
+pets-farm,Pets & Farm,pets,horse,Horse
+pets-farm,Pets & Farm,pets,cow,Cow
+pets-farm,Pets & Farm,pets,pig,Pig
+pets-farm,Pets & Farm,pets,sheep,Sheep
+pets-farm,Pets & Farm,pets,rabbit,Rabbit
+pets-farm,Pets & Farm,pets,duck,Duck
+wild-animals,Wild Animals,wildanimals,lion,Lion
+wild-animals,Wild Animals,wildanimals,tiger,Tiger
+wild-animals,Wild Animals,wildanimals,elephant,Elephant
+wild-animals,Wild Animals,wildanimals,bear,Bear
+wild-animals,Wild Animals,wildanimals,wolf,Wolf
+wild-animals,Wild Animals,wildanimals,fox,Fox
+wild-animals,Wild Animals,wildanimals,eagle,Eagle
+wild-animals,Wild Animals,wildanimals,monkey,Monkey
+nature-seasons,Nature & Seasons,nature,tree,Tree
+nature-seasons,Nature & Seasons,nature,flower,Flower
+nature-seasons,Nature & Seasons,nature,mountain,Mountain
+nature-seasons,Nature & Seasons,nature,river,River
+nature-seasons,Nature & Seasons,nature,ocean,Ocean
+nature-seasons,Nature & Seasons,nature,beach,Beach
+nature-seasons,Nature & Seasons,nature,sun,Sun
+nature-seasons,Nature & Seasons,nature,moon,Moon
+nature-seasons,Nature & Seasons,nature,spring,Spring
+nature-seasons,Nature & Seasons,nature,summer,Summer
+nature-seasons,Nature & Seasons,nature,fall,Fall
+nature-seasons,Nature & Seasons,nature,winter,Winter
+weather,Weather,weather,rain,Rain
+weather,Weather,weather,snow,Snow
+weather,Weather,weather,wind,Wind
+weather,Weather,weather,cloud,Cloud
+weather,Weather,weather,lightning,Lightning
+weather,Weather,weather,thunder,Thunder
+weather,Weather,weather,hot,Hot
+weather,Weather,weather,cold,Cold
+sports,Sports,sports,football,Football
+sports,Sports,sports,basketball,Basketball
+sports,Sports,sports,baseball,Baseball
+sports,Sports,sports,soccer,Soccer
+sports,Sports,sports,volleyball,Volleyball
+sports,Sports,sports,hockey,Hockey
+sports,Sports,sports,tennis,Tennis
+sports,Sports,sports,golf,Golf
+arts-hobbies,Arts & Hobbies,musicart,draw,Draw
+arts-hobbies,Arts & Hobbies,musicart,paint,Paint
+arts-hobbies,Arts & Hobbies,musicart,sing,Sing
+arts-hobbies,Arts & Hobbies,musicart,dance,Dance
+arts-hobbies,Arts & Hobbies,musicart,music,Music
+arts-hobbies,Arts & Hobbies,musicart,guitar,Guitar
+arts-hobbies,Arts & Hobbies,musicart,piano,Piano
+holidays,Holidays,party,party,Party
+holidays,Holidays,party,birthday,Birthday
+holidays,Holidays,party,christmas,Christmas
+holidays,Holidays,party,halloween,Halloween
+holidays,Holidays,party,thanksgiving,Thanksgiving
+holidays,Holidays,party,easter,Easter
+countries,Countries,countries,america,America / USA
+countries,Countries,countries,canada,Canada
+countries,Countries,countries,mexico,Mexico
+countries,Countries,countries,france,France
+countries,Countries,countries,germany,Germany
+countries,Countries,countries,china,China
+countries,Countries,countries,japan,Japan
+countries,Countries,countries,italy,Italy
+tech,Tech,tech,computer,Computer
+tech,Tech,tech,phone,Phone
+tech,Tech,tech,tablet,Tablet
+tech,Tech,tech,laptop,Laptop
+tech,Tech,tech,camera,Camera
+tech,Tech,tech,tv,Tv
+tech,Tech,tech,keyboard,Keyboard
+tech,Tech,tech,mouse,Mouse
+online-media,Online & Media,online,internet,Internet
+online-media,Online & Media,online,email,Email
+online-media,Online & Media,online,text,Text
+online-media,Online & Media,online,download,Download
+online-media,Online & Media,online,upload,Upload
+online-media,Online & Media,online,share,Share
+online-media,Online & Media,online,send,Send
+online-media,Online & Media,online,video,Video
+big-ideas,Big Ideas,bigideas,can,Can
+big-ideas,Big Ideas,bigideas,cannot,Cannot
+big-ideas,Big Ideas,bigideas,maybe,Maybe
+big-ideas,Big Ideas,bigideas,important,Important
+big-ideas,Big Ideas,bigideas,rightcorrect,Right / Correct
+big-ideas,Big Ideas,bigideas,wrong,Wrong
+big-ideas,Big Ideas,bigideas,future,Future
+big-ideas,Big Ideas,bigideas,always,Always
+asl-phrases,ASL Phrases,sayings,mynameis,My Name Is
+asl-phrases,ASL Phrases,sayings,nicetomeetyou,Nice To Meet You
+asl-phrases,ASL Phrases,sayings,howareyou,How Are You
+asl-phrases,ASL Phrases,sayings,imfine,I'm Fine
+asl-phrases,ASL Phrases,sayings,signslow,Sign Slow
+asl-phrases,ASL Phrases,sayings,yourewelcome,You're Welcome
+asl-phrases,ASL Phrases,sayings,dontknow,Don't Know
+asl-phrases,ASL Phrases,sayings,notyet,Not Yet
+asl-phrases,ASL Phrases,sayings,signagain,Sign Again
+asl-phrases,ASL Phrases,sayings,excuseme,Excuse Me
+asl-phrases,ASL Phrases,sayings,seeyoulater,See You Later
+asl-phrases,ASL Phrases,sayings,samehere,Same Here
+asl-phrases,ASL Phrases,sayings,havegoodday,Have A Good Day
+asl-phrases,ASL Phrases,sayings,whatisyourname,What's Your Name
+asl-phrases,ASL Phrases,sayings,whatsthat,What's That
+asl-phrases,ASL Phrases,sayings,whatdoesthatmean,What Does That Mean
+asl-phrases,ASL Phrases,sayings,imgood,I'm Good
+asl-phrases,ASL Phrases,sayings,goodmorning,Good Morning
+asl-phrases,ASL Phrases,sayings,goodnight,Good Night
+asl-phrases,ASL Phrases,sayings,idontunderstand,I Don't Understand
+asl-phrases,ASL Phrases,sayings,ineedhelp,I Need Help
+asl-phrases,ASL Phrases,sayings,canyouhelpme,Can You Help Me
+asl-phrases,ASL Phrases,sayings,pleasehelpme,Please Help Me
+asl-phrases,ASL Phrases,sayings,wherebathroom,Where Is The Bathroom
+asl-phrases,ASL Phrases,sayings,nicetoseeyou,Nice To See You
+asl-phrases,ASL Phrases,sayings,letmesee,Let Me See
+asl-phrases,ASL Phrases,sayings,howyousignthat,How Do You Sign That
+asl-phrases,ASL Phrases,sayings,onemoretime,One More Time
+asl-phrases,ASL Phrases,sayings,talktoyoulater,Talk To You Later
+asl-phrases,ASL Phrases,sayings,blowmind,Blow Mind
+asl-phrases,ASL Phrases,sayings,allofsudden,All Of A Sudden
+asl-phrases,ASL Phrases,sayings,wrapup,Wrap Up
+asl-phrases,ASL Phrases,sayings,letgo,Let Go
+asl-phrases,ASL Phrases,sayings,imtired,I'm Tired
+asl-phrases,ASL Phrases,sayings,imhappy,I'm Happy
+asl-phrases,ASL Phrases,sayings,imsad,I'm Sad
+asl-phrases,ASL Phrases,sayings,imangry,I'm Angry
+asl-phrases,ASL Phrases,sayings,imscared,I'm Scared
+asl-phrases,ASL Phrases,sayings,iwant,I Want
+asl-phrases,ASL Phrases,sayings,ilike,I Like
+asl-phrases,ASL Phrases,sayings,imhungry,I'm Hungry
+asl-phrases,ASL Phrases,sayings,iwanteat,I Want To Eat
+asl-phrases,ASL Phrases,sayings,iwantdrink,I Want To Drink
+asl-phrases,ASL Phrases,sayings,howmany,How Many?
+asl-phrases,ASL Phrases,sayings,whereareyou,Where Are You?
+asl-phrases,ASL Phrases,sayings,whatisyournamesign,What's Your Name Sign?
+asl-phrases,ASL Phrases,sayings,imlearningasl,I'm Learning ASL

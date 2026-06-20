@@ -1,0 +1,23 @@
+rules_version = '2';
+
+// Client read access for the ASL app (paths → units → lessons, dictionary words).
+// Deploy: firebase deploy --only firestore:rules --project asl-app-718bf
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /paths/{pathId} {
+      allow read: if true;
+      match /units/{unitId} {
+        allow read: if true;
+        match /lessons/{lessonId} {
+          allow read: if true;
+        }
+      }
+    }
+    match /words/{wordId} {
+      allow read: if true;
+      match /videos/{videoId} {
+        allow read: if true;
+      }
+    }
+  }
+}

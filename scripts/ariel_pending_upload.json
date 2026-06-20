@@ -1,0 +1,107 @@
+{
+  "generatedAt": "2026-06-18T06:26:33.569291+00:00",
+  "datasetRoot": "/Users/maxcascerceri/Desktop/victoriaarielsigns",
+  "filmmaker": "VictoriaAriel",
+  "videoCount": 9,
+  "videos": [
+    {
+      "wordId": "her",
+      "text": "Her",
+      "primaryUnitTitle": "You & Me",
+      "videoId": "video_001",
+      "sourcePath": "\u201cher\u201d.mov",
+      "storagePath": "asl-videos/her/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 3538137,
+      "sourceFilename": "\u201cher\u201d.mov"
+    },
+    {
+      "wordId": "him",
+      "text": "Him",
+      "primaryUnitTitle": "You & Me",
+      "videoId": "video_001",
+      "sourcePath": "\u201chim\u201d.mov",
+      "storagePath": "asl-videos/him/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 3538137,
+      "sourceFilename": "\u201chim\u201d.mov"
+    },
+    {
+      "wordId": "milk",
+      "text": "Milk",
+      "primaryUnitTitle": "Food & Drinks",
+      "videoId": "video_001",
+      "sourcePath": "\u201cmilk\u201d.mov",
+      "storagePath": "asl-videos/milk/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 4854677,
+      "sourceFilename": "\u201cmilk\u201d.mov"
+    },
+    {
+      "wordId": "pleasehelpme",
+      "text": "Please Help Me",
+      "primaryUnitTitle": "Getting Help",
+      "videoId": "video_001",
+      "sourcePath": "\u201cplease help me\u201d.mov",
+      "storagePath": "asl-videos/pleasehelpme/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 7613416,
+      "sourceFilename": "\u201cplease help me\u201d.mov"
+    },
+    {
+      "wordId": "pleasesignslower",
+      "text": "Please Sign Slower",
+      "primaryUnitTitle": "Getting Help",
+      "videoId": "video_001",
+      "sourcePath": "\u201cplease sign slower\u201d.mov",
+      "storagePath": "asl-videos/pleasesignslower/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 10822197,
+      "sourceFilename": "\u201cplease sign slower\u201d.mov"
+    },
+    {
+      "wordId": "road",
+      "text": "Road",
+      "primaryUnitTitle": "Getting There",
+      "videoId": "video_001",
+      "sourcePath": "\u201croad\u201d.mov",
+      "storagePath": "asl-videos/road/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 4871189,
+      "sourceFilename": "\u201croad\u201d.mov"
+    },
+    {
+      "wordId": "she",
+      "text": "She",
+      "primaryUnitTitle": "You & Me",
+      "videoId": "video_001",
+      "sourcePath": "\u201cshe\u201d.mov",
+      "storagePath": "asl-videos/she/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 3538137,
+      "sourceFilename": "\u201cshe\u201d.mov"
+    },
+    {
+      "wordId": "shorts",
+      "text": "Shorts",
+      "primaryUnitTitle": "Clothes & Accessories",
+      "videoId": "video_001",
+      "sourcePath": "\u201cshorts\u201d.mov",
+      "storagePath": "asl-videos/shorts/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 5238013,
+      "sourceFilename": "\u201cshorts\u201d.mov"
+    },
+    {
+      "wordId": "winter",
+      "text": "Winter",
+      "primaryUnitTitle": "Nature & Seasons",
+      "videoId": "video_001",
+      "sourcePath": "\u201cwinter\u201d.mov",
+      "storagePath": "asl-videos/winter/video_001.mov",
+      "sortOrder": 1,
+      "fileSizeBytes": 6094521,
+      "sourceFilename": "\u201cwinter\u201d.mov"
+    }
+  ]
+}

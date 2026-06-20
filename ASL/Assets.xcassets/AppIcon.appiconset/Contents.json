@@ -1,6 +1,7 @@
 {
   "images" : [
     {
+      "filename" : "openart-image_1781693751826_fdbcf6f7_1781693752187_cf9b2406 (1).png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -12,6 +13,7 @@
           "value" : "dark"
         }
       ],
+      "filename" : "openart-image_1781693751826_fdbcf6f7_1781693752187_cf9b2406 (1) 1.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -23,6 +25,7 @@
           "value" : "tinted"
         }
       ],
+      "filename" : "openart-image_1781693751826_fdbcf6f7_1781693752187_cf9b2406 (1) 2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"

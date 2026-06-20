@@ -24,8 +24,8 @@ struct SignsTabView: View {
     @AppStorage("asl.favoriteSigns.v1") private var favoriteWordIdsData = "[]"
 
     private let columns = [
-        GridItem(.flexible(), spacing: 14),
-        GridItem(.flexible(), spacing: 14)
+        GridItem(.flexible(minimum: 0, maximum: .infinity), spacing: 14),
+        GridItem(.flexible(minimum: 0, maximum: .infinity), spacing: 14)
     ]
 
     private var dictionarySearchQuery: String? {
@@ -107,12 +107,11 @@ struct SignsTabView: View {
                                                 favoriteWordIds: favoriteWordIds,
                                                 categoryTitleForWordId: SignCategory.primaryCategoryTitle(forWordId:),
                                                 toggleFavorite: toggleFavorite,
-                                                selectSign: { wordId, wordIds in
-                                                    selectedSign = SignDetailSelection(wordId: wordId, wordIds: wordIds)
-                                                }
+                                                selectSign: openSignDetail
                                             )
                                             .task(id: visibleDictionaryWordIds) {
-                                                store.loadWords(wordIds: visibleDictionaryWordIds)
+                                                await store.loadWordsAwait(wordIds: visibleDictionaryWordIds)
+                                                store.prepareDictionarySearchResults(wordIds: visibleDictionaryWordIds)
                                             }
                                         }
                                     } else {
@@ -122,6 +121,10 @@ struct SignsTabView: View {
                                                     Keyboard.dismiss()
                                                     Haptics.tap()
                                                     categoryTapPulseId = category.id
+                                                    store.prepareDictionaryCategory(wordIds: category.words)
+                                                    Task {
+                                                        await store.loadWordsAwait(wordIds: category.words)
+                                                    }
                                                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) {
                                                         navigationPath.append(category.id)
                                                         categoryTapPulseId = nil
@@ -140,7 +143,7 @@ struct SignsTabView: View {
                                     if favoriteWordIds.isEmpty {
                                         DictionaryEmptyState(
                                             mascotImageName: "mine and yours",
-                                            mascotSize: 240,
+                                            mascotSize: UnitMascot.favoritesEmptyStateSize,
                                             title: "No Favorites Yet",
                                             message: "Tap Save on a sign to add it here."
                                         )
@@ -158,12 +161,11 @@ struct SignsTabView: View {
                                             store: store,
                                             favoriteWordIds: favoriteWordIds,
                                             toggleFavorite: toggleFavorite,
-                                            selectSign: { wordId, wordIds in
-                                                selectedSign = SignDetailSelection(wordId: wordId, wordIds: wordIds)
-                                            }
+                                            selectSign: openSignDetail
                                         )
                                         .task(id: visibleFavoriteWordIds) {
-                                            store.loadWords(wordIds: visibleFavoriteWordIds)
+                                            await store.loadWordsAwait(wordIds: visibleFavoriteWordIds)
+                                            store.prepareDictionaryFavorites(wordIds: visibleFavoriteWordIds)
                                         }
                                     }
                                 }
@@ -184,6 +186,8 @@ struct SignsTabView: View {
                 }
             })
             .brandCanvasBackground()
+            .onAppear { store.setSignsTabActive(true) }
+            .onDisappear { store.setSignsTabActive(false) }
             .onChange(of: searchText) { _, newValue in
                 if newValue.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false {
                     isSearchExpanded = true
@@ -197,9 +201,7 @@ struct SignsTabView: View {
                         store: store,
                         favoriteWordIds: favoriteWordIds,
                         toggleFavorite: toggleFavorite,
-                        selectSign: { wordId, wordIds in
-                            selectedSign = SignDetailSelection(wordId: wordId, wordIds: wordIds)
-                        }
+                        selectSign: openSignDetail
                     )
                 }
             }
@@ -227,7 +229,16 @@ struct SignsTabView: View {
                 selectedSection = .favorites
                 closeDictionarySearch()
             }
+            .onChange(of: store.pendingSignWordId) { _, wordId in
+                guard wordId != nil, let consumed = store.consumePendingSignWordId() else { return }
+                openSignDetail(wordId: consumed, wordIds: [consumed])
+            }
         }
+    }
+
+    private func openSignDetail(wordId: String, wordIds: [String]) {
+        store.prepareDictionarySign(wordId: wordId, in: wordIds)
+        selectedSign = SignDetailSelection(wordId: wordId, wordIds: wordIds)
     }
 
     private func openDictionarySearch() {
@@ -300,7 +311,7 @@ private struct SignCategory: Identifiable {
     let systemImage: String
     /// When set, shown in the card center instead of the SF Symbol placeholder.
     let iconAssetName: String?
-    let palette: CategoryPalette
+    let palette: PastelPalette
     let words: [String]
 
     init(
@@ -308,7 +319,7 @@ private struct SignCategory: Identifiable {
         title: String,
         systemImage: String,
         iconAssetName: String? = nil,
-        palette: CategoryPalette,
+        palette: PastelPalette,
         words: [String]
     ) {
         self.id = id
@@ -348,103 +359,80 @@ private struct SignCategory: Identifiable {
         all.first { $0.words.contains(wordId) }
     }
 
-    static let all: [SignCategory] = [
-        SignCategory(id: "greetings", title: "Getting Started", systemImage: "hand.wave.fill", palette: .brand, words: ["hello", "bye", "please", "thankyou", "sorry", "welcome", "name", "congratulations", "oops", "nice", "meet", "introduce", "sign", "mynameis", "nicetomeetyou", "howareyou", "imfine", "signslow", "imsorry", "yourewelcome"]),
-        SignCategory(id: "responses", title: "Quick Responses", systemImage: "bubble.left.fill", palette: .mint, words: ["yes", "no", "sure", "wow", "really", "alright", "ok", "again", "wait", "nevermind", "maybe", "dontknow", "notyet", "signagain", "excuseme", "seeyoulater", "samehere", "havegoodday"]),
-        SignCategory(id: "pronouns", title: "Pronouns", systemImage: "person.2.fill", palette: .lavender, words: ["i", "me", "you", "we", "us", "our", "my", "your", "his", "mine", "he", "they"]),
-        SignCategory(id: "questions", title: "Ask & Answer", systemImage: "questionmark", palette: .peach, words: ["what", "where", "when", "who", "why", "how", "which", "whatisyourname", "whatsthat", "whatdoesthatmean"]),
-        SignCategory(id: "people-words", title: "People Words", systemImage: "person.text.rectangle.fill", palette: .butter, words: ["person", "people", "myself", "yourself", "sign", "introduce"]),
-        SignCategory(id: "mood-basics", title: "Check-ins", systemImage: "face.smiling.fill", palette: .aqua, words: ["good", "bad", "fine", "great", "happy", "sad", "tired", "angry", "scared", "excited", "worry", "imgood", "goodmorning", "goodnight"]),
-
-        SignCategory(id: "deaf-culture", title: "Deaf Culture", systemImage: "hands.clap.fill", palette: .mint, words: ["deaf", "hearing", "hardofhearing", "community", "culture", "identity", "pride", "history", "iamdeaf", "iamhearing", "imlearningasl", "signlanguage"]),
-        SignCategory(id: "accessibility", title: "Accessibility", systemImage: "captions.bubble.fill", palette: .sky, words: ["interpreter", "caption", "hearingaid", "lipread", "gesture", "translate"]),
-        SignCategory(id: "alphabet", title: "Alphabet", systemImage: "a.circle.fill", palette: .lavender, words: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]),
-        SignCategory(id: "fingerspelling", title: "Fingerspelling", systemImage: "hand.point.up.left.fill", palette: .peach, words: ["alphabet", "fingerspell", "letter", "language", "word", "name"]),
-        SignCategory(id: "numbers", title: "Numbers", systemImage: "number", palette: .aqua, words: ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven"]),
-        SignCategory(id: "money", title: "Money", systemImage: "dollarsign.circle.fill", palette: .butter, words: ["money", "pay", "cost", "price", "1dollar", "5dollars"]),
-        SignCategory(id: "amounts-math", title: "Amounts & Math", systemImage: "percent", palette: .mint, words: ["half", "quarter", "percent", "double", "triple", "hundred", "many", "few", "enough", "more", "less", "very", "almost", "really"]),
-        SignCategory(id: "sentence-helpers", title: "Sentence Helpers", systemImage: "link", palette: .sky, words: ["and", "but", "or", "so", "then", "with", "without", "also", "because", "same", "different", "if"]),
-
-        SignCategory(id: "family", title: "Family", systemImage: "figure.2.and.child.holdinghands", palette: .peach, words: ["mother", "father", "sister", "brother", "baby", "child", "family", "parents", "grandmother", "grandfather", "aunt", "uncle", "cousin", "niece", "nephew", "twins"]),
-        SignCategory(id: "people", title: "People", systemImage: "person.fill", palette: .lavender, words: ["man", "woman", "boy", "girl", "adult", "teenager"]),
-        SignCategory(id: "movement", title: "Movement", systemImage: "figure.walk", palette: .aqua, words: ["go", "come", "walk", "run", "stop", "turn", "move", "leave"]),
-        SignCategory(id: "body-actions", title: "Body Actions", systemImage: "figure.arms.open", palette: .mint, words: ["eat", "drink", "sleep", "see", "hear", "feel", "breathe", "smell"]),
-        SignCategory(id: "communication", title: "Communication", systemImage: "message.fill", palette: .sky, words: ["tell", "ask", "talk", "think", "know", "understand", "believe", "need", "help", "idontunderstand", "ineedhelp", "canyouhelpme"]),
-        SignCategory(id: "doing-helping", title: "Doing & Helping", systemImage: "bolt.fill", palette: .butter, words: ["make", "get", "give", "take", "use", "find", "want", "help"]),
-
-        SignCategory(id: "colors", title: "Colors", systemImage: "paintbrush.fill", palette: .mint, words: ["red", "blue", "green", "yellow", "orange", "purple", "pink", "brown", "black", "white", "gray", "gold", "silver", "bright"]),
-        SignCategory(id: "descriptions", title: "Descriptions", systemImage: "slider.horizontal.3", palette: .peach, words: ["dark", "light", "bright", "big", "small", "tall", "fast", "slow", "hard", "hot"]),
-        SignCategory(id: "temperature", title: "Temperature", systemImage: "thermometer.medium", palette: .lavender, words: ["hot", "cold"]),
-        SignCategory(id: "home", title: "Home", systemImage: "house.fill", palette: .sky, words: ["home", "house", "kitchen", "bathroom", "bedroom", "livingroom", "basement", "backyard", "wherebathroom", "garage"]),
-        SignCategory(id: "furniture", title: "Furniture", systemImage: "chair.fill", palette: .butter, words: ["table", "chair", "bed", "couch", "door", "window", "lamp", "clock"]),
-        SignCategory(id: "hygiene", title: "Hygiene", systemImage: "shower.fill", palette: .aqua, words: ["shower", "toilet", "sink", "soap", "toothbrush", "brush", "comb", "mirror"]),
-        SignCategory(id: "chores", title: "Chores", systemImage: "sparkles", palette: .mint, words: ["clean", "wash", "cook", "sweep", "vacuum", "washdishes"]),
-
-        SignCategory(id: "mealtime", title: "Mealtime", systemImage: "fork.knife", palette: .peach, words: ["breakfast", "lunch", "dinner", "hungry", "full", "delicious"]),
-        SignCategory(id: "fruit", title: "Fruit", systemImage: "apple.logo", palette: .sky, words: ["apple", "banana", "grapes", "strawberry", "cherry", "pineapple", "lemon", "orange"]),
-        SignCategory(id: "vegetables", title: "Vegetables", systemImage: "carrot.fill", palette: .mint, words: ["tomato", "carrot", "corn", "onion", "potato", "lettuce"]),
-        SignCategory(id: "protein-dairy", title: "Protein & Dairy", systemImage: "takeoutbag.and.cup.and.straw.fill", palette: .butter, words: ["meat", "fish", "egg", "cheese", "milk", "butter", "bacon", "chicken"]),
-        SignCategory(id: "snacks", title: "Snacks", systemImage: "birthday.cake.fill", palette: .lavender, words: ["bread", "pizza", "cake", "chocolate"]),
-        SignCategory(id: "drinks", title: "Drinks", systemImage: "cup.and.saucer.fill", palette: .aqua, words: ["water", "coffee", "tea", "juice"]),
-
-        SignCategory(id: "weekdays", title: "Weekdays", systemImage: "calendar", palette: .mint, words: ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "weekend"]),
-        SignCategory(id: "time-of-day", title: "Time of Day", systemImage: "sun.max.fill", palette: .sky, words: ["morning", "afternoon", "night", "today", "yesterday", "tomorrow", "now", "noon", "later", "early"]),
-        SignCategory(id: "time-units", title: "Time Units", systemImage: "clock.fill", palette: .peach, words: ["day", "week", "month", "year", "hour", "minute", "weekend", "holiday"]),
-        SignCategory(id: "head-face", title: "Head & Face", systemImage: "face.smiling", palette: .lavender, words: ["head", "face", "eyes", "ear", "nose", "mouth", "teeth", "tongue"]),
-        SignCategory(id: "body", title: "Body", systemImage: "figure.arms.open", palette: .aqua, words: ["body", "arm", "hands", "finger", "shoulder", "neck", "back", "stomach"]),
-        SignCategory(id: "symptoms", title: "Symptoms", systemImage: "bandage.fill", palette: .butter, words: ["sick", "hurt", "pain", "headache", "cough", "sneeze", "tired", "dizzy"]),
-        SignCategory(id: "health", title: "Health", systemImage: "cross.case.fill", palette: .mint, words: ["health", "exercise", "doctor", "nurse", "hospital", "medicine"]),
-
-        SignCategory(id: "personality", title: "Personality", systemImage: "person.crop.circle.fill", palette: .sky, words: ["confident", "humble", "lazy", "stubborn", "curious", "serious", "remember", "forget"]),
-        SignCategory(id: "big-feelings", title: "Big Feelings", systemImage: "heart.fill", palette: .peach, words: ["bored", "lonely", "jealous", "embarrass", "frustrate", "surprise"]),
-        SignCategory(id: "relationships", title: "Relationships", systemImage: "heart.circle.fill", palette: .lavender, words: ["love", "like", "hate", "friend", "hug", "kiss"]),
-        SignCategory(id: "clothing", title: "Clothing", systemImage: "tshirt.fill", palette: .mint, words: ["shirt", "pants", "dress", "shoes", "socks", "jacket", "hat", "clothes", "shorts", "skirt", "sweater", "boots", "gloves", "scarf", "belt", "suit"]),
-        SignCategory(id: "accessories", title: "Accessories", systemImage: "backpack.fill", palette: .butter, words: ["glasses", "earring", "necklace", "bracelet", "ring", "backpack", "wallet", "watch"]),
-
-        SignCategory(id: "transportation", title: "Transportation", systemImage: "car.fill", palette: .sky, words: ["car", "bus", "train", "airplane", "bike", "truck", "motorcycle", "boat"]),
-        SignCategory(id: "directions", title: "Directions", systemImage: "location.north.line.fill", palette: .aqua, words: ["here", "there", "left", "right", "up", "down", "near", "far"]),
-        SignCategory(id: "places", title: "Places", systemImage: "mappin.and.ellipse", palette: .peach, words: ["shop", "park", "restaurant", "hotel", "library", "church"]),
-        SignCategory(id: "commute", title: "Commute", systemImage: "road.lanes", palette: .lavender, words: ["drive", "ride", "arrive", "travel", "road", "street", "traffic", "commute"]),
-        SignCategory(id: "school", title: "School", systemImage: "book.fill", palette: .mint, words: ["school", "class", "student", "teacher", "learn", "study", "read", "write", "math", "science", "history", "art", "book", "pen", "paper", "music"]),
-        SignCategory(id: "work", title: "Work", systemImage: "briefcase.fill", palette: .butter, words: ["work", "job", "boss", "lawyer", "engineer", "scientist", "meeting", "retire"]),
-
-        SignCategory(id: "pets-farm", title: "Pets & Farm", systemImage: "pawprint.fill", palette: .peach, words: ["dog", "cat", "horse", "cow", "pig", "sheep", "rabbit", "duck"]),
-        SignCategory(id: "wild-animals", title: "Wild Animals", systemImage: "hare.fill", palette: .sky, words: ["lion", "tiger", "elephant", "bear", "wolf", "fox", "eagle", "monkey"]),
-        SignCategory(id: "nature", title: "Nature", systemImage: "leaf.fill", palette: .mint, words: ["tree", "flower", "mountain", "river", "ocean", "beach", "sun", "moon"]),
-        SignCategory(id: "weather", title: "Weather", systemImage: "cloud.sun.fill", palette: .aqua, words: ["rain", "snow", "wind", "cloud", "lightning", "thunder"]),
-        SignCategory(id: "seasons", title: "Seasons", systemImage: "tree.fill", palette: .butter, words: ["spring", "summer", "fall", "winter"]),
-        SignCategory(id: "sports", title: "Sports", systemImage: "sportscourt.fill", palette: .lavender, words: ["football", "basketball", "baseball", "soccer", "volleyball", "hockey", "tennis", "golf"]),
-        SignCategory(id: "arts-hobbies", title: "Arts & Hobbies", systemImage: "music.note", palette: .peach, words: ["draw", "paint", "sing", "dance", "music", "guitar", "piano", "nicetoseeyou"]),
-
-        SignCategory(id: "holidays", title: "Holidays", systemImage: "party.popper.fill", palette: .mint, words: ["party", "birthday", "christmas", "halloween", "thanksgiving", "easter"]),
-        SignCategory(id: "countries", title: "Countries", systemImage: "globe.americas.fill", palette: .sky, words: ["america", "canada", "mexican", "france", "germany", "china", "japan", "italy"]),
-        SignCategory(id: "tech", title: "Tech", systemImage: "desktopcomputer", palette: .lavender, words: ["computer", "phone", "tablet", "laptop", "camera", "tv", "keyboard", "mouse"]),
-        SignCategory(id: "online-media", title: "Online & Media", systemImage: "wifi", palette: .aqua, words: ["internet", "email", "text", "download", "upload", "share", "send", "video"]),
-        SignCategory(id: "big-ideas", title: "Big Ideas", systemImage: "lightbulb.fill", palette: .butter, words: ["can", "cannot", "maybe", "important", "right", "wrong", "future", "always"]),
-        SignCategory(id: "asl-phrases", title: "ASL Phrases", systemImage: "quote.bubble.fill", palette: .peach, words: [
-            "mynameis", "nicetomeetyou", "howareyou", "imfine", "signslow", "imsorry", "yourewelcome",
-            "dontknow", "notyet", "signagain", "excuseme", "seeyoulater", "samehere", "havegoodday",
-            "whatisyourname", "whatsthat", "whatdoesthatmean", "imgood", "goodmorning", "goodnight",
-            "idontunderstand", "ineedhelp", "canyouhelpme", "iamdeaf", "iamhearing", "imlearningasl",
-            "wherebathroom", "nicetoseeyou", "letmesee", "howyousignthat", "onemoretime", "talktoyoulater",
-            "blowmind", "allofsudden", "wrapup", "letgo"
-        ])
-    ]
-}
-
-private struct CategoryPalette {
-    let unitPalette: UnitPalette
-
-    var fill: Color { unitPalette.color }
-    var depth: Color { unitPalette.shadow }
-
-    static let brand = CategoryPalette(unitPalette: UnitPalette.palette(for: 0))
-    static let mint = CategoryPalette(unitPalette: UnitPalette.palette(for: 1))
-    static let sky = CategoryPalette(unitPalette: UnitPalette.palette(for: 2))
-    static let aqua = CategoryPalette(unitPalette: UnitPalette.palette(for: 2))
-    static let peach = CategoryPalette(unitPalette: UnitPalette.palette(for: 3))
-    static let lavender = CategoryPalette(unitPalette: UnitPalette.palette(for: 4))
-    static let butter = CategoryPalette(unitPalette: UnitPalette.palette(for: 5))
+    static let all: [SignCategory] = {
+        let entries: [(String, String, String, String?, [String])] = [
+            ("greetings", "First Signs", "hand.wave.fill", nil, ["hello", "bye", "please", "thankyou", "sorry", "welcome", "name", "congratulations", "oops", "nice", "meet", "introduce", "sign", "mynameis", "nicetomeetyou", "howareyou", "imfine", "signslow", "yourewelcome", "thankyouverymuch"]),
+            ("responses", "Everyday Replies", "bubble.left.fill", nil, ["yes", "no", "sure", "wow", "really", "alright", "ok", "again", "wait", "nevermind", "maybe", "dontknow", "notyet", "signagain", "excuseme", "seeyoulater", "samehere", "havegoodday", "nicetoseeyou", "cool", "awesome", "funny"]),
+            ("pronouns", "Pronouns", "person.2.fill", nil, ["i", "me", "you", "we", "us", "our", "my", "your", "his", "mine", "he", "they", "she", "her", "him", "them", "their", "yours", "ours"]),
+            ("questions", "Question Words", "questionmark", nil, ["what", "where", "when", "who", "why", "how", "which", "whatisyourname", "whatsthat", "whatdoesthatmean", "howmany", "whereareyou", "whatisyournamesign", "whereareyoufrom", "whatareyoudoing", "imfrom"]),
+            ("people-words", "People Words", "person.text.rectangle.fill", nil, ["person", "people", "myself", "yourself", "sign", "introduce"]),
+            ("mood-basics", "Check-ins", "face.smiling.fill", nil, ["good", "bad", "fine", "great", "happy", "sad", "tired", "angry", "scared", "excited", "worry", "nervous", "imgood", "goodmorning", "goodnight", "imtired", "imhappy", "imsad", "imangry", "imscared", "imexcited", "imnervous"]),
+            ("deaf-world", "Deaf World Basics", "ear.fill", nil, ["deaf", "hearing", "hardofhearing", "asl", "signlanguage", "namesign", "deafculture", "fluent", "learnasl", "practice", "whatisyournamesign", "imlearningasl", "isignalittle", "interpreter", "caption", "hearingaid", "lipread", "gesture", "translate"]),
+            ("alphabet", "Alphabet", "a.circle.fill", nil, ["a", "b", "c", "d", "e", "f", "g", "h", "letteri", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]),
+            ("fingerspelling", "Fingerspelling", "hand.point.up.left.fill", nil, ["alphabet", "fingerspell", "letter", "language", "word", "name"]),
+            ("numbers", "Numbers", "number", nil, ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven"]),
+            ("money", "Money", "dollarsign.circle.fill", nil, ["money", "pay", "cost", "price", "1dollar", "5dollars"]),
+            ("amounts-math", "Amounts & Math", "percent", nil, ["half", "quarter", "percent", "double", "triple", "hundred", "many", "few", "enough", "more", "less", "very", "almost", "really"]),
+            ("sentence-helpers", "Sentence Helpers", "link", nil, ["and", "but", "or", "so", "with", "without", "also", "because", "same", "different", "if"]),
+            ("family", "Family", "figure.2.and.child.holdinghands", nil, ["mother", "father", "sister", "brother", "baby", "child", "family", "parents", "grandmother", "grandfather", "aunt", "uncle", "cousin", "niece", "nephew", "twins"]),
+            ("people", "People", "person.fill", nil, ["man", "woman", "boy", "girl", "adult", "teenager"]),
+            ("movement", "Movement", "figure.walk", nil, ["go", "come", "walk", "run", "stop", "turn", "move", "lost", "imlost"]),
+            ("body-actions", "Body Actions", "figure.arms.open", nil, ["eat", "drink", "sleep", "see", "hear", "feel", "breathe", "smell"]),
+            ("communication", "Communication", "message.fill", nil, ["tell", "ask", "talk", "think", "know", "understand", "believe", "need", "help", "idontunderstand", "ineedhelp", "canyouhelpme", "pleasehelpme", "canyourepeatthat", "pleasesignslower", "howyousignthat", "isignalittle", "call911"]),
+            ("doing-helping", "Doing & Helping", "bolt.fill", nil, ["make", "get", "give", "take", "use", "find", "want", "help", "iwant", "try", "doing", "whatareyoudoing"]),
+            ("colors", "Colors", "paintbrush.fill", nil, ["red", "blue", "green", "yellow", "orangecolor", "purple", "pink", "brown", "black", "white", "gray", "gold", "silver", "bright"]),
+            ("descriptions", "Descriptions", "slider.horizontal.3", nil, ["dark", "light", "bright", "big", "small", "tall", "fast", "slow", "hard"]),
+            ("home", "Home", "house.fill", nil, ["home", "house", "kitchen", "bathroom", "bedroom", "livingroom", "basement", "backyard", "wherebathroom", "garage"]),
+            ("furniture", "Furniture", "chair.fill", nil, ["table", "chair", "bed", "couch", "door", "window", "lamp", "clock"]),
+            ("hygiene", "Hygiene", "shower.fill", nil, ["shower", "toilet", "sink", "soap", "toothbrush", "brush", "comb", "mirror"]),
+            ("chores", "Chores", "sparkles", nil, ["clean", "wash", "cook", "sweep", "vacuum", "washdishes"]),
+            ("mealtime", "Mealtime", "fork.knife", nil, ["breakfast", "lunch", "dinner", "hungry", "full", "delicious", "imhungry"]),
+            ("fruit", "Fruit", "apple.logo", nil, ["apple", "banana", "grapes", "strawberry", "cherry", "pineapple", "lemon", "orangefruit"]),
+            ("vegetables", "Vegetables", "carrot.fill", nil, ["tomato", "carrot", "corn", "onion", "potato", "lettuce"]),
+            ("protein-dairy", "Protein & Dairy", "takeoutbag.and.cup.and.straw.fill", nil, ["meat", "fish", "egg", "cheese", "milk", "butter", "bacon", "chicken"]),
+            ("snacks-drinks", "Snacks & Drinks", "mug.fill", nil, ["bread", "pizza", "cake", "chocolate", "water", "coffee", "tea", "juice"]),
+            ("weekdays", "Weekdays", "calendar", nil, ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "weekend"]),
+            ("time-of-day", "Time of Day", "sun.max.fill", nil, ["morning", "afternoon", "night", "today", "yesterday", "tomorrow", "now", "noon", "later", "early"]),
+            ("time-units", "Time Units", "clock.fill", nil, ["day", "week", "month", "year", "hour", "minute", "weekend", "holiday"]),
+            ("head-face", "Head & Face", "face.smiling", nil, ["head", "face", "eyes", "ear", "nose", "mouth", "teeth", "tongue"]),
+            ("body", "Body", "figure.arms.open", nil, ["body", "arm", "hands", "finger", "shoulder", "neck", "back", "stomach"]),
+            ("symptoms", "Symptoms", "bandage.fill", nil, ["sick", "hurt", "pain", "headache", "cough", "sneeze", "tired", "dizzy"]),
+            ("health", "Health", "cross.case.fill", nil, ["health", "exercise", "doctor", "nurse", "hospital", "medicine"]),
+            ("personality", "Personality", "person.crop.circle.fill", nil, ["confident", "humble", "lazy", "stubborn", "curious", "serious", "remember", "forget"]),
+            ("big-feelings", "Big Feelings", "heart.fill", nil, ["bored", "lonely", "jealous", "embarrass", "frustrate", "surprise"]),
+            ("relationships", "Relationships", "heart.circle.fill", nil, ["love", "like", "hate", "friend", "hug", "kiss", "ilike"]),
+            ("clothing", "Clothing", "tshirt.fill", nil, ["shirt", "pants", "dress", "shoes", "socks", "jacket", "hat", "clothes", "shorts", "skirt", "sweater", "boots", "gloves", "scarf", "belt", "suit"]),
+            ("accessories", "Accessories", "backpack.fill", nil, ["glasses", "earring", "necklace", "bracelet", "ring", "backpack", "wallet", "watch"]),
+            ("transportation", "Transportation", "car.fill", nil, ["car", "bus", "train", "airplane", "bike", "truck", "motorcycle", "boat"]),
+            ("directions", "Directions", "location.north.line.fill", nil, ["here", "there", "left", "right", "up", "down", "near", "far"]),
+            ("places", "Places", "mappin.and.ellipse", nil, ["shop", "park", "restaurant", "hotel", "library", "church"]),
+            ("commute", "Commute", "road.lanes", nil, ["drive", "ride", "arrive", "travel", "road", "street", "traffic", "commute"]),
+            ("school", "School", "book.fill", nil, ["school", "class", "student", "teacher", "learn", "study", "read", "write", "math", "science", "history", "art", "book", "pen", "paper", "music"]),
+            ("work", "Work", "briefcase.fill", nil, ["work", "job", "boss", "lawyer", "engineer", "scientist", "meeting", "retire"]),
+            ("pets-farm", "Pets & Farm", "pawprint.fill", nil, ["dog", "cat", "horse", "cow", "pig", "sheep", "rabbit", "duck"]),
+            ("wild-animals", "Wild Animals", "hare.fill", nil, ["lion", "tiger", "elephant", "bear", "wolf", "fox", "eagle", "monkey"]),
+            ("nature-seasons", "Nature & Seasons", "leaf.fill", nil, ["tree", "flower", "mountain", "river", "ocean", "beach", "sun", "moon", "spring", "summer", "fall", "winter"]),
+            ("weather", "Weather", "cloud.sun.fill", nil, ["rain", "snow", "wind", "cloud", "lightning", "thunder", "hot", "cold"]),
+            ("sports", "Sports", "sportscourt.fill", nil, ["football", "basketball", "baseball", "soccer", "volleyball", "hockey", "tennis", "golf"]),
+            ("arts-hobbies", "Arts & Hobbies", "music.note", nil, ["draw", "paint", "sing", "dance", "music", "guitar", "piano"]),
+            ("holidays", "Holidays", "party.popper.fill", nil, ["party", "birthday", "christmas", "halloween", "thanksgiving", "easter"]),
+            ("countries", "Countries", "globe.americas.fill", nil, ["america", "canada", "mexico", "france", "germany", "china", "japan", "italy"]),
+            ("tech", "Tech", "desktopcomputer", nil, ["computer", "phone", "tablet", "laptop", "camera", "tv", "keyboard", "mouse"]),
+            ("online-media", "Online & Media", "wifi", nil, ["internet", "email", "text", "download", "upload", "share", "send", "video"]),
+            ("big-ideas", "Big Ideas", "lightbulb.fill", nil, ["can", "cannot", "maybe", "important", "rightcorrect", "wrong", "future", "always"]),
+            ("asl-phrases", "ASL Phrases", "quote.bubble.fill", nil, ["mynameis", "nicetomeetyou", "howareyou", "imfine", "signslow", "yourewelcome", "dontknow", "notyet", "signagain", "excuseme", "seeyoulater", "samehere", "havegoodday", "whatisyourname", "whatsthat", "whatdoesthatmean", "imgood", "goodmorning", "goodnight", "idontunderstand", "ineedhelp", "canyouhelpme", "pleasehelpme", "wherebathroom", "nicetoseeyou", "letmesee", "howyousignthat", "onemoretime", "talktoyoulater", "blowmind", "allofsudden", "wrapup", "letgo", "imtired", "imhappy", "imsad", "imangry", "imscared", "iwant", "ilike", "imhungry", "iwanteat", "iwantdrink", "howmany", "whereareyou", "whatisyournamesign", "imlearningasl"]),
+        ]
+        return entries.enumerated().map { index, entry in
+            SignCategory(
+                id: entry.0,
+                title: entry.1,
+                systemImage: entry.2,
+                iconAssetName: entry.3,
+                palette: PastelPalette.dictionaryBrowse(at: index),
+                words: entry.4
+            )
+        }
+    }()
 }
 
 private struct DictionarySearchField: View {
@@ -457,7 +445,7 @@ private struct DictionarySearchField: View {
                 .aslIconStyle(role: .navigation, tint: Brand.primary)
 
             TextField("Search signs", text: $text)
-                .font(.system(size: 17, weight: .semibold, design: .rounded))
+                .aslFont(.cardDescription, variant: .prominent)
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
                 .focused(isFocused)
@@ -472,7 +460,7 @@ private struct DictionarySearchField: View {
                             isFocused.wrappedValue = false
                             Keyboard.dismiss()
                         }
-                        .font(.system(size: 16, weight: .bold))
+                        .aslFont(.button, variant: .compact)
                     }
                 }
 
@@ -574,18 +562,19 @@ private struct SignsDictionaryHeader: View {
 private struct SignsSectionPicker: View {
     @Binding var selectedSection: DictionarySection
 
-    private let depth: CGFloat = 5
+    private let depth: CGFloat = 4
+    private let trackHeight: CGFloat = 46
 
     var body: some View {
         ZStack(alignment: .top) {
             Capsule(style: .continuous)
                 .fill(Brand.primaryShadow.opacity(0.35))
-                .frame(height: 52)
+                .frame(height: trackHeight)
                 .offset(y: depth)
 
             Capsule(style: .continuous)
                 .fill(Brand.cream)
-                .frame(height: 52)
+                .frame(height: trackHeight)
                 .overlay {
                     Capsule(style: .continuous)
                         .stroke(Brand.divider, lineWidth: 1.5)
@@ -601,7 +590,8 @@ private struct SignsSectionPicker: View {
                     } label: {
                         SignsSectionTabLabel(
                             title: section.rawValue,
-                            isSelected: selectedSection == section
+                            isSelected: selectedSection == section,
+                            isCompact: section == .allSigns
                         )
                     }
                     .buttonStyle(SignsRaisedPressStyle())
@@ -609,39 +599,41 @@ private struct SignsSectionPicker: View {
             }
             .padding(4)
         }
-        .frame(height: 52 + depth, alignment: .top)
+        .frame(height: trackHeight + depth, alignment: .top)
     }
 }
 
 private struct SignsSectionTabLabel: View {
     let title: String
     let isSelected: Bool
+    var isCompact: Bool = false
     @Environment(\.signsRaisedPressed) private var isPressed
 
-    private let depth: CGFloat = 4
+    private var tabHeight: CGFloat { isCompact ? 36 : 40 }
+    private var depth: CGFloat { isCompact ? 2.5 : 3 }
 
     var body: some View {
         ZStack(alignment: .top) {
             if isSelected {
                 Capsule(style: .continuous)
                     .fill(Brand.primaryShadow)
-                    .frame(height: 44)
+                    .frame(height: tabHeight)
                     .offset(y: isPressed ? 1.5 : depth)
 
                 Capsule(style: .continuous)
                     .fill(Brand.primary)
-                    .frame(height: 44)
+                    .frame(height: tabHeight)
                     .offset(y: isPressed ? depth - 1.5 : 0)
             }
 
             Text(title)
-                .font(.system(size: 17, weight: .heavy, design: .rounded))
+                .font(.asl(isCompact ? 15 : 17, weight: .semibold, design: .ui))
                 .foregroundStyle(isSelected ? Color.white : Brand.primary)
                 .frame(maxWidth: .infinity)
-                .frame(height: 44)
+                .frame(height: tabHeight)
                 .offset(y: isSelected ? (isPressed ? depth - 1.5 : 0) : 0)
         }
-        .frame(height: isSelected ? 44 + depth : 44, alignment: .top)
+        .frame(height: isSelected ? tabHeight + depth : tabHeight, alignment: .top)
         .scaleEffect(isPressed ? (isSelected ? 0.985 : 0.98) : 1)
         .opacity(isPressed && !isSelected ? 0.82 : 1)
         .animation(.spring(response: 0.2, dampingFraction: 0.68), value: isPressed)
@@ -661,69 +653,51 @@ private struct SignCategoryCard: View {
     }
 
     var body: some View {
-        ZStack(alignment: .topTrailing) {
-            RoundedRectangle(cornerRadius: 22, style: .continuous)
-                .fill(category.palette.depth)
-                .offset(y: isVisuallyPressed ? 2 : 7)
-
-            RoundedRectangle(cornerRadius: 22, style: .continuous)
-                .fill(category.palette.fill)
-                .offset(y: isVisuallyPressed ? 5 : 0)
-                .overlay(alignment: .bottomLeading) {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(category.title)
-                            .font(.system(size: 17, weight: .heavy, design: .rounded))
-                            .foregroundStyle(.white)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.72)
-
-                        Text("\(category.words.count) signs")
-                            .font(.system(size: 13, weight: .semibold, design: .rounded))
-                            .foregroundStyle(.white.opacity(0.85))
-                    }
-                    .padding(.horizontal, 12)
-                    .padding(.bottom, 10)
-                }
-
-            categoryIcon
-                .frame(width: 38, height: 38)
-                .padding(.top, 10)
-                .padding(.trailing, 10)
-                .offset(y: isVisuallyPressed ? 5 : 0)
+        PremiumColoredCard(
+            fill: category.palette.fill,
+            depthHint: category.palette.depth,
+            depthMix: PastelCardMetrics.depthMix,
+            slabDepth: PastelCardMetrics.slabDepth,
+            cornerRadius: PastelCardMetrics.cornerRadius,
+            isPressed: isVisuallyPressed
+        ) {
+            categoryCardContent
         }
-        .frame(height: 104)
-        .elevation(.chapterCard(tint: category.palette.depth))
-        .contentShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
-        .scaleEffect(isVisuallyPressed ? 0.97 : 1.0)
-        .animation(.spring(response: 0.2, dampingFraction: 0.68), value: isVisuallyPressed)
+        .contentShape(RoundedRectangle(cornerRadius: PastelCardMetrics.cornerRadius, style: .continuous))
+    }
+
+    private var categoryCardContent: some View {
+        ZStack(alignment: .bottomLeading) {
+            categoryIcon
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                .padding(.top, PastelCardMetrics.iconPadding)
+                .padding(.trailing, PastelCardMetrics.iconPadding)
+
+            PastelPillLabel(title: category.title)
+                .padding(PastelCardMetrics.contentPadding)
+        }
+        .frame(height: PastelCardMetrics.cardHeight)
     }
 
     @ViewBuilder
     private var categoryIcon: some View {
         if let asset = category.iconAssetName {
-            ZStack {
-                Circle()
-                    .fill(Color.white)
-
-                Image(asset)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 30, height: 30)
-            }
-            .frame(width: 38, height: 38)
-        } else {
-            ZStack {
-                Circle()
-                    .fill(Color.white)
-
-                ASLIcon(
-                    source: .symbol(category.systemImage),
-                    role: .badgeDisc,
-                    tint: category.palette.fill
+            Image(asset)
+                .resizable()
+                .scaledToFit()
+                .frame(
+                    width: PastelCardMetrics.browseIconSize,
+                    height: PastelCardMetrics.browseIconSize
                 )
-                .scaleEffect(1.28)
-            }
-            .frame(width: 38, height: 38)
+                .pastelIconWhiteOutline()
+        } else {
+            ASLIcon(
+                source: .symbol(category.systemImage),
+                role: .dictionaryCategory,
+                tint: category.palette.iconTint,
+                assetSize: PastelCardMetrics.browseIconSize
+            )
+            .pastelIconWhiteOutline()
         }
     }
 }
@@ -797,7 +771,7 @@ private struct SignsHeaderSearchButtonIcon: View {
             shadow: Brand.divider
         ) {
             Image(systemName: isSearchActive ? "xmark" : "magnifyingglass")
-                .font(.system(size: 18, weight: .bold))
+                .font(.asl(18, weight: .semibold))
                 .foregroundStyle(Brand.primary)
         }
     }
@@ -832,67 +806,91 @@ private struct SignCategoryDetailView: View {
     let selectSign: (String, [String]) -> Void
 
     @Environment(\.dismiss) private var dismiss
-    @State private var searchText = ""
-    @FocusState private var isSearchFieldFocused: Bool
-
-    private var visibleWordIds: [String] {
-        guard !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            return category.words
-        }
-
-        let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        return category.words.filter { ASLWordDisplay.title(for: $0).lowercased().hasPrefix(query) }
-    }
 
     var body: some View {
         VStack(spacing: 0) {
-            VStack(alignment: .leading, spacing: 18) {
-                SignCategoryHeroCard(category: category) {
-                    Haptics.tap()
-                    dismiss()
-                }
-
-                DictionarySearchField(text: $searchText, isFocused: $isSearchFieldFocused)
+            SignCategoryHeroCard(category: category) {
+                Haptics.tap()
+                dismiss()
             }
             .padding(.horizontal, 18)
             .padding(.top, 6)
-            .padding(.bottom, 10)
+            .padding(.bottom, 18)
             .frame(maxWidth: .infinity)
             .background(Brand.canvas)
 
             ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 0) {
-                    if visibleWordIds.isEmpty {
-                        DictionaryEmptyState(
-                            systemImage: "magnifyingglass",
-                            title: "No Signs Found",
-                            message: "Try searching this category for another sign."
-                        )
-                        .padding(.top, 40)
-                    } else {
-                        SignGridView(
-                            wordIds: visibleWordIds,
-                            store: store,
-                            favoriteWordIds: favoriteWordIds,
-                            compact: true,
-                            toggleFavorite: toggleFavorite,
-                            selectSign: selectSign
-                        )
-                    }
-                }
+                SignGridView(
+                    wordIds: category.words,
+                    store: store,
+                    favoriteWordIds: favoriteWordIds,
+                    compact: true,
+                    toggleFavorite: toggleFavorite,
+                    selectSign: selectSign
+                )
+                .frame(maxWidth: .infinity)
                 .padding(.horizontal, 18)
-                .padding(.bottom, 28)
+
+                if category.id == "fingerspelling" || category.id == "alphabet" {
+                    spellYourNameFooter
+                        .padding(.horizontal, 18)
+                        .padding(.top, 8)
+                }
+
+                Spacer(minLength: 28)
             }
         }
         .brandCanvasBackground()
-        .contentShape(Rectangle())
-        .simultaneousGesture(TapGesture().onEnded {
-            Keyboard.dismiss()
-        })
+        .simultaneousGesture(categorySwipeBackGesture)
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .navigationBar)
+        .background(NavigationSwipeBackEnabler())
         .task(id: category.id) {
-            store.loadWords(wordIds: category.words)
+            await store.loadWordsAwait(wordIds: category.words)
+            store.prepareDictionaryCategory(wordIds: category.words)
+        }
+    }
+
+    private var categorySwipeBackGesture: some Gesture {
+        DragGesture(minimumDistance: 24)
+            .onEnded { value in
+                let dx = value.translation.width
+                let dy = value.translation.height
+                guard abs(dx) > abs(dy), abs(dx) > 70 else { return }
+                Haptics.tap()
+                dismiss()
+            }
+    }
+
+    private var spellYourNameFooter: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(category.id == "alphabet" ? "Ready to spell your name?" : "Spell a name")
+                .font(LessonQuestionLayout.microcopyFont)
+                .foregroundStyle(Brand.secondaryLabel)
+            Button {
+                Haptics.tap()
+                store.queueSpellYourNamePractice(intent: .personalName)
+                dismiss()
+            } label: {
+                HStack {
+                    Image(systemName: "person.text.rectangle.fill")
+                    Text("Open Spell Your Name")
+                        .font(LessonQuestionLayout.choiceFont)
+                    Spacer(minLength: 0)
+                    Image(systemName: "chevron.right")
+                        .font(.aslReading(13, weight: .semibold))
+                }
+                .foregroundStyle(Brand.textPrimary)
+                .padding(.horizontal, 14)
+                .padding(.vertical, 12)
+                .background(
+                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                        .fill(Brand.homeBackground)
+                )
+            }
+            .buttonStyle(.plain)
+            .disabled(!PracticeSpellYourNameAvailability.isUnlocked(from: store))
+            .opacity(PracticeSpellYourNameAvailability.isUnlocked(from: store) ? 1 : 0.55)
         }
     }
 }
@@ -901,47 +899,41 @@ private struct SignCategoryHeroCard: View {
     let category: SignCategory
     let onBack: () -> Void
 
+    private var palette: PastelPalette { category.palette }
+
     var body: some View {
         ZStack(alignment: .topTrailing) {
             RoundedRectangle(cornerRadius: 26, style: .continuous)
-                .fill(category.palette.depth)
-                .offset(y: 8)
+                .fill(
+                    PremiumCardStyle.softDepth(
+                        for: palette.fill,
+                        hint: palette.depth,
+                        mix: PastelCardMetrics.depthMix
+                    )
+                )
+                .offset(y: PastelCardMetrics.slabDepth)
 
             RoundedRectangle(cornerRadius: 26, style: .continuous)
-                .fill(category.palette.fill)
+                .fill(palette.fill)
                 .overlay(alignment: .bottomLeading) {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(category.title)
-                            .font(.system(size: 31, weight: .heavy, design: .rounded))
-                            .foregroundStyle(.white)
-                        Text("\(category.words.count) signs")
-                            .font(.system(size: 17, weight: .bold, design: .rounded))
-                            .foregroundStyle(.white.opacity(0.85))
-                    }
-                    .padding(20)
+                    PastelPillLabel(
+                        title: category.title,
+                        fontSize: PastelCardMetrics.heroTitleFontSize,
+                        horizontalPadding: 12,
+                        verticalPadding: 6
+                    )
+                    .padding(PastelCardMetrics.heroContentPadding)
                 }
 
-            ZStack {
-                Circle()
-                    .fill(Color.white)
-                    .frame(width: 64, height: 64)
-
-                ASLIcon(
-                    source: .symbol(category.systemImage),
-                    role: .badgeDisc,
-                    tint: category.palette.fill
-                )
-                .scaleEffect(1.55)
-            }
-            .frame(width: 64, height: 64)
-            .padding(24)
+            heroIcon
+                .padding(PastelCardMetrics.heroIconPadding)
         }
-        .elevation(.chapterCard(tint: category.palette.depth))
+        .elevation(.chapterCard(tint: palette.fill))
         .overlay(alignment: .topLeading) {
             Button(action: onBack) {
                 Image(systemName: "chevron.left")
-                    .font(.system(size: 20, weight: .heavy))
-                    .foregroundStyle(Color.primary.opacity(0.62))
+                    .font(.asl(20, weight: .semibold))
+                    .foregroundStyle(Brand.textPrimary.opacity(0.62))
                     .frame(width: 44, height: 44)
                     .background(
                         Circle()
@@ -953,6 +945,34 @@ private struct SignCategoryHeroCard: View {
         }
         .frame(height: 156)
     }
+
+    @ViewBuilder
+    private var heroIcon: some View {
+        if let asset = category.iconAssetName {
+            Image(asset)
+                .resizable()
+                .scaledToFit()
+                .frame(
+                    width: PastelCardMetrics.heroIconSize,
+                    height: PastelCardMetrics.heroIconSize
+                )
+                .pastelIconWhiteOutline(strokeWidth: 2.25)
+        } else {
+            ASLIcon(
+                source: .symbol(category.systemImage),
+                role: .dictionaryCategory,
+                tint: palette.iconTint,
+                assetSize: PastelCardMetrics.heroIconSize
+            )
+            .pastelIconWhiteOutline(strokeWidth: 2.25)
+        }
+    }
+}
+
+private enum SignsGridLayout {
+    static let columnCount = 2
+    static let columnSpacing: CGFloat = 14
+    static let rowSpacing: CGFloat = 14
 }
 
 private struct SignGridView: View {
@@ -964,30 +984,99 @@ private struct SignGridView: View {
     let toggleFavorite: (String) -> Void
     let selectSign: (String, [String]) -> Void
 
-    private let columns = [
-        GridItem(.flexible(), spacing: 14),
-        GridItem(.flexible(), spacing: 14)
-    ]
+    private var rows: [[String]] {
+        stride(from: 0, to: wordIds.count, by: SignsGridLayout.columnCount).map { start in
+            Array(wordIds[start..<min(start + SignsGridLayout.columnCount, wordIds.count)])
+        }
+    }
 
     var body: some View {
-        LazyVGrid(columns: columns, spacing: 18) {
-            ForEach(wordIds, id: \.self) { wordId in
-                SignWordCard(
-                    wordId: wordId,
-                    store: store,
-                    categorySubtitle: categoryTitleForWordId?(wordId),
-                    compact: compact,
-                    isFavorite: favoriteWordIds.contains(wordId),
-                    toggleFavorite: {
-                        toggleFavorite(wordId)
-                    },
-                    openSign: {
-                        Haptics.tap()
-                        selectSign(wordId, wordIds)
+        VStack(spacing: SignsGridLayout.rowSpacing) {
+            ForEach(Array(rows.enumerated()), id: \.offset) { _, row in
+                HStack(spacing: SignsGridLayout.columnSpacing) {
+                    ForEach(row, id: \.self) { wordId in
+                        signCard(wordId: wordId)
+                            .frame(maxWidth: .infinity)
                     }
-                )
+
+                    if row.count < SignsGridLayout.columnCount {
+                        ForEach(0..<(SignsGridLayout.columnCount - row.count), id: \.self) { _ in
+                            Color.clear
+                                .frame(maxWidth: .infinity)
+                                .accessibilityHidden(true)
+                        }
+                    }
+                }
             }
         }
+        .frame(maxWidth: .infinity)
+    }
+
+    @ViewBuilder
+    private func signCard(wordId: String) -> some View {
+        let categorySubtitle = categoryTitleForWordId?(wordId)
+
+        SignWordCard(
+            wordId: wordId,
+            store: store,
+            categorySubtitle: categorySubtitle,
+            compact: compact,
+            isFavorite: favoriteWordIds.contains(wordId),
+            toggleFavorite: {
+                toggleFavorite(wordId)
+            },
+            openSign: {
+                Haptics.tap()
+                selectSign(wordId, wordIds)
+            }
+        )
+        .frame(
+            height: SignsWordCardLayout.cardHeight(
+                compact: compact,
+                hasSubtitle: categorySubtitle != nil
+            )
+        )
+    }
+}
+
+private enum SignsWordCardLayout {
+    static let compactThumbnailHeight: CGFloat = 122
+    static let standardThumbnailHeight: CGFloat = 134
+
+    static let compactLabelContentHeight: CGFloat = 52
+    static let standardLabelContentHeight: CGFloat = 62
+    static let compactLabelContentHeightWithSubtitle: CGFloat = 58
+    static let standardLabelContentHeightWithSubtitle: CGFloat = 68
+
+    static let compactTitleLineHeight: CGFloat = 20
+    static let standardTitleLineHeight: CGFloat = 24
+    static let subtitleLineHeight: CGFloat = 16
+
+    static let compactHorizontalPadding: CGFloat = 10
+    static let standardHorizontalPadding: CGFloat = 8
+    static let compactVerticalPadding: CGFloat = 6
+    static let standardVerticalPadding: CGFloat = 5
+
+    static let cornerRadius: CGFloat = 21
+
+    static func thumbnailHeight(compact: Bool) -> CGFloat {
+        compact ? compactThumbnailHeight : standardThumbnailHeight
+    }
+
+    static func labelContentHeight(compact: Bool, hasSubtitle: Bool) -> CGFloat {
+        if compact {
+            return hasSubtitle ? compactLabelContentHeightWithSubtitle : compactLabelContentHeight
+        }
+        return hasSubtitle ? standardLabelContentHeightWithSubtitle : standardLabelContentHeight
+    }
+
+    static func labelSectionHeight(compact: Bool, hasSubtitle: Bool) -> CGFloat {
+        let verticalPadding = compact ? compactVerticalPadding : standardVerticalPadding
+        return labelContentHeight(compact: compact, hasSubtitle: hasSubtitle) + (verticalPadding * 2)
+    }
+
+    static func cardHeight(compact: Bool, hasSubtitle: Bool) -> CGFloat {
+        thumbnailHeight(compact: compact) + labelSectionHeight(compact: compact, hasSubtitle: hasSubtitle)
     }
 }
 
@@ -1000,209 +1089,405 @@ private struct SignWordCard: View {
     let toggleFavorite: () -> Void
     let openSign: () -> Void
 
-    private var thumbnailHeight: CGFloat { compact ? 112 : 128 }
-    private var labelMinHeight: CGFloat {
-        if compact { return categorySubtitle == nil ? 56 : 62 }
-        return categorySubtitle == nil ? 66 : 72
+    private var thumbnailHeight: CGFloat {
+        SignsWordCardLayout.thumbnailHeight(compact: compact)
+    }
+
+    private var hasSubtitle: Bool { categorySubtitle != nil }
+
+    private var labelContentHeight: CGFloat {
+        SignsWordCardLayout.labelContentHeight(compact: compact, hasSubtitle: hasSubtitle)
+    }
+
+    private var labelSectionHeight: CGFloat {
+        SignsWordCardLayout.labelSectionHeight(compact: compact, hasSubtitle: hasSubtitle)
+    }
+
+    private var cardHeight: CGFloat {
+        SignsWordCardLayout.cardHeight(compact: compact, hasSubtitle: hasSubtitle)
+    }
+
+    private var horizontalPadding: CGFloat {
+        compact ? SignsWordCardLayout.compactHorizontalPadding : SignsWordCardLayout.standardHorizontalPadding
+    }
+
+    private var verticalPadding: CGFloat {
+        compact ? SignsWordCardLayout.compactVerticalPadding : SignsWordCardLayout.standardVerticalPadding
     }
 
     var body: some View {
         VStack(spacing: 0) {
-            ZStack(alignment: .topTrailing) {
-                SignThumbnailSurface(wordId: wordId, store: store)
-                    .frame(height: thumbnailHeight)
-                    .clipped()
+            thumbnailStage
 
-                Button {
-                    toggleFavorite()
-                } label: {
-                    Image(systemName: isFavorite ? "heart.fill" : "heart")
-                        .font(.system(size: 24, weight: .heavy))
-                        .foregroundStyle(isFavorite ? SignsTheme.accent : Color.white.opacity(0.72))
-                        .shadow(color: .black.opacity(0.08), radius: 4, y: 2)
-                        .frame(width: 42, height: 42)
-                }
-                .buttonStyle(.plain)
-                .padding(3)
-            }
-
-            VStack(alignment: .leading, spacing: compact ? 6 : 2) {
-                if compact {
-                    Text(ASLWordDisplay.title(for: store.wordsById[wordId]?.text ?? wordId))
-                        .font(.system(size: 20, weight: .heavy, design: .rounded))
-                        .foregroundStyle(.primary)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.72)
-                        .padding(.horizontal, 11)
-                        .padding(.vertical, 7)
-                        .background(
-                            Capsule(style: .continuous)
-                                .fill(Brand.cream.opacity(0.95))
-                        )
-                } else {
-                    Text(ASLWordDisplay.title(for: store.wordsById[wordId]?.text ?? wordId))
-                        .font(.system(size: 21, weight: .heavy, design: .rounded))
-                        .foregroundStyle(.primary)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.72)
-                }
-
-                if let categorySubtitle {
-                    Text(categorySubtitle)
-                        .font(.system(size: 13, weight: .semibold, design: .rounded))
-                        .foregroundStyle(.secondary)
-                        .lineLimit(1)
-                        .padding(.leading, compact ? 4 : 0)
-                }
-            }
-            .frame(maxWidth: .infinity, minHeight: labelMinHeight, alignment: .leading)
-            .padding(.horizontal, compact ? 10 : 0)
-            .padding(.vertical, compact ? 8 : 0)
-            .background(Brand.chrome)
+            labelSection
         }
+        .frame(maxWidth: .infinity, minHeight: cardHeight, maxHeight: cardHeight)
         .background(Brand.chrome)
-        .clipShape(RoundedRectangle(cornerRadius: 21, style: .continuous))
+        .clipShape(RoundedRectangle(cornerRadius: SignsWordCardLayout.cornerRadius, style: .continuous))
         .overlay {
-            RoundedRectangle(cornerRadius: 21, style: .continuous)
+            RoundedRectangle(cornerRadius: SignsWordCardLayout.cornerRadius, style: .continuous)
                 .stroke(Color.black.opacity(0.06), lineWidth: 1)
         }
         .elevation(.insetField)
-        .contentShape(RoundedRectangle(cornerRadius: 21, style: .continuous))
+        .contentShape(RoundedRectangle(cornerRadius: SignsWordCardLayout.cornerRadius, style: .continuous))
+        .onAppear { store.mergeDictionaryVisiblePriority(wordId: wordId) }
         .onTapGesture(perform: openSign)
-        .task(id: wordId) {
-            store.loadWords(wordIds: [wordId])
+    }
+
+    private var thumbnailStage: some View {
+        ZStack(alignment: .topTrailing) {
+            SignPosterSurface(wordId: wordId, store: store)
+
+            Button {
+                toggleFavorite()
+            } label: {
+                Image(systemName: isFavorite ? "heart.fill" : "heart")
+                    .font(.asl(24, weight: .semibold))
+                    .foregroundStyle(isFavorite ? SignsTheme.accent : Color.white.opacity(0.72))
+                    .shadow(color: .black.opacity(0.08), radius: 4, y: 2)
+                    .frame(width: 42, height: 42)
+            }
+            .buttonStyle(.plain)
+            .padding(3)
         }
+        .frame(maxWidth: .infinity, minHeight: thumbnailHeight, maxHeight: thumbnailHeight)
+        .clipped()
+    }
+
+    private var labelSection: some View {
+        VStack(spacing: compact ? 6 : 2) {
+            Text(ASLWordDisplay.title(for: store.wordsById[wordId]?.text ?? wordId))
+                .aslStyle(.cardTitle, variant: compact ? .compact : .standard)
+                .lineLimit(1)
+                .minimumScaleFactor(0.72)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity, minHeight: compact ? SignsWordCardLayout.compactTitleLineHeight : SignsWordCardLayout.standardTitleLineHeight, maxHeight: compact ? SignsWordCardLayout.compactTitleLineHeight : SignsWordCardLayout.standardTitleLineHeight)
+
+            if let categorySubtitle {
+                Text(categorySubtitle)
+                    .aslStyle(.progressLabel, variant: .standard)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(minHeight: SignsWordCardLayout.subtitleLineHeight, maxHeight: SignsWordCardLayout.subtitleLineHeight)
+                    .padding(.leading, compact ? 4 : 0)
+            }
+        }
+        .frame(maxWidth: .infinity, minHeight: labelContentHeight, maxHeight: labelContentHeight, alignment: hasSubtitle ? .top : .center)
+        .padding(.horizontal, horizontalPadding)
+        .padding(.vertical, verticalPadding)
+        .frame(maxWidth: .infinity, minHeight: labelSectionHeight, maxHeight: labelSectionHeight)
+        .background(Brand.chrome)
     }
 }
 
-private struct SignThumbnailSurface: View {
+private struct SignPosterSurface: View {
     let wordId: String
     @ObservedObject var store: ASLDataStore
 
-    @State private var thumbnail: UIImage?
-    @State private var thumbnailURL: URL?
-
     var body: some View {
-        ZStack {
-            if let thumbnail {
-                Image(uiImage: thumbnail)
-                    .resizable()
-                    .scaledToFill()
-            } else {
-                Rectangle()
-                    .fill(
-                        LinearGradient(
-                            colors: [
-                                Color(red: 0.93, green: 0.92, blue: 0.96),
-                                Color(red: 0.86, green: 0.94, blue: 0.96)
-                            ],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-                    .overlay {
-                        ProgressView()
-                            .tint(SignsTheme.accent)
-                    }
-            }
-        }
-        .onAppear { loadThumbnailIfReady() }
-        .onChange(of: store.wordsById[wordId]?.id) { _, _ in loadThumbnailIfReady() }
-        .onChange(of: store.videosByWordId[wordId]?.first?.playbackURL) { _, _ in loadThumbnailIfReady() }
-    }
-
-    private var playbackURL: URL? {
-        store.videosByWordId[wordId]?.first?.playbackURL
-    }
-
-    private func loadThumbnailIfReady() {
-        if let url = playbackURL {
-            generateThumbnail(for: url)
-            return
-        }
-
-        if let word = store.wordsById[wordId] {
-            store.loadVideos(for: word)
-        } else {
-            store.loadWords(wordIds: [wordId])
-        }
-    }
-
-    private func generateThumbnail(for url: URL) {
-        guard thumbnailURL != url else { return }
-        thumbnailURL = url
-        thumbnail = nil
-
-        Task {
-            let image = await Self.thumbnailImage(for: url)
-            guard thumbnailURL == url else { return }
-            thumbnail = image
-        }
-    }
-
-    private static func thumbnailImage(for url: URL) async -> UIImage? {
-        await Task.detached(priority: .utility) {
-            let asset = AVURLAsset(url: url)
-            let generator = AVAssetImageGenerator(asset: asset)
-            generator.appliesPreferredTrackTransform = true
-            generator.maximumSize = CGSize(width: 420, height: 420)
-
-            do {
-                let image = try generator.copyCGImage(at: CMTime(seconds: 0.15, preferredTimescale: 600), actualTime: nil)
-                return UIImage(cgImage: image)
-            } catch {
-                return nil
-            }
-        }.value
+        PosterImageView(wordId: wordId, store: store)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
 private struct SignVideoSurface: View {
     let wordId: String
+    let neighborWordIds: [String]
     @ObservedObject var store: ASLDataStore
     var cornerRadius: CGFloat
     var videoGravity: AVLayerVideoGravity
+    /// Fixed height for dictionary detail sheet stage cards.
+    var stageHeight: CGFloat = 340
+    /// Shows the shared replay + green turtle controls (primary "sign area"
+    /// surfaces only, e.g. the detail sheet — not dense grid thumbnails).
+    var showsControls: Bool = false
 
-    @StateObject private var controller = LessonPlayerController()
+    @State private var controller: LessonPlayerController?
+    @State private var showLoadError = false
+    @State private var retryToken = 0
 
     var body: some View {
-        ZStack {
-            if playbackURL != nil {
-                LessonVideoPlayer(
+        Group {
+            if ASLPendingFilmCatalog.shouldShowMissingMedia(for: wordId, store: store) {
+                SignFilmPlaceholder(
+                    title: ASLPendingFilmCatalog.title(for: wordId, store: store),
+                    height: showsControls ? stageHeight : nil,
+                    cornerRadius: cornerRadius,
+                    style: .stage
+                )
+                .elevation(showsControls ? .insetField : .none)
+            } else if missingBundledVideo {
+                dictionaryLoadFailure
+            } else if showsControls, let controller {
+                dictionaryDetailStage(controller: controller)
+            } else if let controller {
+                SignVideoSurfaceBody(
+                    wordId: wordId,
+                    store: store,
                     controller: controller,
                     cornerRadius: cornerRadius,
-                    videoGravity: videoGravity
+                    videoGravity: videoGravity,
+                    showsControls: showsControls,
+                    showLoadError: $showLoadError,
+                    onRetry: retryDictionaryVideo
                 )
             } else {
-                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                    .fill(Color(red: 0.93, green: 0.92, blue: 0.96))
-                    .overlay {
-                        ProgressView()
-                            .tint(SignsTheme.accent)
-                    }
+                dictionaryDetailLoadingPoster
             }
         }
-        .onAppear { loadIfReady() }
-        .onChange(of: store.wordsById[wordId]?.id) { _, _ in loadIfReady() }
-        .onChange(of: playbackURL) { _, _ in loadIfReady() }
+        .frame(maxWidth: .infinity)
+        .frame(height: showsControls ? stageHeight : nil)
+        .task(id: "\(wordId)-\(retryToken)") {
+            await borrowController()
+        }
     }
 
-    private var playbackURL: URL? {
-        store.videosByWordId[wordId]?.first?.playbackURL
+    @ViewBuilder
+    private func dictionaryDetailStage(controller: LessonPlayerController) -> some View {
+        LessonVideoStage(
+            controller: controller,
+            wordId: wordId,
+            store: store,
+            height: stageHeight,
+            cornerRadius: cornerRadius,
+            showsControls: true
+        )
+        .overlay {
+            if !controller.isPlaybackReady {
+                SignDetailPosterSurface(
+                    wordId: wordId,
+                    store: store,
+                    cornerRadius: SignVideoCardMetrics.innerCornerRadius
+                )
+                .padding(SignVideoCardMetrics.innerPadding)
+                .clipShape(
+                    RoundedRectangle(
+                        cornerRadius: SignVideoCardMetrics.innerCornerRadius,
+                        style: .continuous
+                    )
+                )
+                .allowsHitTesting(false)
+                .transition(.opacity)
+            }
+        }
+        .overlay {
+            if showLoadError && !controller.isPlaybackReady {
+                SignVideoLoadFailureView(cornerRadius: cornerRadius, onRetry: retryDictionaryVideo)
+            }
+        }
+        .animation(.easeOut(duration: 0.15), value: controller.isPlaybackReady)
+        .onChange(of: controller.isPlaybackReady) { _, ready in
+            if ready { showLoadError = false }
+        }
+        .onChange(of: controller.playbackFailed) { _, failed in
+            if failed { showLoadError = true }
+        }
     }
 
-    private func loadIfReady() {
-        if let url = playbackURL {
-            controller.load(url)
-            controller.playAtNormalSpeed()
-            controller.replay()
+    private var dictionaryDetailLoadingPoster: some View {
+        SignDetailPosterSurface(
+            wordId: wordId,
+            store: store,
+            cornerRadius: SignVideoCardMetrics.innerCornerRadius
+        )
+        .padding(SignVideoCardMetrics.innerPadding)
+        .frame(maxWidth: .infinity)
+        .frame(height: stageHeight)
+        .background(Brand.homeBackground)
+        .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                .strokeBorder(Brand.divider.opacity(0.95), lineWidth: SignVideoCardMetrics.borderWidth)
+        }
+        .elevation(.insetField)
+    }
+
+    private func retryDictionaryVideo() {
+        Haptics.tap()
+        showLoadError = false
+        retryToken += 1
+    }
+
+    private var missingBundledVideo: Bool {
+        FilmedSignCatalog.isFilmed(wordId: wordId) && !BundledSignMedia.hasBundledVideo(for: wordId)
+    }
+
+    private var dictionaryLoadFailure: some View {
+        SignVideoLoadFailureView(cornerRadius: cornerRadius, onRetry: retryDictionaryVideo)
+    }
+
+    private func borrowController() async {
+        guard !ASLPendingFilmCatalog.shouldShowMissingMedia(for: wordId, store: store) else { return }
+        showLoadError = false
+
+        let borrowed = await store.borrowDictionaryController(
+            for: wordId,
+            neighborWordIds: neighborWordIds
+        )
+        controller = borrowed
+
+        if borrowed.isPlaybackReady {
             return
         }
 
-        if let word = store.wordsById[wordId] {
-            store.loadVideos(for: word)
-        } else {
-            store.loadWords(wordIds: [wordId])
+        await borrowed.awaitPlaybackReady(timeout: 2)
+        if borrowed.playbackFailed || !borrowed.isPlaybackReady {
+            showLoadError = true
+        }
+    }
+}
+
+private struct SignVideoSurfaceBody: View {
+    let wordId: String
+    @ObservedObject var store: ASLDataStore
+    @ObservedObject var controller: LessonPlayerController
+    var cornerRadius: CGFloat
+    var videoGravity: AVLayerVideoGravity
+    var showsControls: Bool
+    @Binding var showLoadError: Bool
+    var onRetry: () -> Void
+
+    var body: some View {
+        Group {
+            if showsControls {
+                detailPlaybackStack
+            } else {
+                gridPlaybackStack
+            }
+        }
+        .onChange(of: controller.isPlaybackReady) { _, ready in
+            if ready { showLoadError = false }
+        }
+        .onChange(of: controller.playbackFailed) { _, failed in
+            if failed { showLoadError = true }
+        }
+    }
+
+    private var detailPlaybackStack: some View {
+        ZStack {
+            SignDetailPosterSurface(
+                wordId: wordId,
+                store: store,
+                cornerRadius: SignVideoCardMetrics.innerCornerRadius
+            )
+            .opacity(controller.isPlaybackReady ? 0 : 1)
+            .animation(.easeOut(duration: 0.15), value: controller.isPlaybackReady)
+
+            LessonVideoPlayer(
+                controller: controller,
+                cornerRadius: SignVideoCardMetrics.innerCornerRadius,
+                videoGravity: videoGravity
+            )
+
+            if showLoadError && !controller.isPlaybackReady {
+                SignVideoLoadFailureView(cornerRadius: cornerRadius, onRetry: onRetry)
+            }
+        }
+        .padding(SignVideoCardMetrics.innerPadding)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Brand.homeBackground)
+        .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                .strokeBorder(Brand.divider.opacity(0.95), lineWidth: SignVideoCardMetrics.borderWidth)
+        }
+        .elevation(.insetField)
+        .overlay { SignVideoControlsOverlay(controller: controller) }
+    }
+
+    private var gridPlaybackStack: some View {
+        ZStack {
+            LessonVideoPlayer(
+                controller: controller,
+                cornerRadius: cornerRadius,
+                videoGravity: videoGravity
+            )
+            if !controller.isPlaybackReady {
+                ProgressView()
+                    .tint(SignsTheme.accent)
+            }
+        }
+    }
+}
+
+private struct SignVideoLoadFailureView: View {
+    var cornerRadius: CGFloat
+    var onRetry: () -> Void
+
+    var body: some View {
+        VStack(spacing: 14) {
+            Image(systemName: "wifi.exclamationmark")
+                .font(.asl(32, weight: .semibold))
+                .foregroundStyle(Brand.secondaryLabel)
+            Text("Couldn't load sign video")
+                .font(.asl(15, weight: .semibold))
+                .foregroundStyle(Brand.textPrimary)
+            Button(action: onRetry) {
+                Text("Retry")
+                    .font(.asl(14, weight: .semibold))
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 22)
+                    .padding(.vertical, 10)
+                    .background(SignsTheme.accent, in: Capsule())
+            }
+            .buttonStyle(.plain)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Brand.homeBackground.opacity(0.92))
+        .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+    }
+}
+
+private struct SignDetailPosterSurface: View {
+    let wordId: String
+    @ObservedObject var store: ASLDataStore
+    var cornerRadius: CGFloat
+
+    @ObservedObject private var loader = PosterImageLoader.shared
+
+    var body: some View {
+        let _ = store.mediaCacheRevision
+        let _ = loader.revision
+        let detailURL = store.detailPosterDisplayURL(for: wordId)
+
+        ZStack {
+            if let bundledURL = BundledSignMedia.posterURL(for: wordId),
+               let image = UIImage(contentsOfFile: bundledURL.path) {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFill()
+            } else if let localURL = store.localPosterURL(for: wordId),
+               let image = UIImage(contentsOfFile: localURL.path) {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFill()
+            } else if let detailURL,
+                      let image = loader.image(for: wordId, url: detailURL) {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFill()
+            } else if let gridURL = store.posterDisplayURL(for: wordId),
+                      let image = loader.image(for: wordId, url: gridURL) {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFill()
+            } else {
+                Rectangle().fill(Brand.homeBackground)
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .clipped()
+        .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+        .onAppear {
+            store.prepareDictionaryDetailPoster(wordId: wordId)
+            guard let detailURL else { return }
+            guard store.localPosterURL(for: wordId) != nil else {
+                guard loader.image(for: wordId, url: detailURL) == nil else { return }
+                guard !loader.isLoading(wordId: wordId, url: detailURL) else { return }
+                loader.load(wordId: wordId, url: detailURL)
+                return
+            }
         }
     }
 }
@@ -1217,6 +1502,7 @@ private struct SignDetailSheet: View {
     @Environment(\.dismiss) private var dismiss
     @AppStorage("asl.favoriteSigns.v1") private var favoriteWordIdsData = "[]"
     @State private var currentIndex: Int
+    @State private var showYourTurnPractice = false
 
     init(initialWordId: String,
          wordIds: [String],
@@ -1248,9 +1534,8 @@ private struct SignDetailSheet: View {
         VStack(spacing: 22) {
             HStack {
                 Spacer()
-                Text(currentTitle.uppercased())
-                    .font(.system(size: 24, weight: .heavy, design: .rounded))
-                    .foregroundStyle(.primary)
+                Text(currentTitle)
+                    .aslStyle(.cardTitle, variant: .prominent)
                     .lineLimit(1)
                     .minimumScaleFactor(0.7)
                 Spacer()
@@ -1261,8 +1546,8 @@ private struct SignDetailSheet: View {
                     dismiss()
                 } label: {
                     Image(systemName: "xmark")
-                        .font(.system(size: 18, weight: .heavy))
-                        .foregroundStyle(Color.secondary.opacity(0.55))
+                        .font(.asl(18, weight: .semibold))
+                        .foregroundStyle(Brand.secondaryLabel.opacity(0.55))
                         .frame(width: 44, height: 44)
                 }
                 .buttonStyle(.plain)
@@ -1271,19 +1556,21 @@ private struct SignDetailSheet: View {
 
             SignVideoSurface(
                 wordId: currentWordId,
+                neighborWordIds: wordIds,
                 store: store,
-                cornerRadius: 22,
-                videoGravity: .resizeAspectFill
+                cornerRadius: SignVideoCardMetrics.cornerRadius,
+                videoGravity: .resizeAspectFill,
+                stageHeight: 340,
+                showsControls: true
             )
-            .frame(height: 340)
 
             HStack(spacing: 40) {
                 Button {
                     move(by: -1)
                 } label: {
                     Image(systemName: "arrow.left")
-                        .font(.system(size: 28, weight: .bold))
-                        .foregroundStyle(wordIds.count > 1 ? Color.primary.opacity(0.85) : Color.secondary.opacity(0.18))
+                        .font(.asl(28, weight: .semibold))
+                        .foregroundStyle(wordIds.count > 1 ? Brand.textPrimary.opacity(0.85) : Brand.secondaryLabel.opacity(0.18))
                         .frame(width: 58, height: 44)
                 }
                 .buttonStyle(.plain)
@@ -1293,8 +1580,8 @@ private struct SignDetailSheet: View {
                     move(by: 1)
                 } label: {
                     Image(systemName: "arrow.right")
-                        .font(.system(size: 28, weight: .bold))
-                        .foregroundStyle(wordIds.count > 1 ? Color.primary.opacity(0.85) : Color.secondary.opacity(0.18))
+                        .font(.asl(28, weight: .semibold))
+                        .foregroundStyle(wordIds.count > 1 ? Brand.textPrimary.opacity(0.85) : Brand.secondaryLabel.opacity(0.18))
                         .frame(width: 58, height: 44)
                 }
                 .buttonStyle(.plain)
@@ -1304,6 +1591,7 @@ private struct SignDetailSheet: View {
             HStack {
                 Button {
                     Haptics.tap()
+                    showYourTurnPractice = true
                 } label: {
                     SheetActionLabel(
                         systemImage: "rectangle.2.swap",
@@ -1331,9 +1619,20 @@ private struct SignDetailSheet: View {
         }
         .padding(.horizontal, 24)
         .brandCanvasBackground()
+        .fullScreenCover(isPresented: $showYourTurnPractice) {
+            SignYourTurnPracticeView(
+                store: store,
+                wordId: currentWordId,
+                onDismiss: { showYourTurnPractice = false }
+            )
+        }
         .task(id: currentWordId) {
-            store.loadWords(wordIds: [currentWordId])
+            await store.loadWordsAwait(wordIds: wordIds)
             store.recordSignStudied(wordId: currentWordId)
+            store.warmDictionaryVideo(wordId: currentWordId, neighborWordIds: wordIds)
+        }
+        .onDisappear {
+            store.clearDictionaryVideoProtection()
         }
     }
 
@@ -1341,6 +1640,8 @@ private struct SignDetailSheet: View {
         guard wordIds.count > 1 else { return }
         Haptics.tap()
         let next = (currentIndex + offset + wordIds.count) % wordIds.count
+        let nextWordId = wordIds[next]
+        store.warmDictionaryVideo(wordId: nextWordId, neighborWordIds: wordIds)
         withAnimation(.spring(response: 0.28, dampingFraction: 0.82)) {
             currentIndex = next
         }
@@ -1364,13 +1665,13 @@ private struct SheetActionLabel: View {
             ASLIcon(
                 source: .symbol(systemImage),
                 role: .feature,
-                tint: isActive ? SignsTheme.accent : Color.secondary.opacity(0.45),
+                tint: isActive ? SignsTheme.accent : Brand.secondaryLabel.opacity(0.45),
                 isEmphasis: isActive
             )
 
             Text(title)
-                .font(.system(size: 14, weight: .bold, design: .rounded))
-                .foregroundStyle(isActive ? SignsTheme.accent : Color.secondary.opacity(0.55))
+                .aslFont(.tabBar, variant: .prominent)
+                .foregroundStyle(isActive ? SignsTheme.accent : Brand.secondaryLabel.opacity(0.55))
         }
         .frame(width: 76)
     }
@@ -1390,6 +1691,7 @@ private struct DictionaryEmptyState: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: mascotSize, height: mascotSize)
+                    .offset(y: 2)
                     .accessibilityHidden(true)
             } else if let systemImage {
                 ASLIcon(
@@ -1400,11 +1702,10 @@ private struct DictionaryEmptyState: View {
             }
 
             Text(title)
-                .font(.system(size: 22, weight: .heavy, design: .rounded))
+                .aslStyle(.cardTitle, variant: .standard)
 
             Text(message)
-                .font(.system(size: 15, weight: .semibold, design: .rounded))
-                .foregroundStyle(.secondary)
+                .aslStyle(.cardDescription, variant: .compact)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 18)
         }
@@ -1414,4 +1715,45 @@ private struct DictionaryEmptyState: View {
 
 private enum SignsTheme {
     static let accent = Brand.primary
+}
+
+/// Re-enables the system edge-swipe back gesture when the default back button is hidden.
+private struct NavigationSwipeBackEnabler: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> UIViewController {
+        UIViewController()
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+        DispatchQueue.main.async {
+            guard let navigationController = uiViewController.navigationController else { return }
+            navigationController.interactivePopGestureRecognizer?.isEnabled = true
+            navigationController.interactivePopGestureRecognizer?.delegate = context.coordinator
+        }
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+
+    final class Coordinator: NSObject, UIGestureRecognizerDelegate {
+        func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+            guard let navigationController = gestureRecognizer.view?.nearestNavigationController else {
+                return false
+            }
+            return navigationController.viewControllers.count > 1
+        }
+    }
+}
+
+private extension UIView {
+    var nearestNavigationController: UINavigationController? {
+        var responder: UIResponder? = self
+        while let current = responder {
+            if let navigationController = current as? UINavigationController {
+                return navigationController
+            }
+            responder = current.next
+        }
+        return nil
+    }
 }

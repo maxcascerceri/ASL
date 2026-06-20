@@ -1,0 +1,46 @@
+/Users/maxcascerceri/Library/Python/3.9/lib/python/site-packages/google/auth/__init__.py:54: FutureWarning: You are using a Python version 3.9 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+  warnings.warn(eol_message.format("3.9"), FutureWarning)
+/Users/maxcascerceri/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+/Users/maxcascerceri/Library/Python/3.9/lib/python/site-packages/google/oauth2/__init__.py:40: FutureWarning: You are using a Python version 3.9 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+  warnings.warn(eol_message.format("3.9"), FutureWarning)
+/Users/maxcascerceri/Library/Python/3.9/lib/python/site-packages/google/api_core/_python_version_support.py:242: FutureWarning: You are using a non-supported Python version (3.9.6). Google will not post any further updates to google.api_core supporting this Python version. Please upgrade to the latest Python version, or at least Python 3.10, and then update google.api_core.
+  warnings.warn(message, FutureWarning)
+Keep manifests: ['elijah_videos.json', 'victoria_ariel_videos.json']
+Keep word IDs: 450
+Word IDs with Storage and/or Firestore video: 1002
+Will keep media for: 450 word IDs
+Will purge media for: 552 word IDs
+  Storage blobs: 2208
+  Firestore video docs: 2208
+  Sample purge word IDs: raft, rag, rainbow, raisin, rake, range, rat, razor, reach, react, ready, really, reason, recent, recite, record, recording, red, reduce, reflect, refrigerator, refuse, register, regular, relationship
+  ... and 527 more
+
+Deleting Storage blobs...
+  Storage: deleted 200/2208 blobs
+  Storage: deleted 400/2208 blobs
+  Storage: deleted 600/2208 blobs
+  Storage: deleted 800/2208 blobs
+  Storage: deleted 1000/2208 blobs
+  Storage: deleted 1200/2208 blobs
+  Storage: deleted 1400/2208 blobs
+  Storage: deleted 1600/2208 blobs
+  Storage: deleted 1800/2208 blobs
+  Storage: deleted 2000/2208 blobs
+  Storage: deleted 2200/2208 blobs
+  Storage: deleted 2208/2208 blobs
+Deleting Firestore video docs...
+  Firestore videos: deleted 450 docs
+  Firestore videos: deleted 900 docs
+  Firestore videos: deleted 1350 docs
+  Firestore videos: deleted 1800 docs
+  Firestore videos: deleted 2208 docs (done)
+Resetting parent word docs (videoCount=0)...
+  Parent words reset: 450/552
+  Parent words reset: 552/552 (done)
+
+Purge complete.
+  Storage blobs deleted: 2208
+  Firestore video docs deleted: 2208
+  words/{id} parent reset (videoCount=0): 552
+  Audit log: /Users/maxcascerceri/Desktop/ASL/scripts/purge_non_filmed_videos_log.json

@@ -1,0 +1,11 @@
+rules_version = '2';
+
+// Public read for sign videos (app has no sign-in). Writes via service account only.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /asl-videos/{wordId}/{fileName} {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}
