@@ -7,7 +7,7 @@ This folder contains the Privacy Policy and Terms of Use for the Ziggy ASL app, 
 1. Push this repo (with the `docs/` folder) to GitHub.
 2. In the repo: **Settings → Pages**.
 3. Under **Source**, choose **Deploy from a branch**.
-4. Branch: **main** (or your default), folder: **/docs**.
+4. Branch: **main**, folder: **`/docs`** (not `/ (root)` — that puts pages under `/docs/` in the URL).
 5. Save. After a minute or two, the site will be live at:
    - **https://maxcascerceri.github.io/ASL/**
 
