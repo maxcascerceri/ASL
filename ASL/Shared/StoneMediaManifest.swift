@@ -11,189 +11,189 @@ enum StoneMediaManifest {
     /// Stone sortOrder (1–4) → word superset per teaching unit.
     static let wordIdsByUnitStone: [String: [Int: [String]]] = [
         "p1-u01": [
-            1: ["hello", "thankyou", "bye", "please", "sorry", "welcome", "congratulations", "oops", "very", "much", "yourewelcome", "your", "face"],
-            2: ["hello", "thankyou", "bye", "please", "sorry", "welcome", "congratulations", "oops", "very", "much", "thankyouverymuch", "yourewelcome", "nice", "meet", "you", "my", "name", "how", "are", "mynameis", "nicetomeetyou", "howareyou", "whatareyoudoing", "your", "allofsudden", "blowmind", "call911", "imhappy"],
-            3: ["hello", "thankyou", "bye", "please", "sorry", "welcome", "congratulations", "oops", "very", "much", "thankyouverymuch", "yourewelcome", "nice", "meet", "you", "my", "name", "how", "are", "mynameis", "nicetomeetyou", "howareyou", "imfine", "signslow", "no", "your"]
+            1: ["hello", "thankyou", "bye", "please", "sorry", "welcome", "congratulations", "oops", "yourewelcome", "your", "face"],
+            2: ["hello", "thankyou", "bye", "please", "sorry", "welcome", "congratulations", "oops", "very", "much", "thankyouverymuch", "yourewelcome", "nice", "meet", "you", "my", "name", "how", "are", "mynameis", "nicetomeetyou", "howareyou", "your"],
+            3: ["hello", "thankyou", "bye", "please", "sorry", "welcome", "congratulations", "oops", "very", "much", "thankyouverymuch", "yourewelcome", "nice", "meet", "you", "my", "name", "how", "are", "mynameis", "nicetomeetyou", "howareyou", "imfine", "signslow", "i", "fine", "sign", "imfrom", "slow", "talktoyoulater", "your", "imhappy"]
         ],
         "p1-u02": [
-            1: ["yes", "no", "ok", "sure", "really", "wow", "dontknow", "notyet", "signagain", "cool", "i", "my", "know", "excuseme", "blowmind", "translate"],
-            2: ["yes", "no", "ok", "sure", "really", "wow", "dontknow", "notyet", "signagain", "cool", "awesome", "funny", "samehere", "excuseme", "seeyoulater", "same", "oops", "here", "know", "see", "you", "later", "welcome", "signslow", "very", "much", "congratulations", "mouth"],
-            3: ["yes", "no", "ok", "sure", "really", "wow", "dontknow", "notyet", "signagain", "cool", "awesome", "funny", "samehere", "excuseme", "seeyoulater", "have", "havegoodday", "nicetoseeyou", "alright", "body", "i", "know", "same", "here", "see", "you", "later", "congratulations", "oops", "my", "your", "very"]
+            1: ["yes", "no", "ok", "sure", "really", "wow", "dontknow", "notyet", "signagain", "cool", "know", "welcome", "excuseme", "hello", "i", "much"],
+            2: ["yes", "no", "ok", "sure", "really", "wow", "dontknow", "notyet", "signagain", "cool", "awesome", "funny", "samehere", "excuseme", "seeyoulater", "hello", "same", "here", "see", "fine", "know", "i", "you", "later", "my", "name", "slow", "translate"],
+            3: ["yes", "no", "ok", "sure", "really", "wow", "dontknow", "notyet", "signagain", "cool", "awesome", "funny", "samehere", "excuseme", "seeyoulater", "have", "havegoodday", "nicetoseeyou", "alright", "please", "sorry", "welcome", "a", "nice", "good", "fine", "oops", "very", "day", "howareyou", "see", "you", "later", "mouth", "my", "know", "slow", "i", "here", "are", "same"]
         ],
         "p1-u03": [
-            1: ["i", "me", "you", "we", "us", "our", "my", "your", "his", "mine", "practice", "whatisyourname", "what", "name", "mynameis"],
-            2: ["i", "me", "you", "we", "us", "our", "my", "your", "his", "mine", "he", "they", "she", "her", "him", "them", "their", "yours", "ours", "signslow"],
-            3: ["i", "me", "you", "we", "us", "our", "my", "your", "his", "mine", "he", "they", "she", "her", "him", "them", "their", "yours", "ours", "camera", "mynameis", "name", "oops", "very", "are", "hello", "thankyou"]
+            1: ["i", "you", "we", "my", "your", "name", "mynameis", "whatisyourname", "what", "welcome"],
+            2: ["i", "you", "we", "my", "your", "name", "he", "she", "they", "his", "their", "our"],
+            3: ["i", "you", "we", "my", "your", "name", "he", "she", "they", "his", "their", "our", "mynameis", "nicetomeetyou", "body", "much", "nice", "really", "alright", "awesome", "cool", "ours", "yours", "mine", "me", "him", "us", "them", "her"]
         ],
         "p1-u05": [
-            1: ["person", "people", "myself", "yourself", "sign", "nice", "meet", "introduce", "they", "thankyou", "congratulations"],
-            2: ["person", "people", "myself", "yourself", "sign", "nice", "meet", "introduce", "what", "where", "when", "who", "why", "how", "which", "many", "whatisyourname", "whatsthat", "whatdoesthatmean", "lonely", "your", "name", "very", "much", "really", "whatisyournamesign", "whereareyou", "talk"],
-            3: ["person", "people", "myself", "yourself", "sign", "nice", "meet", "introduce", "what", "where", "when", "who", "why", "how", "which", "many", "whatisyourname", "whatsthat", "whatdoesthatmean", "howmany", "whereareyou", "from", "doing", "whereareyoufrom", "imfrom", "whatareyoudoing", "give", "his", "your", "name", "that", "you", "are", "ok", "wow", "yes", "again", "very"]
+            1: ["person", "people", "myself", "yourself", "sign", "nice", "meet", "introduce", "letter", "hello"],
+            2: ["person", "people", "myself", "yourself", "sign", "nice", "meet", "introduce", "what", "where", "when", "who", "why", "how", "which", "many", "whatisyourname", "whatsthat", "whatdoesthatmean", "wherebathroom", "bathroom", "much", "really", "very", "whereareyou", "remember", "your", "name", "fingerspell"],
+            3: ["person", "people", "myself", "yourself", "sign", "nice", "meet", "introduce", "what", "where", "when", "who", "why", "how", "which", "many", "whatisyourname", "whatsthat", "whatdoesthatmean", "howmany", "whereareyou", "from", "doing", "whereareyoufrom", "imfrom", "whatareyoudoing", "howyousignthat", "you", "please", "i", "imgood", "wherebathroom"]
         ],
         "p1-u06": [
-            1: ["fine", "good", "bad", "happy", "sad", "great", "angry", "tired", "scared", "excited", "letter"],
-            2: ["fine", "good", "bad", "happy", "sad", "great", "angry", "tired", "scared", "excited", "imtired", "imscared", "imgood", "imhappy", "imsad", "imangry", "worry", "nervous", "imexcited", "imnervous", "goodmorning", "goodnight", "ineedhelp", "imthirsty", "i", "imhungry", "fingerspell"],
-            3: ["fine", "good", "bad", "happy", "sad", "great", "angry", "tired", "scared", "excited", "imtired", "imscared", "imgood", "imhappy", "imsad", "imangry", "worry", "nervous", "imexcited", "imnervous", "goodmorning", "goodnight", "bored", "lonely", "jealous", "embarrass", "frustrate", "surprise", "confident", "humble", "lazy", "stubborn", "curious", "serious", "remember", "forget", "what", "i", "much", "nice", "my", "we", "you", "your"]
+            1: ["fine", "good", "bad", "happy", "sad", "great", "angry", "tired", "different", "hello"],
+            2: ["fine", "good", "bad", "happy", "sad", "great", "angry", "tired", "scared", "imtired", "imscared", "imgood", "imhappy", "imsad", "imangry", "excited", "worry", "nervous", "imexcited", "imnervous", "goodmorning", "goodnight", "ineedhelp", "imthirsty", "i", "imhungry", "fingerspell"],
+            3: ["fine", "good", "bad", "happy", "sad", "great", "angry", "tired", "scared", "imtired", "imscared", "imgood", "imhappy", "imsad", "imangry", "excited", "worry", "nervous", "imexcited", "imnervous", "goodmorning", "goodnight", "bored", "lonely", "jealous", "embarrass", "frustrate", "surprise", "confident", "humble", "lazy", "stubborn", "curious", "serious", "remember", "forget", "fingerspell", "i", "nice", "sorry", "thankyou", "welcome", "name", "bye", "congratulations"]
         ],
         "p1-u08": [
-            1: ["and", "but", "or", "so", "with", "same", "signslow"],
-            2: ["and", "but", "or", "so", "with", "without", "also", "because", "same", "camera", "hello", "tall", "hot"],
-            3: ["and", "but", "or", "so", "with", "without", "also", "because", "same", "different", "if", "language", "word", "cold", "fast", "small", "bright", "dark"]
+            1: ["and", "but", "or", "so", "with", "same", "hello", "ok"],
+            2: ["and", "but", "or", "so", "with", "without", "also", "because", "same", "idontunderstand", "fast", "small"],
+            3: ["and", "but", "or", "so", "with", "without", "also", "because", "same", "different", "if", "language", "word", "see", "cold", "hot", "our", "his"]
         ],
         "p1-u10": [
-            1: ["alphabet", "fingerspell", "letter", "a", "b", "c", "d", "e", "f", "g", "name", "hello", "ok"],
-            2: ["alphabet", "fingerspell", "letter", "a", "b", "c", "d", "e", "f", "g", "h", "letteri", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "idontunderstand"],
-            3: ["alphabet", "fingerspell", "letter", "a", "b", "c", "d", "e", "f", "g", "h", "letteri", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "see", "book", "pen", "nurse", "police", "doctor", "exercise", "chair", "bed", "name"]
+            1: ["alphabet", "fingerspell", "letter", "a", "b", "c", "d", "e", "name", "what", "hello"],
+            2: ["alphabet", "fingerspell", "letter", "a", "b", "c", "d", "e", "f", "g", "h", "letteri", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "name", "they"],
+            3: ["alphabet", "fingerspell", "letter", "a", "b", "c", "d", "e", "f", "g", "h", "letteri", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "my", "name", "mynameis", "talk", "math", "science"]
         ],
         "p1-u15": [
-            1: ["zero", "one", "two", "three", "excuseme"],
-            2: ["zero", "one", "two", "three", "four", "five", "six", "seven", "tablet", "school", "class"],
-            3: ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "interpreter", "art", "book", "doctor", "medicine", "nurse", "police", "money", "pay"]
+            1: ["zero", "one", "two", "three", "hello", "onemoretime", "more", "again", "fingerspell"],
+            2: ["zero", "one", "two", "three", "four", "five", "six", "seven", "letter", "onemoretime", "more", "again", "window", "table", "bed", "chair"],
+            3: ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "fingerspell", "onemoretime", "more", "again", "write", "school", "science", "student"]
         ],
         "p1-u17": [
-            1: ["money", "pay", "cost", "price", "what"],
-            2: ["money", "pay", "cost", "price", "1dollar", "5dollars", "half", "quarter", "much", "they", "really", "very"],
-            3: ["money", "pay", "cost", "price", "1dollar", "5dollars", "half", "quarter", "percent", "double", "triple", "hundred", "talk", "door", "window", "clock", "couch", "lamp", "really", "very", "table", "chair"]
+            1: ["money", "pay", "cost", "price", "no", "hello"],
+            2: ["money", "pay", "cost", "price", "1dollar", "5dollars", "half", "quarter", "much", "really", "hello", "translate", "i", "their", "they", "we"],
+            3: ["money", "pay", "cost", "price", "1dollar", "5dollars", "half", "quarter", "percent", "double", "triple", "hundred", "really", "very", "mouth", "couch", "door"]
         ],
         "p1-u18": [
-            1: ["mother", "father", "sister", "brother", "baby", "child", "family", "parents", "grandmother", "grandfather", "no"],
-            2: ["mother", "father", "sister", "brother", "baby", "child", "family", "parents", "grandmother", "grandfather", "aunt", "uncle", "cousin", "niece", "nephew", "twins", "man", "woman", "boy", "girl", "translate"],
-            3: ["mother", "father", "sister", "brother", "baby", "child", "family", "parents", "grandmother", "grandfather", "aunt", "uncle", "cousin", "niece", "nephew", "twins", "man", "woman", "boy", "girl", "adult", "teenager", "mouth", "go", "come", "move", "turn", "walk", "traffic", "commute"]
+            1: ["mother", "father", "sister", "brother", "baby", "child", "family", "parents", "hello", "video"],
+            2: ["mother", "father", "sister", "brother", "baby", "child", "family", "parents", "grandmother", "grandfather", "aunt", "uncle", "cousin", "niece", "nephew", "twins", "man", "woman", "boy", "girl", "signlanguage"],
+            3: ["mother", "father", "sister", "brother", "baby", "child", "family", "parents", "grandmother", "grandfather", "aunt", "uncle", "cousin", "niece", "nephew", "twins", "man", "woman", "boy", "girl", "adult", "teenager", "i", "talk", "that", "think", "understand", "stop", "walk", "come", "go"]
         ],
         "p1-u22": [
-            1: ["deaf", "hearing", "hardofhearing", "asl", "signlanguage", "today"],
-            2: ["deaf", "hearing", "hardofhearing", "asl", "signlanguage", "namesign", "deafculture", "fluent", "learnasl", "practice", "whatisyournamesign", "imlearningasl", "who", "what", "your", "i", "whatsthat", "whereareyou", "whereareyoufrom", "imlost", "stop"],
-            3: ["deaf", "hearing", "hardofhearing", "asl", "signlanguage", "namesign", "deafculture", "fluent", "learnasl", "practice", "whatisyournamesign", "imlearningasl", "interpreter", "caption", "hearingaid", "lipread", "gesture", "translate", "meet", "she", "what", "your", "i", "you", "yes", "really", "sure", "wait"]
+            1: ["deaf", "hearing", "hardofhearing", "asl", "signlanguage", "hello", "they"],
+            2: ["deaf", "hearing", "hardofhearing", "asl", "signlanguage", "namesign", "deafculture", "fluent", "learnasl", "practice", "whatisyournamesign", "imlearningasl", "hello", "whatsthat", "imlost", "i", "congratulations", "what", "your", "talk"],
+            3: ["deaf", "hearing", "hardofhearing", "asl", "signlanguage", "namesign", "deafculture", "fluent", "learnasl", "practice", "whatisyournamesign", "imlearningasl", "interpreter", "caption", "hearingaid", "lipread", "gesture", "translate", "give", "your", "his", "what", "i", "you", "they", "we", "no", "alright", "awesome", "cool"]
         ],
         "p1-u23": [
-            1: ["go", "come", "walk", "run", "hello", "tablet"],
-            2: ["go", "come", "walk", "run", "stop", "turn", "move", "lost", "imlost", "here", "there", "left", "right", "up", "down", "near", "far", "i", "interpreter"],
-            3: ["go", "come", "walk", "run", "stop", "turn", "move", "lost", "imlost", "here", "there", "left", "right", "up", "down", "near", "far", "ok", "i", "find", "try", "hear", "eat", "feel", "see", "letgo", "doing", "get"]
+            1: ["go", "come", "walk", "run", "letgo", "wait"],
+            2: ["go", "come", "walk", "run", "stop", "turn", "move", "lost", "imlost", "here", "there", "left", "right", "up", "down", "near", "far", "i"],
+            3: ["go", "come", "walk", "run", "stop", "turn", "move", "lost", "imlost", "here", "there", "left", "right", "up", "down", "near", "far", "howyousignthat", "i", "doing", "deaf", "letgo", "feel", "see", "smell", "breathe"]
         ],
         "p1-u24": [
-            1: ["eat", "drink", "see", "hear", "feel", "breathe", "smell", "wait", "letmesee", "me"],
-            2: ["eat", "drink", "see", "hear", "feel", "breathe", "smell", "want", "hungry", "make", "get", "give", "take", "iwanteat", "iwantdrink", "imhungry", "use", "find", "try", "doing", "know", "that", "i", "help", "letgo", "letmesee", "howyousignthat"],
-            3: ["eat", "drink", "see", "hear", "feel", "breathe", "smell", "want", "hungry", "make", "get", "give", "take", "iwanteat", "iwantdrink", "imhungry", "use", "find", "try", "doing", "iwant", "tell", "ask", "talk", "think", "know", "believe", "excuseme", "i", "how", "are", "ok", "wow", "yes", "again", "your", "his", "wait"]
+            1: ["eat", "drink", "see", "hear", "feel", "breathe", "smell", "letmesee", "me", "today"],
+            2: ["eat", "drink", "see", "hear", "feel", "breathe", "smell", "want", "hungry", "make", "get", "give", "take", "iwanteat", "iwantdrink", "imhungry", "use", "find", "try", "doing", "very", "much", "nice", "help", "stop"],
+            3: ["eat", "drink", "see", "hear", "feel", "breathe", "smell", "want", "hungry", "make", "get", "give", "take", "iwanteat", "iwantdrink", "imhungry", "use", "find", "try", "doing", "iwant", "tell", "ask", "talk", "think", "know", "believe", "thankyou", "i", "meet", "are", "wow", "have", "alright"]
         ],
         "p1-u27": [
-            1: ["red", "blue", "green", "yellow", "orangecolor", "purple", "pink", "brown", "black", "white", "imhappy"],
-            2: ["red", "blue", "green", "yellow", "orangecolor", "purple", "pink", "brown", "black", "white", "gray", "gold", "silver", "dark", "light", "bright", "slow", "no"],
-            3: ["red", "blue", "green", "yellow", "orangecolor", "purple", "pink", "brown", "black", "white", "gray", "gold", "silver", "dark", "light", "bright", "translate", "paper", "health", "medicine", "hospital", "nurse"]
+            1: ["red", "blue", "green", "yellow", "orangecolor", "purple", "pink", "brown", "meet"],
+            2: ["red", "blue", "green", "yellow", "orangecolor", "purple", "pink", "brown", "black", "white", "gray", "gold", "silver", "dark", "light", "bright", "slow", "hello", "wait"],
+            3: ["red", "blue", "green", "yellow", "orangecolor", "purple", "pink", "brown", "black", "white", "gray", "gold", "silver", "dark", "light", "bright", "howyousignthat", "art", "book", "exercise", "nurse", "police", "doctor", "slow"]
         ],
         "p1-u29": [
-            1: ["big", "small", "tall", "hot", "cold", "bright", "light", "mouth"],
-            2: ["big", "small", "tall", "hot", "cold", "fast", "hard", "almost", "many", "quarter", "body", "really", "triple", "very", "light", "slow", "hello", "bright", "dark", "help", "understand", "same"],
-            3: ["big", "small", "tall", "hot", "cold", "fast", "hard", "almost", "many", "few", "enough", "more", "less", "practice", "light", "same", "slow", "their", "yours", "ours", "triple", "w", "x", "half", "hundred", "very", "double"]
+            1: ["big", "small", "tall", "hot", "cold", "bright", "hello", "sweep", "vacuum", "light", "slow", "excuseme", "dark"],
+            2: ["big", "small", "tall", "hot", "cold", "fast", "hard", "almost", "many", "quarter", "really", "triple", "tablet", "light", "mirror", "clean", "slow", "very", "bright", "dark", "i", "we"],
+            3: ["big", "small", "tall", "hot", "cold", "fast", "hard", "almost", "many", "few", "enough", "more", "less", "double", "interpreter", "light", "i", "we", "slow"]
         ],
         "p1-u30": [
-            1: ["home", "house", "kitchen", "camera", "hello", "name", "nice", "oops"],
-            2: ["home", "house", "kitchen", "bathroom", "bedroom", "livingroom", "wherebathroom", "where", "different", "airplane", "motorcycle"],
-            3: ["home", "house", "kitchen", "bathroom", "bedroom", "livingroom", "wherebathroom", "basement", "backyard", "garage", "fingerspell", "where", "walk", "run", "here", "there"]
+            1: ["home", "house", "kitchen", "hello", "they", "man"],
+            2: ["home", "house", "kitchen", "bathroom", "bedroom", "livingroom", "wherebathroom", "hello", "wrapup", "where", "my"],
+            3: ["home", "house", "kitchen", "bathroom", "bedroom", "livingroom", "wherebathroom", "basement", "backyard", "garage", "your", "hello", "where", "go", "stop", "turn", "walk"]
         ],
         "p1-u31": [
-            1: ["table", "chair", "bed", "fingerspell"],
-            2: ["table", "chair", "bed", "couch", "door", "window", "letter", "need", "that"],
-            3: ["table", "chair", "bed", "couch", "door", "window", "lamp", "clock", "fingerspell", "really", "wow", "me", "we"]
+            1: ["table", "chair", "bed", "our", "hello", "surprise", "tired"],
+            2: ["table", "chair", "bed", "couch", "door", "window", "hello", "face", "sad", "tired"],
+            3: ["table", "chair", "bed", "couch", "door", "window", "lamp", "clock", "imhappy", "wow", "sure", "wait", "yes", "that", "call", "he", "they", "we", "you"]
         ],
         "p1-u32": [
-            1: ["shower", "toilet", "sink", "soap", "toothbrush", "brush", "comb", "mirror", "clean", "wash", "hello", "video"],
-            2: ["shower", "toilet", "sink", "soap", "toothbrush", "brush", "comb", "mirror", "clean", "wash", "sweep", "vacuum", "washdishes", "sleep", "see", "signlanguage", "h", "letteri", "smell", "breathe"],
-            3: ["shower", "toilet", "sink", "soap", "toothbrush", "brush", "comb", "mirror", "clean", "wash", "sweep", "vacuum", "washdishes", "sleep", "face", "pen", "paper", "hospital", "nurse", "police", "doctor", "hello"]
+            1: ["shower", "toilet", "sink", "soap", "toothbrush", "brush", "comb", "mirror", "give"],
+            2: ["shower", "toilet", "sink", "soap", "toothbrush", "brush", "comb", "mirror", "clean", "wash", "sweep", "vacuum", "washdishes", "sleep", "me", "see", "he", "hello", "today"],
+            3: ["shower", "toilet", "sink", "soap", "toothbrush", "brush", "comb", "mirror", "clean", "wash", "sweep", "vacuum", "washdishes", "sleep", "me", "see", "letmesee", "mynameis", "stop", "history", "art", "exercise", "nurse", "police", "doctor"]
         ],
         "p1-u35": [
-            1: ["apple", "banana", "orangefruit", "grapes", "strawberry", "cherry", "pineapple", "lemon", "tomato", "carrot", "different"],
-            2: ["apple", "banana", "orangefruit", "grapes", "strawberry", "cherry", "pineapple", "lemon", "tomato", "carrot", "corn", "onion", "potato", "lettuce", "fingerspell", "ocean", "beach"],
-            3: ["apple", "banana", "orangefruit", "grapes", "strawberry", "cherry", "pineapple", "lemon", "tomato", "carrot", "corn", "onion", "potato", "lettuce", "fingerspell", "dog", "cat", "rabbit", "pig", "sheep"]
+            1: ["apple", "banana", "orangefruit", "grapes", "strawberry", "cherry", "pineapple", "lemon", "meet", "hello"],
+            2: ["apple", "banana", "orangefruit", "grapes", "strawberry", "cherry", "pineapple", "lemon", "tomato", "carrot", "corn", "onion", "potato", "lettuce", "wait"],
+            3: ["apple", "banana", "orangefruit", "grapes", "strawberry", "cherry", "pineapple", "lemon", "tomato", "carrot", "corn", "onion", "potato", "lettuce", "howyousignthat", "sing", "dance", "horse", "sheep", "cat", "cow"]
         ],
         "p1-u37": [
-            1: ["meat", "fish", "egg", "cheese", "milk", "butter", "bacon", "chicken", "letter"],
-            2: ["meat", "fish", "egg", "cheese", "milk", "butter", "bacon", "chicken", "bread", "pizza", "cake", "chocolate", "breakfast", "lunch", "dinner", "full", "delicious", "cook", "water", "coffee", "tea", "juice", "thirsty", "imthirsty", "hungry", "i", "fingerspell"],
-            3: ["meat", "fish", "egg", "cheese", "milk", "butter", "bacon", "chicken", "bread", "pizza", "cake", "chocolate", "breakfast", "lunch", "dinner", "full", "delicious", "cook", "water", "coffee", "tea", "juice", "thirsty", "imthirsty", "what", "i", "banana", "orangefruit", "hungry", "lemon", "apple", "cherry", "duck", "lion"]
+            1: ["meat", "fish", "egg", "cheese", "milk", "butter", "bacon", "chicken", "excuseme"],
+            2: ["meat", "fish", "egg", "cheese", "milk", "butter", "bacon", "chicken", "bread", "pizza", "cake", "chocolate", "breakfast", "lunch", "dinner", "full", "delicious", "cook", "water", "coffee", "tea", "juice", "thirsty", "imthirsty", "hungry", "hello", "tablet", "i"],
+            3: ["meat", "fish", "egg", "cheese", "milk", "butter", "bacon", "chicken", "bread", "pizza", "cake", "chocolate", "breakfast", "lunch", "dinner", "full", "delicious", "cook", "water", "coffee", "tea", "juice", "thirsty", "imthirsty", "interpreter", "i", "dance", "music", "grapes", "pineapple", "strawberry", "apple", "sheep", "rabbit"]
         ],
         "p1-u40": [
-            1: ["today", "tomorrow", "now", "morning", "afternoon", "night", "later", "signlanguage"],
-            2: ["today", "tomorrow", "now", "morning", "afternoon", "night", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "weekend", "holiday", "yesterday", "noon", "day", "face"],
-            3: ["today", "tomorrow", "now", "morning", "afternoon", "night", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "weekend", "holiday", "yesterday", "noon", "day", "week", "month", "year", "hour", "minute", "later", "early", "talktoyoulater", "talk", "you", "imhappy", "know", "believe", "turn", "lost", "move", "run", "travel", "road"]
+            1: ["today", "tomorrow", "now", "morning", "afternoon", "night", "later", "hello", "ok"],
+            2: ["today", "tomorrow", "now", "morning", "afternoon", "night", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "weekend", "holiday", "yesterday", "noon", "day", "later", "meet", "idontunderstand"],
+            3: ["today", "tomorrow", "now", "morning", "afternoon", "night", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "weekend", "holiday", "yesterday", "noon", "day", "week", "month", "year", "hour", "minute", "talk", "you", "talktoyoulater", "later", "early", "see", "thankyouverymuch", "happy", "there", "near", "right", "up"]
         ],
         "p1-u42": [
-            1: ["head", "face", "eyes", "ear", "nose", "mouth", "teeth", "tongue", "body", "arm", "fingerspell"],
-            2: ["head", "face", "eyes", "ear", "nose", "mouth", "teeth", "tongue", "body", "arm", "hands", "finger", "shoulder", "neck", "back", "stomach", "sick", "hurt", "pain", "headache", "tired", "fingerspell"],
-            3: ["head", "face", "eyes", "ear", "nose", "mouth", "teeth", "tongue", "body", "arm", "hands", "finger", "shoulder", "neck", "back", "stomach", "sick", "hurt", "pain", "headache", "cough", "sneeze", "dizzy", "letter", "without", "also", "tall", "light", "slow", "small", "emergency"]
+            1: ["head", "face", "eyes", "ear", "nose", "mouth", "teeth", "tongue", "hello", "video"],
+            2: ["head", "face", "eyes", "ear", "nose", "mouth", "teeth", "tongue", "body", "arm", "hands", "finger", "shoulder", "neck", "back", "stomach", "sick", "hurt", "pain", "headache", "signlanguage"],
+            3: ["head", "face", "eyes", "ear", "nose", "mouth", "teeth", "tongue", "body", "arm", "hands", "finger", "shoulder", "neck", "back", "stomach", "sick", "hurt", "pain", "headache", "cough", "sneeze", "dizzy", "i", "sad", "imsad", "tired", "imscared", "hard", "almost", "so", "or", "same", "with"]
         ],
         "p1-u45": [
-            1: ["health", "exercise", "doctor", "nurse", "police", "meet"],
-            2: ["health", "exercise", "doctor", "nurse", "hospital", "medicine", "shop", "park", "here", "there", "police", "wait", "road", "street"],
-            3: ["health", "exercise", "doctor", "nurse", "hospital", "medicine", "shop", "park", "restaurant", "hotel", "library", "church", "howyousignthat", "history", "art", "chair", "clock", "couch", "door", "police"]
+            1: ["health", "exercise", "doctor", "nurse", "hospital", "medicine", "shop", "park", "police", "traffic", "commute", "camera"],
+            2: ["health", "exercise", "doctor", "nurse", "hospital", "medicine", "shop", "park", "restaurant", "hotel", "library", "church", "please", "help", "me", "different", "he", "again", "police"],
+            3: ["health", "exercise", "doctor", "nurse", "hospital", "medicine", "shop", "park", "restaurant", "hotel", "library", "church", "please", "help", "me", "pleasehelpme", "garage", "fingerspell", "write", "math", "he", "his", "my", "pen", "book", "class", "history"]
         ],
         "p1-u49": [
-            1: ["love", "like", "hate", "friend", "hug", "kiss", "ilike", "i", "imangry", "body"],
-            2: ["love", "like", "hate", "friend", "hug", "kiss", "ilike", "party", "birthday", "christmas", "halloween", "thanksgiving", "easter", "i", "practice"],
-            3: ["love", "like", "hate", "friend", "hug", "kiss", "ilike", "party", "birthday", "christmas", "halloween", "thanksgiving", "easter", "signslow", "i", "come", "walk", "lost", "move", "run", "stop", "hello"]
+            1: ["love", "like", "hate", "friend", "hug", "kiss", "ilike", "imangry", "i", "we"],
+            2: ["love", "like", "hate", "friend", "hug", "kiss", "ilike", "party", "birthday", "christmas", "halloween", "thanksgiving", "easter", "hello", "he", "i"],
+            3: ["love", "like", "hate", "friend", "hug", "kiss", "ilike", "party", "birthday", "christmas", "halloween", "thanksgiving", "easter", "she", "i", "go", "come", "lost", "move", "run", "stop", "hello"]
         ],
         "p1-u50": [
-            1: ["shirt", "pants", "shoes", "dress", "jacket", "hat", "fingerspell"],
-            2: ["shirt", "pants", "shoes", "dress", "jacket", "hat", "socks", "clothes", "shorts", "skirt", "sweater", "boots", "gloves", "scarf", "belt", "suit", "glasses", "watch", "what"],
-            3: ["shirt", "pants", "shoes", "dress", "jacket", "hat", "socks", "clothes", "shorts", "skirt", "sweater", "boots", "gloves", "scarf", "belt", "suit", "glasses", "watch", "earring", "necklace", "bracelet", "ring", "backpack", "wallet", "they", "stomach", "sick", "tall", "light", "slow", "small"]
+            1: ["shirt", "pants", "shoes", "dress", "jacket", "hat", "hello", "we"],
+            2: ["shirt", "pants", "shoes", "dress", "jacket", "hat", "socks", "clothes", "shorts", "skirt", "sweater", "boots", "gloves", "scarf", "belt", "suit", "glasses", "watch", "he"],
+            3: ["shirt", "pants", "shoes", "dress", "jacket", "hat", "socks", "clothes", "shorts", "skirt", "sweater", "boots", "gloves", "scarf", "belt", "suit", "glasses", "watch", "earring", "necklace", "bracelet", "ring", "backpack", "wallet", "she", "hands", "back", "body", "finger"]
         ],
         "p1-u56": [
-            1: ["drive", "ride", "arrive", "travel", "road", "street", "traffic", "commute", "car", "bus", "idontunderstand"],
-            2: ["drive", "ride", "arrive", "travel", "road", "street", "traffic", "commute", "car", "bus", "train", "airplane", "bike", "truck", "motorcycle", "boat", "see"],
-            3: ["drive", "ride", "arrive", "travel", "road", "street", "traffic", "commute", "car", "bus", "train", "airplane", "bike", "truck", "motorcycle", "boat", "video", "try", "tell", "stop", "walk", "come", "go", "hello"]
+            1: ["drive", "ride", "arrive", "travel", "road", "street", "traffic", "commute", "hello", "excuseme"],
+            2: ["drive", "ride", "arrive", "travel", "road", "street", "traffic", "commute", "car", "bus", "train", "airplane", "bike", "truck", "motorcycle", "boat", "i", "lost", "their", "they", "we", "tablet"],
+            3: ["drive", "ride", "arrive", "travel", "road", "street", "traffic", "commute", "car", "bus", "train", "airplane", "bike", "truck", "motorcycle", "boat", "i", "lost", "imlost", "interpreter", "tell", "ask", "their", "they", "we", "stop", "walk", "come", "go", "hello"]
         ],
         "p1-u57": [
-            1: ["school", "class", "student", "teacher", "learn", "study", "read", "write", "math", "science", "give"],
-            2: ["school", "class", "student", "teacher", "learn", "study", "read", "write", "math", "science", "history", "art", "book", "pen", "paper", "today"],
-            3: ["school", "class", "student", "teacher", "learn", "study", "read", "write", "math", "science", "history", "art", "book", "pen", "paper", "stop", "price", "5dollars", "cost", "money", "chair", "clock", "couch", "door"]
+            1: ["school", "class", "student", "teacher", "learn", "study", "read", "write", "body", "hello"],
+            2: ["school", "class", "student", "teacher", "learn", "study", "read", "write", "math", "science", "history", "art", "book", "pen", "paper", "i", "learnasl", "lipread", "their", "they", "we", "practice"],
+            3: ["school", "class", "student", "teacher", "learn", "study", "read", "write", "math", "science", "history", "art", "book", "pen", "paper", "i", "learnasl", "imlearningasl", "signslow", "couch", "door", "their", "they", "we", "pay", "1dollar", "5dollars", "cost"]
         ],
         "p1-u59": [
-            1: ["work", "job", "boss", "talk"],
-            2: ["work", "job", "boss", "lawyer", "engineer", "scientist", "give", "hard", "tall"],
-            3: ["work", "job", "boss", "lawyer", "engineer", "scientist", "meeting", "retire", "today", "sick", "hurt", "shoes", "socks"]
+            1: ["work", "job", "boss", "lawyer", "they", "hello"],
+            2: ["work", "job", "boss", "lawyer", "engineer", "scientist", "meeting", "retire", "hello", "my", "hot", "cold", "brush", "comb"],
+            3: ["work", "job", "boss", "lawyer", "engineer", "scientist", "meeting", "retire", "what", "you", "doing", "whatareyoudoing", "whatdoesthatmean", "and", "your", "shoulder", "neck", "shirt", "sweater", "belt", "boots"]
         ],
         "p1-u60": [
-            1: ["dog", "cat", "horse", "cow", "pig", "sheep", "rabbit", "duck", "lion", "tiger", "hello", "interpreter"],
-            2: ["dog", "cat", "horse", "cow", "pig", "sheep", "rabbit", "duck", "lion", "tiger", "elephant", "bear", "wolf", "fox", "eagle", "monkey", "ok"],
-            3: ["dog", "cat", "horse", "cow", "pig", "sheep", "rabbit", "duck", "lion", "tiger", "elephant", "bear", "wolf", "fox", "eagle", "monkey", "idontunderstand", "hot", "cold", "q", "r"]
+            1: ["dog", "cat", "horse", "cow", "pig", "sheep", "rabbit", "duck", "hello", "body"],
+            2: ["dog", "cat", "horse", "cow", "pig", "sheep", "rabbit", "duck", "lion", "tiger", "elephant", "bear", "wolf", "fox", "eagle", "monkey", "hello", "practice"],
+            3: ["dog", "cat", "horse", "cow", "pig", "sheep", "rabbit", "duck", "lion", "tiger", "elephant", "bear", "wolf", "fox", "eagle", "monkey", "signslow", "hot", "cold", "shorts", "skirt"]
         ],
         "p1-u62": [
-            1: ["tree", "flower", "mountain", "river", "face"],
-            2: ["tree", "flower", "mountain", "river", "ocean", "beach", "sun", "moon", "imhappy"],
-            3: ["tree", "flower", "mountain", "river", "ocean", "beach", "sun", "moon", "spring", "summer", "fall", "winter", "no", "rain", "snow", "hot", "lightning"]
+            1: ["tree", "flower", "mountain", "river", "fingerspell", "hello"],
+            2: ["tree", "flower", "mountain", "river", "ocean", "beach", "sun", "moon", "hello", "letter"],
+            3: ["tree", "flower", "mountain", "river", "ocean", "beach", "sun", "moon", "spring", "summer", "fall", "winter", "fingerspell", "snow", "wind"]
         ],
         "p1-u63": [
-            1: ["rain", "snow", "wind", "see"],
-            2: ["rain", "snow", "wind", "cloud", "lightning", "thunder", "video", "cold", "hot", "tiger", "bear"],
-            3: ["rain", "snow", "wind", "cloud", "lightning", "thunder", "hot", "cold", "signlanguage", "duck", "lion", "fox", "monkey", "tiger", "wolf", "hello"]
+            1: ["rain", "snow", "wind", "hello", "camera", "cold"],
+            2: ["rain", "snow", "wind", "cloud", "lightning", "thunder", "hello", "different", "cold", "hot", "horse", "sheep"],
+            3: ["rain", "snow", "wind", "cloud", "lightning", "thunder", "hot", "cold", "fingerspell", "tiger", "bear", "eagle", "elephant", "cat", "pig", "rabbit", "sheep"]
         ],
         "p1-u65": [
-            1: ["football", "basketball", "baseball", "translate"],
-            2: ["football", "basketball", "baseball", "soccer", "volleyball", "hockey", "mouth", "cat", "pig"],
-            3: ["football", "basketball", "baseball", "soccer", "volleyball", "hockey", "tennis", "golf", "body", "tiger", "elephant", "monkey", "rain"]
+            1: ["football", "basketball", "baseball", "what", "without", "hello", "thankyou", "name", "nice", "oops"],
+            2: ["football", "basketball", "baseball", "soccer", "volleyball", "hockey", "hello", "they", "rabbit", "pig"],
+            3: ["football", "basketball", "baseball", "soccer", "volleyball", "hockey", "tennis", "golf", "talk", "duck", "horse", "pig", "rabbit", "beach", "sun", "eagle", "wolf", "bear", "elephant"]
         ],
         "p1-u66": [
-            1: ["draw", "paint", "sing", "practice"],
-            2: ["draw", "paint", "sing", "dance", "music", "science", "signslow", "student", "tree", "moon", "mountain", "ocean"],
-            3: ["draw", "paint", "sing", "dance", "music", "guitar", "piano", "camera", "pig", "sheep", "elephant", "bear", "write", "art", "book", "flower", "mountain"]
+            1: ["draw", "paint", "sing", "hello", "give", "tv", "tablet"],
+            2: ["draw", "paint", "sing", "dance", "music", "hello", "today", "flower", "spring", "summer", "sun", "science", "student"],
+            3: ["draw", "paint", "sing", "dance", "music", "guitar", "piano", "stop", "hello", "dog", "cat", "rabbit", "pig", "sheep", "write"]
         ],
         "p1-u68": [
-            1: ["america", "canada", "mexico", "howyousignthat"],
-            2: ["america", "canada", "mexico", "france", "germany", "china", "excuseme", "tablet", "tv"],
-            3: ["america", "canada", "mexico", "france", "germany", "china", "japan", "italy", "tablet", "pain", "headache", "jacket", "hat"]
+            1: ["america", "canada", "mexico", "france", "no", "hello"],
+            2: ["america", "canada", "mexico", "france", "germany", "china", "japan", "italy", "hello", "translate"],
+            3: ["america", "canada", "mexico", "france", "germany", "china", "japan", "italy", "where", "you", "from", "whereareyoufrom", "dizzy", "mouth", "back", "finger", "hands", "neck", "hello", "shirt", "sweater", "belt", "boots"]
         ],
         "p1-u69": [
-            1: ["computer", "phone", "tablet", "laptop", "camera", "tv", "keyboard", "mouse", "internet", "email", "stop"],
-            2: ["computer", "phone", "tablet", "laptop", "camera", "tv", "keyboard", "mouse", "internet", "email", "text", "download", "upload", "share", "send", "video", "meet"],
-            3: ["computer", "phone", "tablet", "laptop", "camera", "tv", "keyboard", "mouse", "internet", "email", "text", "download", "upload", "share", "send", "video", "wait", "hurt", "pain", "socks", "pants", "scarf", "shirt", "hello"]
+            1: ["computer", "phone", "tablet", "laptop", "camera", "tv", "keyboard", "mouse", "hello", "our"],
+            2: ["computer", "phone", "tablet", "laptop", "camera", "tv", "keyboard", "mouse", "internet", "email", "text", "download", "upload", "share", "send", "video", "face"],
+            3: ["computer", "phone", "tablet", "laptop", "camera", "tv", "keyboard", "mouse", "internet", "email", "text", "download", "upload", "share", "send", "video", "imhappy", "neck", "back", "shirt", "sweater", "belt", "boots"]
         ],
         "p1-u71": [
-            1: ["can", "cannot", "maybe", "important", "alright", "they"],
-            2: ["can", "cannot", "maybe", "important", "rightcorrect", "wrong", "future", "onemoretime", "talktoyoulater", "allofsudden", "letgo", "more", "socks", "talk", "you", "later", "double", "pleasehelpme", "pleasesignslower", "samehere", "that", "wow", "really", "thankyouverymuch", "blowmind", "call911", "canyouhelpme", "nice", "one", "again"],
-            3: ["can", "cannot", "maybe", "important", "rightcorrect", "wrong", "future", "onemoretime", "talktoyoulater", "allofsudden", "letgo", "always", "nevermind", "giveup", "letmesee", "blowmind", "wrapup", "give", "nephew", "one", "more", "again", "so", "talk", "you", "later", "wow", "really", "cool", "funny", "orangefruit", "grapes", "tomato", "carrot", "corn", "lettuce"]
+            1: ["can", "cannot", "maybe", "important", "hello", "alright", "ok"],
+            2: ["can", "cannot", "maybe", "important", "rightcorrect", "wrong", "future", "onemoretime", "talktoyoulater", "allofsudden", "letgo", "hello", "pleasehelpme", "wow", "really", "letmesee", "go", "nine", "one", "more", "again", "blowmind", "idontunderstand"],
+            3: ["can", "cannot", "maybe", "important", "rightcorrect", "wrong", "future", "onemoretime", "talktoyoulater", "allofsudden", "letgo", "always", "nevermind", "giveup", "letmesee", "blowmind", "wrapup", "call911", "yourewelcome", "bye", "thankyou", "wow", "really", "see", "more", "few", "one", "again", "you", "they", "talk", "later", "cool", "funny"]
         ],
         "p1-u73": [
-            1: ["again", "wait", "need", "slow", "help", "cool", "know", "awesome", "different"],
-            2: ["again", "wait", "need", "slow", "help", "understand", "little", "repeat", "that", "idontunderstand", "canyouhelpme", "isignalittle", "pleasesignslower", "howyousignthat", "know", "him", "you", "me", "ilike", "yes", "canyourepeatthat", "sign", "name", "very", "i", "iwant", "samehere", "onemoretime", "one", "more", "fingerspell"],
-            3: ["again", "wait", "need", "slow", "help", "understand", "little", "repeat", "that", "idontunderstand", "canyouhelpme", "isignalittle", "pleasesignslower", "howyousignthat", "call", "nineoneone", "police", "emergency", "ineedhelp", "pleasehelpme", "canyourepeatthat", "call911", "fingerspell", "i", "sorry", "you", "me", "meet", "please", "sign", "sure", "know", "very", "much", "are", "same", "see", "no", "funny"]
+            1: ["again", "wait", "need", "slow", "help", "cool", "awesome", "practice", "hello", "know", "funny"],
+            2: ["again", "wait", "need", "slow", "help", "understand", "little", "repeat", "that", "idontunderstand", "canyouhelpme", "isignalittle", "pleasesignslower", "howyousignthat", "know", "yes", "alright", "awesome", "hello", "canyourepeatthat", "ilike", "your", "i", "sign", "iwant", "name", "you", "me", "samehere", "signslow"],
+            3: ["again", "wait", "need", "slow", "help", "understand", "little", "repeat", "that", "idontunderstand", "canyouhelpme", "isignalittle", "pleasesignslower", "howyousignthat", "call", "nineoneone", "police", "emergency", "ineedhelp", "pleasehelpme", "canyourepeatthat", "call911", "wow", "please", "me", "you", "dontknow", "i", "camera", "know"]
         ]
     ]
 

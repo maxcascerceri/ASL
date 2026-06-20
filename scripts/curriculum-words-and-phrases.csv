@@ -125,7 +125,7 @@ dinner,Dinner,word,p1-u37,Food & Drinks,p1-u37,Food & Drinks,1,
 dizzy,Dizzy,word,p1-u42,Body & Wellness,p1-u42,Body & Wellness,1,
 doctor,Doctor,word,p1-u45,Health & Town,p1-u45,Health & Town,1,
 dog,Dog,word,p1-u60,Animals,p1-u60,Animals,1,
-doing,Doing,word,p1-u05,Meet People,p1-u05;p1-u24,Meet People;Everyday Actions,2,
+doing,Doing,word,p1-u05,Meet People,p1-u05;p1-u24;p1-u59,Meet People;Everyday Actions;Work Life,3,
 dontknow,Don't Know,phrase,p1-u02,Everyday Replies,p1-u02,Everyday Replies,1,i;know
 door,Door,word,p1-u31,Furniture,p1-u31,Furniture,1,
 double,Double,word,p1-u17,Money & Counting,p1-u17,Money & Counting,1,
@@ -180,7 +180,7 @@ fox,Fox,word,p1-u60,Animals,p1-u60,Animals,1,
 france,France,word,p1-u68,Countries,p1-u68,Countries,1,
 friday,Friday,word,p1-u40,Time & Calendar,p1-u40,Time & Calendar,1,
 friend,Friend,word,p1-u49,Friends & Holidays,p1-u49,Friends & Holidays,1,
-from,From,word,p1-u05,Meet People,p1-u05,Meet People,1,
+from,From,word,p1-u05,Meet People,p1-u05;p1-u68,Meet People;Countries,2,
 frustrate,Frustrate,word,p1-u06,Feelings & Emotions,p1-u06,Feelings & Emotions,1,
 full,Full,word,p1-u37,Food & Drinks,p1-u37,Food & Drinks,1,
 funny,Funny,word,p1-u02,Everyday Replies,p1-u02,Everyday Replies,1,
@@ -227,7 +227,7 @@ hear,Hear,word,p1-u24,Everyday Actions,p1-u24,Everyday Actions,1,
 hearing,Hearing,word,p1-u22,Deaf Culture,p1-u22,Deaf Culture,1,
 hearingaid,Hearing Aid,word,p1-u22,Deaf Culture,p1-u22,Deaf Culture,1,
 hello,Hello,word,p1-u01,Getting Started,p1-u01,Getting Started,1,
-help,Help,word,p1-u73,Getting Help,p1-u73,Getting Help,1,
+help,Help,word,p1-u73,Getting Help,p1-u73;p1-u45,Getting Help;Health & Town,2,
 here,Here,word,p1-u23,On the Move,p1-u23,On the Move,1,
 his,His,word,p1-u03,You & Me,p1-u03,You & Me,1,
 history,History,word,p1-u57,School & Classroom,p1-u57,School & Classroom,1,
@@ -249,7 +249,7 @@ humble,Humble,word,p1-u06,Feelings & Emotions,p1-u06,Feelings & Emotions,1,
 hundred,Hundred,word,p1-u17,Money & Counting,p1-u17,Money & Counting,1,
 hungry,Hungry,word,p1-u24,Everyday Actions,p1-u24,Everyday Actions,1,
 hurt,Hurt,word,p1-u42,Body & Wellness,p1-u42,Body & Wellness,1,
-i,I,word,p1-u03,You & Me,p1-u03,You & Me,1,
+i,I,word,p1-u03,You & Me,p1-u03;p1-u56;p1-u57;p1-u42,You & Me;Getting There;School & Classroom;Body & Wellness,4,
 idontunderstand,I Don't Understand,phrase,p1-u73,Getting Help,p1-u73,Getting Help,1,i;understand
 if,If,word,p1-u08,Connect Ideas,p1-u08,Connect Ideas,1,
 ilike,I Like,phrase,p1-u49,Friends & Holidays,p1-u49,Friends & Holidays,1,i;like
@@ -260,11 +260,11 @@ imfrom,I'm From ___,phrase,p1-u05,Meet People,p1-u05,Meet People,1,i;from
 imgood,I'm Good,phrase,p1-u06,Feelings & Emotions,p1-u06,Feelings & Emotions,1,i;good
 imhappy,I'm Happy,phrase,p1-u06,Feelings & Emotions,p1-u06,Feelings & Emotions,1,i;happy
 imhungry,I'm Hungry,phrase,p1-u24,Everyday Actions,p1-u24,Everyday Actions,1,i;hungry
-imlearningasl,I'm Learning ASL,phrase,p1-u22,Deaf Culture,p1-u22,Deaf Culture,1,i;learnasl
-imlost,I'm Lost,phrase,p1-u23,On the Move,p1-u23,On the Move,1,i;lost
+imlearningasl,I'm Learning ASL,phrase,p1-u22,Deaf Culture,p1-u22;p1-u57,Deaf Culture;School & Classroom,2,i;learnasl
+imlost,I'm Lost,phrase,p1-u23,On the Move,p1-u23;p1-u56,On the Move;Getting There,2,i;lost
 imnervous,I'm Nervous,phrase,p1-u06,Feelings & Emotions,p1-u06,Feelings & Emotions,1,i;nervous
 important,Important,word,p1-u71,Everyday Sayings,p1-u71,Everyday Sayings,1,
-imsad,I'm Sad,phrase,p1-u06,Feelings & Emotions,p1-u06,Feelings & Emotions,1,i;sad
+imsad,I'm Sad,phrase,p1-u06,Feelings & Emotions,p1-u06;p1-u42,Feelings & Emotions;Body & Wellness,2,i;sad
 imscared,I'm Scared,phrase,p1-u06,Feelings & Emotions,p1-u06,Feelings & Emotions,1,i;scared
 imthirsty,I'm Thirsty,phrase,p1-u37,Food & Drinks,p1-u37,Food & Drinks,1,i;thirsty
 imtired,I'm Tired,phrase,p1-u06,Feelings & Emotions,p1-u06,Feelings & Emotions,1,i;tired
@@ -296,12 +296,12 @@ later,Later,word,p1-u40,Time & Calendar,p1-u40,Time & Calendar,1,
 lawyer,Lawyer,word,p1-u59,Work Life,p1-u59,Work Life,1,
 lazy,Lazy,word,p1-u06,Feelings & Emotions,p1-u06,Feelings & Emotions,1,
 learn,Learn,word,p1-u57,School & Classroom,p1-u57,School & Classroom,1,
-learnasl,Learn ASL,word,p1-u22,Deaf Culture,p1-u22,Deaf Culture,1,
+learnasl,Learn ASL,word,p1-u22,Deaf Culture,p1-u22;p1-u57,Deaf Culture;School & Classroom,2,
 left,Left,word,p1-u23,On the Move,p1-u23,On the Move,1,
 lemon,Lemon,word,p1-u35,Fruits & Veggies,p1-u35,Fruits & Veggies,1,
 less,Less,word,p1-u29,Size & Amount,p1-u29,Size & Amount,1,
 letgo,Let Go,phrase,p1-u71,Everyday Sayings,p1-u71,Everyday Sayings,1,go;letgo
-letmesee,Let Me See,phrase,p1-u71,Everyday Sayings,p1-u71,Everyday Sayings,1,me;see;letmesee
+letmesee,Let Me See,phrase,p1-u32,At Home,p1-u32;p1-u71,At Home;Everyday Sayings,2,me;see;letmesee
 letter,Letter,word,p1-u10,The Alphabet,p1-u10,The Alphabet,1,
 letteri,Letter I,word,p1-u10,The Alphabet,p1-u10,The Alphabet,1,
 lettuce,Lettuce,word,p1-u35,Fruits & Veggies,p1-u35,Fruits & Veggies,1,
@@ -314,7 +314,7 @@ lipread,Lipread,word,p1-u22,Deaf Culture,p1-u22,Deaf Culture,1,
 little,Little,word,p1-u73,Getting Help,p1-u73,Getting Help,1,
 livingroom,Living Room,word,p1-u30,My Home,p1-u30,My Home,1,
 lonely,Lonely,word,p1-u06,Feelings & Emotions,p1-u06,Feelings & Emotions,1,
-lost,Lost,word,p1-u23,On the Move,p1-u23,On the Move,1,
+lost,Lost,word,p1-u23,On the Move,p1-u23;p1-u56,On the Move;Getting There,2,
 love,Love,word,p1-u49,Friends & Holidays,p1-u49,Friends & Holidays,1,
 lunch,Lunch,word,p1-u37,Food & Drinks,p1-u37,Food & Drinks,1,
 m,M,word,p1-u10,The Alphabet,p1-u10,The Alphabet,1,
@@ -323,6 +323,7 @@ man,Man,word,p1-u18,Family & People,p1-u18,Family & People,1,
 many,Many,word,p1-u05,Meet People,p1-u05;p1-u29,Meet People;Size & Amount,2,
 math,Math,word,p1-u57,School & Classroom,p1-u57,School & Classroom,1,
 maybe,Maybe,word,p1-u71,Everyday Sayings,p1-u71,Everyday Sayings,1,
+me,Me,word,p1-u45,Health & Town,p1-u45;p1-u32,Health & Town;At Home,2,
 meat,Meat,word,p1-u37,Food & Drinks,p1-u37,Food & Drinks,1,
 medicine,Medicine,word,p1-u45,Health & Town,p1-u45,Health & Town,1,
 meet,Meet,word,p1-u01,Getting Started,p1-u01;p1-u05,Getting Started;Meet People,2,
@@ -346,11 +347,11 @@ mouth,Mouth,word,p1-u42,Body & Wellness,p1-u42,Body & Wellness,1,
 move,Move,word,p1-u23,On the Move,p1-u23,On the Move,1,
 much,Much,word,p1-u01,Getting Started,p1-u01,Getting Started,1,
 music,Music,word,p1-u66,Music & Art,p1-u66,Music & Art,1,
-my,My,word,p1-u01,Getting Started,p1-u01;p1-u03,Getting Started;You & Me,2,
-mynameis,My Name Is,phrase,p1-u01,Getting Started,p1-u01,Getting Started,1,my;name
+my,My,word,p1-u01,Getting Started,p1-u01;p1-u03;p1-u10,Getting Started;You & Me;The Alphabet,3,
+mynameis,My Name Is,phrase,p1-u01,Getting Started,p1-u01;p1-u03;p1-u10,Getting Started;You & Me;The Alphabet,3,my;name
 myself,Myself,word,p1-u05,Meet People,p1-u05,Meet People,1,
 n,N,word,p1-u10,The Alphabet,p1-u10,The Alphabet,1,
-name,Name,word,p1-u01,Getting Started,p1-u01,Getting Started,1,
+name,Name,word,p1-u01,Getting Started,p1-u01;p1-u03;p1-u10,Getting Started;You & Me;The Alphabet,3,
 namesign,Name Sign,word,p1-u22,Deaf Culture,p1-u22,Deaf Culture,1,
 near,Near,word,p1-u23,On the Move,p1-u23,On the Move,1,
 neck,Neck,word,p1-u42,Body & Wellness,p1-u42,Body & Wellness,1,
@@ -402,8 +403,8 @@ pig,Pig,word,p1-u60,Animals,p1-u60,Animals,1,
 pineapple,Pineapple,word,p1-u35,Fruits & Veggies,p1-u35,Fruits & Veggies,1,
 pink,Pink,word,p1-u27,Colors,p1-u27,Colors,1,
 pizza,Pizza,word,p1-u37,Food & Drinks,p1-u37,Food & Drinks,1,
-please,Please,word,p1-u01,Getting Started,p1-u01,Getting Started,1,
-pleasehelpme,Please Help Me,phrase,p1-u73,Getting Help,p1-u73,Getting Help,1,please;help;me
+please,Please,word,p1-u01,Getting Started,p1-u01;p1-u45,Getting Started;Health & Town,2,
+pleasehelpme,Please Help Me,phrase,p1-u73,Getting Help,p1-u73;p1-u45,Getting Help;Health & Town,2,please;help;me
 pleasesignslower,Please Sign Slower,phrase,p1-u73,Getting Help,p1-u73,Getting Help,1,please;sign;slow
 police,Police,word,p1-u73,Getting Help,p1-u73,Getting Help,1,
 potato,Potato,word,p1-u35,Fruits & Veggies,p1-u35,Fruits & Veggies,1,
@@ -430,7 +431,7 @@ river,River,word,p1-u62,Nature & Seasons,p1-u62,Nature & Seasons,1,
 road,Road,word,p1-u56,Getting There,p1-u56,Getting There,1,
 run,Run,word,p1-u23,On the Move,p1-u23,On the Move,1,
 s,S,word,p1-u10,The Alphabet,p1-u10,The Alphabet,1,
-sad,Sad,word,p1-u06,Feelings & Emotions,p1-u06,Feelings & Emotions,1,
+sad,Sad,word,p1-u06,Feelings & Emotions,p1-u06;p1-u42,Feelings & Emotions;Body & Wellness,2,
 same,Same,word,p1-u08,Connect Ideas,p1-u08,Connect Ideas,1,
 samehere,Same Here,phrase,p1-u02,Everyday Replies,p1-u02,Everyday Replies,1,same;here
 saturday,Saturday,word,p1-u40,Time & Calendar,p1-u40,Time & Calendar,1,
@@ -439,7 +440,7 @@ scarf,Scarf,word,p1-u50,Clothes & Accessories,p1-u50,Clothes & Accessories,1,
 school,School,word,p1-u57,School & Classroom,p1-u57,School & Classroom,1,
 science,Science,word,p1-u57,School & Classroom,p1-u57,School & Classroom,1,
 scientist,Scientist,word,p1-u59,Work Life,p1-u59,Work Life,1,
-see,See,word,p1-u24,Everyday Actions,p1-u24,Everyday Actions,1,
+see,See,word,p1-u24,Everyday Actions,p1-u24;p1-u32,Everyday Actions;At Home,2,
 seeyoulater,See You Later,phrase,p1-u02,Everyday Replies,p1-u02,Everyday Replies,1,see;you;later
 send,Send,word,p1-u69,Devices & Apps,p1-u69,Devices & Apps,1,
 serious,Serious,word,p1-u06,Feelings & Emotions,p1-u06,Feelings & Emotions,1,
@@ -495,8 +496,8 @@ t,T,word,p1-u10,The Alphabet,p1-u10,The Alphabet,1,
 table,Table,word,p1-u31,Furniture,p1-u31,Furniture,1,
 tablet,Tablet,word,p1-u69,Devices & Apps,p1-u69,Devices & Apps,1,
 take,Take,word,p1-u24,Everyday Actions,p1-u24,Everyday Actions,1,
-talk,Talk,word,p1-u24,Everyday Actions,p1-u24,Everyday Actions,1,
-talktoyoulater,Talk To You Later,phrase,p1-u71,Everyday Sayings,p1-u71,Everyday Sayings,1,talk;you;later
+talk,Talk,word,p1-u24,Everyday Actions,p1-u24;p1-u40,Everyday Actions;Time & Calendar,2,
+talktoyoulater,Talk To You Later,phrase,p1-u40,Time & Calendar,p1-u40;p1-u71,Time & Calendar;Everyday Sayings,2,talk;you;later
 tall,Tall,word,p1-u29,Size & Amount,p1-u29,Size & Amount,1,
 tea,Tea,word,p1-u37,Food & Drinks,p1-u37,Food & Drinks,1,
 teacher,Teacher,word,p1-u57,School & Classroom,p1-u57,School & Classroom,1,
@@ -564,16 +565,16 @@ wednesday,Wednesday,word,p1-u40,Time & Calendar,p1-u40,Time & Calendar,1,
 week,Week,word,p1-u40,Time & Calendar,p1-u40,Time & Calendar,1,
 weekend,Weekend,word,p1-u40,Time & Calendar,p1-u40,Time & Calendar,1,
 welcome,Welcome,word,p1-u01,Getting Started,p1-u01,Getting Started,1,
-what,What,word,p1-u05,Meet People,p1-u05,Meet People,1,
-whatareyoudoing,What Are You Doing?,phrase,p1-u05,Meet People,p1-u05,Meet People,1,what;you;doing
+what,What,word,p1-u05,Meet People,p1-u05;p1-u59,Meet People;Work Life,2,
+whatareyoudoing,What Are You Doing?,phrase,p1-u05,Meet People,p1-u05;p1-u59,Meet People;Work Life,2,what;you;doing
 whatdoesthatmean,What Does That Mean,phrase,p1-u05,Meet People,p1-u05,Meet People,1,what;that
 whatisyourname,What's Your Name,phrase,p1-u05,Meet People,p1-u05,Meet People,1,what;your;name
 whatisyournamesign,What's Your Name Sign?,phrase,p1-u22,Deaf Culture,p1-u22,Deaf Culture,1,what;your;namesign
 whatsthat,What's That,phrase,p1-u05,Meet People,p1-u05,Meet People,1,what;that
 when,When,word,p1-u05,Meet People,p1-u05,Meet People,1,
-where,Where,word,p1-u05,Meet People,p1-u05,Meet People,1,
+where,Where,word,p1-u05,Meet People,p1-u05;p1-u68,Meet People;Countries,2,
 whereareyou,Where Are You?,phrase,p1-u05,Meet People,p1-u05,Meet People,1,where;you
-whereareyoufrom,Where Are You From?,phrase,p1-u05,Meet People,p1-u05,Meet People,1,where;you;from
+whereareyoufrom,Where Are You From?,phrase,p1-u05,Meet People,p1-u05;p1-u68,Meet People;Countries,2,where;you;from
 wherebathroom,Where Is The Bathroom,phrase,p1-u30,My Home,p1-u30,My Home,1,where;bathroom
 which,Which,word,p1-u05,Meet People,p1-u05,Meet People,1,
 white,White,word,p1-u27,Colors,p1-u27,Colors,1,
@@ -599,7 +600,7 @@ year,Year,word,p1-u40,Time & Calendar,p1-u40,Time & Calendar,1,
 yellow,Yellow,word,p1-u27,Colors,p1-u27,Colors,1,
 yes,Yes,word,p1-u02,Everyday Replies,p1-u02,Everyday Replies,1,
 yesterday,Yesterday,word,p1-u40,Time & Calendar,p1-u40,Time & Calendar,1,
-you,You,word,p1-u01,Getting Started,p1-u01;p1-u03,Getting Started;You & Me,2,
+you,You,word,p1-u01,Getting Started,p1-u01;p1-u03;p1-u40;p1-u59;p1-u68,Getting Started;You & Me;Time & Calendar;Work Life;Countries,5,
 your,Your,word,p1-u03,You & Me,p1-u03,You & Me,1,
 yourewelcome,You're Welcome,phrase,p1-u01,Getting Started,p1-u01,Getting Started,1,your;welcome
 yourself,Yourself,word,p1-u05,Meet People,p1-u05,Meet People,1,

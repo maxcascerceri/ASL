@@ -20,7 +20,8 @@ UNIT_SPECS: list[tuple[str, str, str, str, list[str]]] = [
       "excuseme", "seeyoulater", "have", "havegoodday", "signagain", "nicetoseeyou", "alright",
       "cool", "awesome", "funny"]),
     ("p1-u03", "You & Me", "Pronouns and possessives.", "Subject",
-     ["i", "you", "we", "he", "she", "they", "my", "your", "our", "his", "their"]),
+     ["i", "you", "we", "he", "she", "they", "my", "your", "our", "his", "their",
+      "name", "mynameis"]),
     ("p1-u73", "Getting Help", "Ask for help, clarity, and safety.", "Survival",
      ["again", "wait", "need", "slow", "help", "understand",
       "idontunderstand", "ineedhelp", "canyouhelpme", "pleasehelpme",
@@ -53,12 +54,14 @@ UNIT_SPECS: list[tuple[str, str, str, str, list[str]]] = [
       "here", "there", "left", "right", "up", "down", "near", "far"]),
     ("p1-u56", "Getting There", "Commute, traffic, and vehicles.", "Commuter",
      ["drive", "ride", "arrive", "travel", "road", "street", "traffic", "commute",
-      "car", "bus", "train", "airplane", "bike", "truck", "motorcycle", "boat"]),
+      "car", "bus", "train", "airplane", "bike", "truck", "motorcycle", "boat",
+      "i", "lost", "imlost"]),
     ("p1-u40", "Time & Calendar", "Today, weekdays, and clock time.", "Scheduler",
      ["today", "tomorrow", "now", "morning", "afternoon", "night",
       "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday",
       "weekend", "holiday", "yesterday", "noon",
-      "day", "week", "month", "year", "hour", "minute", "later", "early"]),
+      "day", "week", "month", "year", "hour", "minute", "later", "early",
+      "talk", "you", "talktoyoulater"]),
     ("p1-u18", "Family & People", "Family, relatives, and people types.", "Family",
      ["mother", "father", "sister", "brother", "baby", "child", "family", "parents",
       "grandmother", "grandfather", "aunt", "uncle", "cousin", "niece", "nephew", "twins",
@@ -77,19 +80,23 @@ UNIT_SPECS: list[tuple[str, str, str, str, list[str]]] = [
       "half", "quarter", "percent", "double", "triple", "hundred"]),
     ("p1-u57", "School & Classroom", "School life, subjects, and tools.", "Scholar",
      ["school", "class", "student", "teacher", "learn", "study", "read", "write",
-      "math", "science", "history", "art", "book", "pen", "paper"]),
+      "math", "science", "history", "art", "book", "pen", "paper",
+      "i", "learnasl", "imlearningasl"]),
     ("p1-u45", "Health & Town", "Wellness and places in your community.", "Wellness",
      ["health", "exercise", "doctor", "nurse", "hospital", "medicine",
-      "shop", "park", "restaurant", "hotel", "library", "church"]),
+      "shop", "park", "restaurant", "hotel", "library", "church",
+      "please", "help", "me", "pleasehelpme"]),
     ("p1-u15", "Numbers", "Zero through eleven.", "Counter",
      ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven"]),
     ("p1-u10", "The Alphabet", "Fingerspell A through Z.", "Speller",
      ["alphabet", "fingerspell", "letter",
       "a", "b", "c", "d", "e", "f", "g", "h", "letteri", "j", "k", "l", "m", "n",
-      "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]),
+      "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+      "my", "name", "mynameis"]),
     ("p1-u32", "At Home", "Morning routine, chores, and sleep.", "Fresh",
      ["shower", "toilet", "sink", "soap", "toothbrush", "brush", "comb", "mirror",
-      "clean", "wash", "sweep", "vacuum", "washdishes", "sleep"]),
+      "clean", "wash", "sweep", "vacuum", "washdishes", "sleep",
+      "me", "see", "letmesee"]),
     ("p1-u27", "Colors", "Every color and shade.", "Colorist",
      ["red", "blue", "green", "yellow", "orangecolor", "purple", "pink", "brown",
       "black", "white", "gray", "gold", "silver", "dark", "light", "bright"]),
@@ -103,18 +110,21 @@ UNIT_SPECS: list[tuple[str, str, str, str, list[str]]] = [
     ("p1-u42", "Body & Wellness", "Body parts and feeling sick.", "Face",
      ["head", "face", "eyes", "ear", "nose", "mouth", "teeth", "tongue",
       "body", "arm", "hands", "finger", "shoulder", "neck", "back", "stomach",
-      "sick", "hurt", "pain", "headache", "cough", "sneeze", "dizzy"]),
+      "sick", "hurt", "pain", "headache", "cough", "sneeze", "dizzy",
+      "i", "sad", "imsad"]),
     ("p1-u50", "Clothes & Accessories", "Outfits, jewelry, and what you carry.", "Daily Wear",
      ["shirt", "pants", "dress", "shoes", "socks", "jacket", "hat", "clothes",
       "shorts", "skirt", "sweater", "boots", "gloves", "scarf", "belt", "suit",
       "glasses", "earring", "necklace", "bracelet", "ring", "backpack", "wallet", "watch"]),
     ("p1-u59", "Work Life", "Jobs, bosses, and careers.", "Worker",
-     ["work", "job", "boss", "lawyer", "engineer", "scientist", "meeting", "retire"]),
+     ["work", "job", "boss", "lawyer", "engineer", "scientist", "meeting", "retire",
+      "what", "you", "doing", "whatareyoudoing"]),
     ("p1-u69", "Devices & Apps", "Phones, screens, and the internet.", "Techie",
      ["computer", "phone", "tablet", "laptop", "camera", "tv", "keyboard", "mouse",
       "internet", "email", "text", "download", "upload", "share", "send", "video"]),
     ("p1-u68", "Countries", "Places around the world.", "Global",
-     ["america", "canada", "mexico", "france", "germany", "china", "japan", "italy"]),
+     ["america", "canada", "mexico", "france", "germany", "china", "japan", "italy",
+      "where", "you", "from", "whereareyoufrom"]),
     # ── Life & Fluency (8) ──
     ("p1-u60", "Animals", "Pets, farm, and wild animals.", "Pet Friend",
      ["dog", "cat", "horse", "cow", "pig", "sheep", "rabbit", "duck",
@@ -161,7 +171,7 @@ MANUAL_UNIT_STONE_WORD_SUBSETS: dict[str, list[list[str]]] = {
     "p1-u10": [
         ["alphabet", "fingerspell", "letter", "a", "b", "c", "d", "e", "f", "g"],
         ["h", "letteri", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t"],
-        ["u", "v", "w", "x", "y", "z"],
+        ["u", "v", "w", "x", "y", "z", "my", "name", "mynameis"],
     ],
     "p1-u24": [
         ["eat", "drink", "see", "hear", "feel", "breathe", "smell"],
@@ -173,7 +183,7 @@ MANUAL_UNIT_STONE_WORD_SUBSETS: dict[str, list[list[str]]] = {
         ["today", "tomorrow", "now", "morning", "afternoon", "night"],
         ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday",
          "sunday", "weekend", "holiday", "yesterday", "noon", "day"],
-        ["week", "month", "year", "hour", "minute", "later", "early"],
+        ["week", "month", "year", "hour", "minute", "talk", "you", "talktoyoulater", "later", "early"],
     ],
     "p1-u50": [
         ["shirt", "pants", "shoes", "dress", "jacket", "hat"],
@@ -206,9 +216,9 @@ MANUAL_UNIT_STONE_WORD_SUBSETS: dict[str, list[list[str]]] = {
         ["have", "havegoodday", "nicetoseeyou", "alright"],
     ],
     "p1-u03": [
-        ["i", "you", "we", "my", "your"],
+        ["i", "you", "we", "my", "your", "name"],
         ["he", "she", "they", "his", "their", "our"],
-        [],
+        ["mynameis"],
     ],
     "p1-u23": [
         ["go", "come", "walk", "run"],
@@ -235,8 +245,15 @@ MANUAL_UNIT_STONE_WORD_SUBSETS: dict[str, list[list[str]]] = {
 
 # Units that emit signSequence phrase blocks on stones 2–3.
 PHRASE_SEQUENCE_UNITS: set[str] = {
-    "p1-u01", "p1-u02", "p1-u73", "p1-u06", "p1-u05", "p1-u22", "p1-u24",
+    "p1-u01", "p1-u02", "p1-u03", "p1-u73", "p1-u06", "p1-u05", "p1-u22", "p1-u24",
     "p1-u23", "p1-u49", "p1-u30", "p1-u37", "p1-u71",
+    "p1-u10", "p1-u40", "p1-u56", "p1-u57", "p1-u45", "p1-u42", "p1-u32", "p1-u59", "p1-u68",
+}
+
+# Tier 1 spread: always emit phrase teach → yourTurn in these units (revisit when already on path).
+PHRASE_UNIT_YOUR_TURN: set[str] = {
+    "p1-u03", "p1-u10", "p1-u40", "p1-u56", "p1-u57",
+    "p1-u45", "p1-u42", "p1-u32", "p1-u59", "p1-u68",
 }
 
 UNIT_STONE_DISPLAY_OVERRIDES: dict[str, list[str]] = {
@@ -430,7 +447,7 @@ PHRASE_FILL_PROMPT = "Watch the phrase. Which sign is missing?"
 # unit_id -> answer_word_id -> phrase-backed fillSlot spec (merged at generation time).
 # Only entries whose phraseWordId is filmed and whose answer is a phrase component
 # are emitted. Pending filming (do not add until phrase clip exists):
-#   pleasehelpme, wrapup, pleasesignslower, iwanteat
+#   wrapup, pleasesignslower, iwanteat
 # unit_id -> trigger_word_id -> phrase_id for early complete-the-phrase previews.
 PHRASE_CONTEXT_SIGN_SEQUENCES: dict[str, dict[str, str]] = {
     "p1-u01": {
@@ -700,8 +717,17 @@ SENTENCE_OVERRIDES: dict[str, dict[str, tuple[str, str]]] = {
         "smell": ("I can ", " flowers."),
         "try": ("", " again."),
     },
+    "p1-u03": {
+        "name": ("My ", " is Max."),
+        "mynameis": ("", " — fingerspell name."),
+    },
     "p1-u08": {
         "if": ("", " you have time."),
+    },
+    "p1-u10": {
+        "my": ("", " name is Max."),
+        "name": ("Fingerspell your ", "."),
+        "mynameis": ("", " — fingerspell name."),
     },
     "p1-u14": {
         "name": ("Fingerspell your ", "."),
@@ -711,19 +737,36 @@ SENTENCE_OVERRIDES: dict[str, dict[str, tuple[str, str]]] = {
     },
     "p1-u32": {
         "mirror": ("Look in the ", "."),
+        "see": ("Let me ", "."),
+        "letmesee": ("", ", please."),
     },
     "p1-u37": {
         "chicken": ("Grill the ", " tonight."),
     },
     "p1-u40": {
         "early": ("Wake up ", " today."),
+        "talk": ("", " to you later."),
+        "talktoyoulater": ("", ", friend!"),
     },
     "p1-u50": {
         "watch": ("Check your ", "."),
     },
+    "p1-u56": {
+        "imlost": ("", ", need directions."),
+    },
+    "p1-u57": {
+        "learnasl": ("I ", " every day."),
+        "imlearningasl": ("", ", still practicing."),
+    },
+    "p1-u59": {
+        "doing": ("What are you ", "?"),
+        "whatareyoudoing": ("", " today?"),
+    },
     "p1-u68": {
         "italy": ("We visit ", " next."),
         "mexico": ("We visit ", " next."),
+        "from": ("I am ", " America."),
+        "whereareyoufrom": ("", "?"),
     },
     "p1-u69": {
         "mouse": ("Click the ", "."),
@@ -742,7 +785,15 @@ SENTENCE_OVERRIDES: dict[str, dict[str, tuple[str, str]]] = {
     "p1-u38": {
         "imthirsty": ("I am ", "."),
     },
+    "p1-u42": {
+        "sad": ("I feel ", " today."),
+        "imsad": ("I am ", " now."),
+    },
     "p1-u45": {
+        "please": ("", ", help me."),
+        "help": ("I need ", " now."),
+        "me": ("", ", please help."),
+        "pleasehelpme": ("", " please?"),
         "emergency": ("This is an ", "."),
         "police": ("Call the ", "."),
     },

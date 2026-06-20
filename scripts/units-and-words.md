@@ -14,11 +14,11 @@ hello, thankyou, bye, please, sorry, welcome, congratulations, oops, very, much,
 
 yes, no, ok, sure, really, wow, dontknow, notyet, samehere, excuseme, seeyoulater, have, havegoodday, signagain, nicetoseeyou, alright, cool, awesome, funny
 
-| 3 | p1-u03 | You & Me | 11 | 0 |
+| 3 | p1-u03 | You & Me | 12 | 1 |
 
 ### 3. You & Me (`p1-u03`)
 
-i, you, we, he, she, they, my, your, our, his, their
+i, you, we, he, she, they, my, your, our, his, their, name, mynameis
 
 | 4 | p1-u73 | Getting Help | 13 | 9 |
 
@@ -56,17 +56,17 @@ eat, drink, see, hear, feel, breathe, smell, want, hungry, make, get, give, take
 
 go, come, walk, run, stop, turn, move, lost, imlost, here, there, left, right, up, down, near, far
 
-| 10 | p1-u56 | Getting There | 16 | 0 |
+| 10 | p1-u56 | Getting There | 18 | 1 |
 
 ### 10. Getting There (`p1-u56`)
 
-drive, ride, arrive, travel, road, street, traffic, commute, car, bus, train, airplane, bike, truck, motorcycle, boat
+drive, ride, arrive, travel, road, street, traffic, commute, car, bus, train, airplane, bike, truck, motorcycle, boat, i, lost, imlost
 
-| 11 | p1-u40 | Time & Calendar | 25 | 0 |
+| 11 | p1-u40 | Time & Calendar | 27 | 1 |
 
 ### 11. Time & Calendar (`p1-u40`)
 
-today, tomorrow, now, morning, afternoon, night, monday, tuesday, wednesday, thursday, friday, saturday, sunday, weekend, holiday, yesterday, noon, day, week, month, year, hour, minute, later, early
+today, tomorrow, now, morning, afternoon, night, monday, tuesday, wednesday, thursday, friday, saturday, sunday, weekend, holiday, yesterday, noon, day, week, month, year, hour, minute, later, early, talk, you, talktoyoulater
 
 | 12 | p1-u18 | Family & People | 22 | 0 |
 
@@ -98,17 +98,17 @@ table, chair, bed, couch, door, window, lamp, clock
 
 money, pay, cost, price, 1dollar, 5dollars, half, quarter, percent, double, triple, hundred
 
-| 17 | p1-u57 | School & Classroom | 15 | 0 |
+| 17 | p1-u57 | School & Classroom | 17 | 1 |
 
 ### 17. School & Classroom (`p1-u57`)
 
-school, class, student, teacher, learn, study, read, write, math, science, history, art, book, pen, paper
+school, class, student, teacher, learn, study, read, write, math, science, history, art, book, pen, paper, i, learnasl, imlearningasl
 
-| 18 | p1-u45 | Health & Town | 12 | 0 |
+| 18 | p1-u45 | Health & Town | 15 | 1 |
 
 ### 18. Health & Town (`p1-u45`)
 
-health, exercise, doctor, nurse, hospital, medicine, shop, park, restaurant, hotel, library, church
+health, exercise, doctor, nurse, hospital, medicine, shop, park, restaurant, hotel, library, church, please, help, me, pleasehelpme
 
 | 19 | p1-u15 | Numbers | 12 | 0 |
 
@@ -116,17 +116,17 @@ health, exercise, doctor, nurse, hospital, medicine, shop, park, restaurant, hot
 
 zero, one, two, three, four, five, six, seven, eight, nine, ten, eleven
 
-| 20 | p1-u10 | The Alphabet | 29 | 0 |
+| 20 | p1-u10 | The Alphabet | 31 | 1 |
 
 ### 20. The Alphabet (`p1-u10`)
 
-alphabet, fingerspell, letter, a, b, c, d, e, f, g, h, letteri, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z
+alphabet, fingerspell, letter, a, b, c, d, e, f, g, h, letteri, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, my, name, mynameis
 
-| 21 | p1-u32 | At Home | 14 | 0 |
+| 21 | p1-u32 | At Home | 16 | 1 |
 
 ### 21. At Home (`p1-u32`)
 
-shower, toilet, sink, soap, toothbrush, brush, comb, mirror, clean, wash, sweep, vacuum, washdishes, sleep
+shower, toilet, sink, soap, toothbrush, brush, comb, mirror, clean, wash, sweep, vacuum, washdishes, sleep, me, see, letmesee
 
 | 22 | p1-u27 | Colors | 16 | 0 |
 
@@ -146,11 +146,11 @@ big, small, tall, hot, cold, fast, hard, almost, many, few, enough, more, less
 
 and, but, or, so, with, without, also, because, same, different, if, language, word
 
-| 25 | p1-u42 | Body & Wellness | 23 | 0 |
+| 25 | p1-u42 | Body & Wellness | 25 | 1 |
 
 ### 25. Body & Wellness (`p1-u42`)
 
-head, face, eyes, ear, nose, mouth, teeth, tongue, body, arm, hands, finger, shoulder, neck, back, stomach, sick, hurt, pain, headache, cough, sneeze, dizzy
+head, face, eyes, ear, nose, mouth, teeth, tongue, body, arm, hands, finger, shoulder, neck, back, stomach, sick, hurt, pain, headache, cough, sneeze, dizzy, i, sad, imsad
 
 | 26 | p1-u50 | Clothes & Accessories | 24 | 0 |
 
@@ -158,11 +158,11 @@ head, face, eyes, ear, nose, mouth, teeth, tongue, body, arm, hands, finger, sho
 
 shirt, pants, dress, shoes, socks, jacket, hat, clothes, shorts, skirt, sweater, boots, gloves, scarf, belt, suit, glasses, earring, necklace, bracelet, ring, backpack, wallet, watch
 
-| 27 | p1-u59 | Work Life | 8 | 0 |
+| 27 | p1-u59 | Work Life | 11 | 1 |
 
 ### 27. Work Life (`p1-u59`)
 
-work, job, boss, lawyer, engineer, scientist, meeting, retire
+work, job, boss, lawyer, engineer, scientist, meeting, retire, what, you, doing, whatareyoudoing
 
 | 28 | p1-u69 | Devices & Apps | 16 | 0 |
 
@@ -170,11 +170,11 @@ work, job, boss, lawyer, engineer, scientist, meeting, retire
 
 computer, phone, tablet, laptop, camera, tv, keyboard, mouse, internet, email, text, download, upload, share, send, video
 
-| 29 | p1-u68 | Countries | 8 | 0 |
+| 29 | p1-u68 | Countries | 11 | 1 |
 
 ### 29. Countries (`p1-u68`)
 
-america, canada, mexico, france, germany, china, japan, italy
+america, canada, mexico, france, germany, china, japan, italy, where, you, from, whereareyoufrom
 
 | 30 | p1-u60 | Animals | 16 | 0 |
 

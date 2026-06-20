@@ -48,6 +48,7 @@ from curriculum_v5_data import (
     PHRASE_FILL_SLOTS,
     PHRASE_IDS,
     PHRASE_SEQUENCE_UNITS,
+    PHRASE_UNIT_YOUR_TURN,
     SENTENCE_OVERRIDES,
     UNIT_ORDER_BY_TITLE,
     UNIT_SPECS,
@@ -1523,6 +1524,22 @@ def is_phrase_your_turn_followup(prev: dict, step: dict) -> bool:
         and bool(word)
         and step.get("wordId") == word
     )
+
+
+PHRASE_REVISIT_TEACH_META = (
+    "Practice This Phrase",
+    "Sign it again in this unit's context.",
+)
+
+
+def lesson_has_phrase_your_turn_pair(steps: list[dict], phrase_id: str) -> bool:
+    for index, step in enumerate(steps):
+        if step.get("wordId") != phrase_id or not is_phrase_teach_step(step):
+            continue
+        next_step = steps[index + 1] if index + 1 < len(steps) else None
+        if next_step and is_phrase_your_turn_followup(step, next_step):
+            return True
+    return False
 
 
 def ensure_your_turn_after_phrase_teaches(
@@ -3033,6 +3050,7 @@ class LessonBuilder:
             self.steps.pop()
         if self.stone == 1:
             self._cap_stone1_watch_choose_share()
+        self.steps = anchor_phrase_your_turn_pairs(self.steps)
         self._ensure_lesson_endings()
         self.steps = anchor_teach_confirm_pairs(self.steps)
         self.steps = enforce_max_teach_confirm_pairs(
@@ -3051,6 +3069,7 @@ class LessonBuilder:
         self.steps = separate_adjacent_match_pairs(self.steps, self.pool)
         self._ensure_asl_tip()
         self._ensure_your_turn()
+        self.steps = anchor_phrase_your_turn_pairs(self.steps)
         self._ensure_lesson_endings()
         self._rebalance_graded_mix()
         self._rebalance_graded_mix()
@@ -3576,9 +3595,15 @@ class LessonBuilder:
                     if self._context_step_count() >= minimum:
                         break
                     if phrase_id in self.state.sequenced_phrases:
-                        _append_phrase_slot_review(self, phrase_id)
+                        if self.unit["id"] in PHRASE_UNIT_YOUR_TURN:
+                            _append_phrase_revisit_your_turn(self, phrase_id)
+                            _append_phrase_slot_review(
+                                self, phrase_id, force_sign_sequence=True
+                            )
+                        else:
+                            _append_phrase_slot_review(self, phrase_id)
                     elif len(self.steps) < self._step_limit() - 2:
-                        _append_phrase_block(self, phrase_id)
+                        _dispatch_unit_phrase(self, phrase_id)
             if self._context_step_count() == before:
                 stall += 1
                 if stall >= 4:
@@ -3598,6 +3623,13 @@ class LessonBuilder:
                 if kind == "matchPairs":
                     break
                 if kind == "teach" and len(self.steps) > min_steps:
+                    if (
+                        len(self.steps) >= 2
+                        and is_phrase_your_turn_followup(
+                            self.steps[-2], self.steps[-1]
+                        )
+                    ):
+                        break
                     self.steps.pop()
                     continue
                 swap_index = None
@@ -3623,9 +3655,17 @@ class LessonBuilder:
             if kind == "teach" and len(self.steps) > STONE_MIN_STEPS.get(
                 self.stone, MIN_MODULE_STEPS
             ):
+                if (
+                    len(self.steps) >= 2
+                    and is_phrase_your_turn_followup(self.steps[-2], self.steps[-1])
+                ):
+                    break
                 self.steps.pop()
                 continue
             if kind != "yourTurn" or len(self.steps) < 2:
+                break
+            prev = self.steps[-2]
+            if is_phrase_your_turn_followup(prev, last):
                 break
             swap_index = None
             for index in range(len(self.steps) - 2, max(len(self.steps) - 6, -1), -1):
@@ -3926,7 +3966,7 @@ class LessonBuilder:
                     cost = _phrase_block_step_cost(self, phrase_id)
                     before = len(self.steps)
                     if self._make_room_for_step(slots_needed=cost):
-                        _append_phrase_block(self, phrase_id)
+                        _dispatch_unit_phrase(self, phrase_id)
                     if len(self.steps) > before:
                         kinds_present.add("signSequence")
 
@@ -4192,10 +4232,10 @@ class LessonBuilder:
             ):
                 phrase_id = phrase_queue.pop(0)
                 if len(self.steps) < step_limit - 1:
-                    _append_phrase_block(self, phrase_id)
+                    _dispatch_unit_phrase(self, phrase_id)
 
         if reserved_phrase and reserved_phrase not in self.state.sequenced_phrases:
-            _append_phrase_block(self, reserved_phrase)
+            _dispatch_unit_phrase(self, reserved_phrase)
             phrase_queue = [p for p in phrase_queue if p != reserved_phrase]
 
         if stone <= 3:
@@ -4205,7 +4245,7 @@ class LessonBuilder:
                 self.fill_untaught_vocab(reserve=self._fill_untaught_reserve)
 
         while phrase_queue and len(self.steps) < step_limit - 2:
-            _append_phrase_block(self, phrase_queue.pop(0))
+            _dispatch_unit_phrase(self, phrase_queue.pop(0))
             if phrase_queue and len(self.steps) < step_limit - 2:
                 self._append_review_pad()
 
@@ -5610,6 +5650,51 @@ def enforce_max_teach_confirm_pairs(
     return result
 
 
+def anchor_phrase_your_turn_pairs(steps: list[dict]) -> list[dict]:
+    """Keep phrase teach → yourTurn pairs adjacent; place before phrase-video review."""
+    pairs_by_phrase: dict[str, tuple[dict, dict]] = {}
+    body: list[dict] = []
+    index = 0
+    while index < len(steps):
+        step = steps[index]
+        next_step = steps[index + 1] if index + 1 < len(steps) else None
+        if is_phrase_teach_step(step) and next_step and is_phrase_your_turn_followup(
+            step, next_step
+        ):
+            word = step.get("wordId")
+            if word:
+                pairs_by_phrase[word] = (step, next_step)
+            index += 2
+            continue
+        body.append(step)
+        index += 1
+
+    if not pairs_by_phrase:
+        return steps
+
+    result: list[dict] = []
+    placed: set[str] = set()
+    for step in body:
+        phrase = step.get("wordId")
+        if (
+            phrase
+            and phrase in pairs_by_phrase
+            and phrase not in placed
+            and step.get("kind") in {"signSequence", "phraseSlot"}
+        ):
+            teach, your_turn = pairs_by_phrase[phrase]
+            result.append(teach)
+            result.append(your_turn)
+            placed.add(phrase)
+        result.append(step)
+
+    for phrase, (teach, your_turn) in pairs_by_phrase.items():
+        if phrase not in placed:
+            result.append(teach)
+            result.append(your_turn)
+    return result
+
+
 def anchor_teach_confirm_pairs(steps: list[dict]) -> list[dict]:
     """Keep each teach step followed immediately by its intro confirm quiz."""
     confirms_by_answer: dict[str, dict] = {}
@@ -6327,6 +6412,32 @@ def _phrase_block_step_cost(builder: LessonBuilder, phrase_id: str) -> int:
     return teaches + 1
 
 
+def _append_phrase_revisit_your_turn(builder: LessonBuilder, phrase_id: str) -> None:
+    """Replay phrase clip + Your Turn in a unit that assigned a path-learned phrase."""
+    if phrase_id not in PHRASE_IDS:
+        return
+    if lesson_has_phrase_your_turn_pair(builder.steps, phrase_id):
+        return
+    if len(builder.steps) + 2 > builder._step_limit():
+        return
+    title, prompt = PHRASE_REVISIT_TEACH_META
+    builder.append(teach_step(phrase_id, title=title, prompt=prompt))
+    builder.append(your_turn_step(phrase_id))
+    builder.last_kind = "yourTurn"
+
+
+def _dispatch_unit_phrase(builder: LessonBuilder, phrase_id: str) -> None:
+    if phrase_id in builder.state.sequenced_phrases:
+        if builder.unit["id"] in PHRASE_UNIT_YOUR_TURN:
+            _append_phrase_revisit_your_turn(builder, phrase_id)
+            if builder.stone >= 2:
+                _append_phrase_slot_review(
+                    builder, phrase_id, force_sign_sequence=True
+                )
+        return
+    _append_phrase_block(builder, phrase_id)
+
+
 def _append_phrase_block(builder: LessonBuilder, phrase_id: str) -> None:
     """Teach components, phrase, then signSequence once per phrase across the path."""
     components = sign_sequence_components(phrase_id)
@@ -6355,7 +6466,9 @@ def _append_phrase_block(builder: LessonBuilder, phrase_id: str) -> None:
     builder.state.sequenced_phrases.add(phrase_id)
 
 
-def _append_phrase_slot_review(builder: LessonBuilder, phrase_id: str) -> bool:
+def _append_phrase_slot_review(
+    builder: LessonBuilder, phrase_id: str, *, force_sign_sequence: bool = False
+) -> bool:
     """phraseSlot or signSequence review for a phrase built on a prior stone."""
     if phrase_id not in builder.state.sequenced_phrases:
         return False
@@ -6367,7 +6480,10 @@ def _append_phrase_slot_review(builder: LessonBuilder, phrase_id: str) -> bool:
     components = sign_sequence_components(phrase_id)
     if len(components) < 2:
         return False
-    use_phrase_slot = (hash(phrase_id) + builder.stone + builder.unit.get("sortOrder", 0)) % 2 == 0
+    use_phrase_slot = (
+        not force_sign_sequence
+        and (hash(phrase_id) + builder.stone + builder.unit.get("sortOrder", 0)) % 2 == 0
+    )
     seq: dict | None = None
     if use_phrase_slot:
         intro = set(builder._introduced_pool()) | set(builder.state.taught_set)
@@ -6404,6 +6520,12 @@ def _inject_phrase_slot_reviews(builder: LessonBuilder) -> None:
     ]
     for phrase_id in unit_phrases:
         if phrase_id in new_stone_phrases:
+            if phrase_id in builder.state.sequenced_phrases:
+                if len(builder.steps) >= builder._step_limit() - 1:
+                    break
+                _append_phrase_slot_review(
+                    builder, phrase_id, force_sign_sequence=True
+                )
             continue
         if len(builder.steps) >= builder._step_limit() - 1:
             break
